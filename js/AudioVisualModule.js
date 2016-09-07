@@ -13,9 +13,7 @@ class AudioVisualModule{
 
         this.addCharacter('aio', currentProfile);
         this.currentCharacter = null;
-        this.setCurrentCharacter('aio');
-
-        
+        this.setCurrentCharacter('aio');       
 
         // Visual Module
         this.visual_module = new Visual_module(this.currentCharacter, 400, 800);
