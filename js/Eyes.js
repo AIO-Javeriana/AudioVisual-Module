@@ -1,12 +1,24 @@
-class Eye extends BodyPart{
-    constructor(eyesColor){
-        this.name = "Eye";
+class Eyes extends BodyPart{
+
+    constructor(name, eyesColor, canvas){
+        super(name);
         this.eyesColor = eyesColor;
+        this.idleAnimationsNumber = 2;
     }
 
     idle(){
-        wink();
-        blink();
+        var choice = Math.floor((Math.random() * this.idleAnimationsNumber) + 1);
+        switch (choice) {
+            case 1:
+                this.wink();
+                break;
+            case 2:
+                this.blink();
+                break;
+            default:
+                this.blink();
+                break;
+        }
     }
     
     happy(level, onFinish){

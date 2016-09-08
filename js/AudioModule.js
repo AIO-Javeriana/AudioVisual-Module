@@ -1,12 +1,10 @@
-class VisualModule extends Module{
+class AudioModule extends Module{
 
-    constructor(id, character, width, length, profile){
+    constructor(id){
         super(id);
-        this.activeCharacter = null;
-        this.setActiveCharacter(character);
-        this.activeProfile = profile;
-        this.canvas = new Canvas(width, length, this.activeProfile.getBackgroundColor());
-        this.activeCharacter.addBodyPart(new Eyes(this.canvas,140,100,this.activeProfile.getEyesColor() ));
+        this.audioInput = new audioInput();  
+        this.registerSound("../sounds/surprised.mp3","SURPRISED");
+
     }
 
     setActiveCharacter(character){
@@ -39,5 +37,10 @@ class VisualModule extends Module{
 
     sleeping(level, onFinish){
         this.activeCharacter.sleeping(level);
-    }    
+    }
+
+    registerSound(path, name){
+        this.audioInput.registerSound(path, name);
+    }
+
 }

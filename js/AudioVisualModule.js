@@ -2,6 +2,9 @@ class AudioVisualModule{
     
     constructor(){
         
+        this.height = 400;
+        this.width = 800;
+
         // Available profiles B9F6CA 43A047 o CFD8DC 455A64
         this.profiles = [];
         this.availableCharacters = [];
@@ -10,18 +13,17 @@ class AudioVisualModule{
         this.addProfile('kike', 'Boy','#CFD8DC', '#455A64');
         this.addProfile('aleja', 'Girl','#FFEBEE', '#FF4081');
         this.setCurrentProfile('kike');
-
-        this.addCharacter('aio', currentProfile);
+        this.addCharacter('aio', this.currentProfile);
         this.currentCharacter = null;
         this.setCurrentCharacter('aio');       
 
         // Visual Module
-        this.visual_module = new Visual_module(this.currentCharacter, 400, 800);
+        this.visualModule = new VisualModule(1, this.currentCharacter, this.height, this.width, this.currentProfile);
         
         /*
 
         // Audio Module
-        this.audio_module = new Audio_module("Audio_module",this);
+        this.audioModule = new Audio_module("Audio_module",this);
         
         // Communications
         /*
@@ -30,44 +32,10 @@ class AudioVisualModule{
             //INFORMAR ERROR EN PANTALLA
         }
         //*/
-        
-        // testing
-        //this.eyes.blink(task_finished);
-        //this.visual_module.eyes.smile(10,task_finished);
-
-
-    }
-    
-    surprised(onFinish){
-        /*if(this.audio_module != null)
-            this.audio_module.surprised(onFinish);
-        if(this.visual_module != null)
-            this.visual_module.surprised(onFinish);*/
     }
 
-    idle(onFinish){
-        //ToDo
-    }
-    
-    happy(level, onFinish){
-        /*if(this.visual_module != null)
-            this.visual_module.happy(10,onFinish);*/
-    }
-
-    angry(level, onFinish){
-        //ToDo
-    }
-
-    confused(level, onFinish){
-        //ToDo
-    }
-    
-    surprised(level, onFinish){
-        //ToDo
-    }
-
-    sleeping(level, onFinish){
-        //ToDo
+    idle(){
+        this.visualModule.idle();
     }
 
     addProfile(name, gender, backgroundColor, eyesColor){
@@ -78,8 +46,24 @@ class AudioVisualModule{
         console.log(this.profiles);
     }
 
-    addCharacter(name){
-        this.availableCharacters.push(new Character(name));
+    addCharacter(name, profile){
+        this.availableCharacters.push(new Character(name, profile));
+    }
+
+    setWidth(width){
+        this.width=width;
+    }
+    
+    getWidth(){
+        return width;
+    }
+
+    setHeight(height){
+        this.height=height;
+    }
+    
+    getHeight(){
+        return height;
     }
 
     setCurrentProfile(name){
@@ -90,7 +74,7 @@ class AudioVisualModule{
     }
 
     setCurrentCharacter(name){
-        for (var i = 0; i < this.profiles.length; i++) {
+        for (var i = 0; i < this.availableCharacters.length; i++) {
             if( this.availableCharacters[i].getName() == name )
                 this.currentCharacter = this.availableCharacters[i];
         }

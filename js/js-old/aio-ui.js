@@ -27,10 +27,10 @@ class Canvas {
 }
 
 class Profile{
-    constructor(gender, backgroundColor,eyes_color){
+    constructor(gender, backgroundColor,eyesColor){
         this.gender = gender;
         this.backgroundColor = backgroundColor;
-        this.eyes_color = eyes_color;
+        this.eyesColor = eyesColor;
     }
 }
 
