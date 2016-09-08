@@ -1,5 +1,5 @@
 
-class Communication_channel{
+class CommunicationChannel{
 
     constructor(hostname, port, aioUi){
         this.HOSTNAME = hostname;

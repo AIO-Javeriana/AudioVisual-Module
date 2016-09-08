@@ -15,56 +15,7 @@ function test(){
         aioUi.happy(10,task_finished);
     }
 }
-class AioUi{
-    
-    constructor(){
-        
-        // Available profiles B9F6CA 43A047 o CFD8DC 455A64
-        this.profiles = [];
-        this.profiles["Boy"] = new Profile('Boy','#CFD8DC', '#455A64');
-        this.profiles["Girl"] = new Profile('Girl','#FFEBEE', '#FF4081');
 
-        // Visual Module
-        this.visual_module = new Visual_module("Visual_module", 400, 800, this.profiles["Boy"]);
-        
-        // Audio Module
-        this.audio_module = new Audio_module("Audio_module",this);
-        
-        // Communications
-        /*
-        this.communication_channel =  new Communication_channel("http://localhost","9090", this);
-        if(!this.communication_channel.connect(this.MODULE_ID)){
-            //INFORMAR ERROR EN PANTALLA
-        }
-        //*/
-        
-        // testing
-        //this.eyes.blink(task_finished);
-        //this.visual_module.eyes.smile(10,task_finished);
-    }
-    
-    surprised(onFinish){
-        if(this.audio_module != null)
-            this.audio_module.surprised(onFinish);
-        if(this.visual_module != null)
-            this.visual_module.surprised(onFinish);
-    }
-    
-    blink(onFinish){
-        if(this.visual_module != null)
-            this.visual_module.blink(onFinish);
-    }
-    
-    wink(onFinish){
-        if(this.visual_module != null)
-            this.visual_module.wink(onFinish);
-    }
-    
-    happy(lvl, onFinish){
-        if(this.visual_module != null)
-            this.visual_module.happy(10,onFinish);
-    }
-}
 
 class Canvas {
     constructor(backgroundColor, height, width){
@@ -76,10 +27,10 @@ class Canvas {
 }
 
 class Profile{
-    constructor(gender, backgroundColor,eyes_color){
+    constructor(gender, backgroundColor,eyesColor){
         this.gender = gender;
         this.backgroundColor = backgroundColor;
-        this.eyes_color = eyes_color;
+        this.eyesColor = eyesColor;
     }
 }
 
