@@ -15,3 +15,7 @@ canvas{
    margin: auto;
    padding-left: 0;
 }
+
+#sleeping-eyes-1, #sleeping-eyes-2 {
+    visibility:hidden;
+}

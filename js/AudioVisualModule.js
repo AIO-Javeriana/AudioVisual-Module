@@ -10,7 +10,7 @@ class AudioVisualModule{
         this.availableCharacters = [];
 
         this.currentProfile = null;
-        this.addProfile('kike', 'Boy','#CFD8DC', '#455A64');
+        this.addProfile('kike', 'Boy','#CFD8DC', '#FFFFFF');
         this.addProfile('aleja', 'Girl','#FFEBEE', '#FF4081');
         this.setCurrentProfile('kike');
         this.addCharacter('aio', this.currentProfile);

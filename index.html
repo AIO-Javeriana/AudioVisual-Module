@@ -1,24 +1,61 @@
 <!doctype html>
 <html lang="en" ng-app>
-  <head>
-    <title>aio-ui</title>
-    <link rel="stylesheet" href="css/aio-ui.css" type="text/css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
-    <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="./js/Module.js"></script>
-    <script src="./js/Canvas.js"></script>
-    <script src="./js/Character.js"></script>
-    <script src="./js/BodyPart.js"></script>
-    <script src="./js/Eyes.js"></script>
-    <script src="./js/VisualModule.js"></script>
-    <script src="./js/Profile.js"></script>
-    <script src="./js/AudioVisualModule.js"></script>
-    <script src="./js/Main.js"></script>
-  </head>
-  <body onLoad="main();" width="800" height="800">
-    <canvas id="stage-canvas" width="800" height="400"><canvas>
+
+<head>
+  <title>aio-ui</title>
+  <link rel="stylesheet" href="css/aio-ui.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+  <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+  <script src="http://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/findShapeIndex.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+
+  <!--
+  <script src="./js/Module.js"></script>
+  <script src="./js/Canvas.js"></script>
+  <script src="./js/Character.js"></script>
+  <script src="./js/BodyPart.js"></script>
+  <script src="./js/Eyes.js"></script>
+  <script src="./js/VisualModule.js"></script>
+  <script src="./js/Profile.js"></script>
+  <script src="./js/AudioVisualModule.js"></script>
+  -->
+  <script src="./js/Main.js"></script>
+</head>
+
+<body width="800" height="800">
+  
+  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
+
+    <g>
+      <path id="opened-eyes-1" stroke="#000000" d="M379.442,192.656c0,103.342,0,103.342-71.472,103.342l0,0
+		c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,88.178,379.442,88.178,379.442,192.656
+		L379.442,192.656z" />
+      <path id="opened-eyes-2" stroke="#000000" d="M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0
+		c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978
+		L563.002,192.978z" />
+    </g>
+
+    <g >
+      <path id="sleeping-eyes-1" stroke="#000000" stroke-miterlimit="10" d="M380.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
+		s31.999,23.5,71.471,23.5C348.443,314.461,380.442,303.939,380.442,290.961z" />
+      <path id="sleeping-eyes-2"  stroke="#000000" stroke-miterlimit="10" d="M562.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
+		s31.999,23.5,71.471,23.5C530.443,314.461,562.442,303.939,562.442,290.961z" />
+    </g>
+
+  </svg>
+
+  <button id="button-test">Click me</button>
+</body>
+
 </html>
