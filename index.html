@@ -30,48 +30,151 @@
   
   -->
 
+  <!--
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="./js/paperjs/dist/paper-full.min.js"></script>
-  
-  <script type="text/paperscript" canvas="myCanvas">
-    var pathData = 'M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0 c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978	L563.002,192.978z';
-    var path = new Path(pathData);
+  -->
 
-    path.strokeColor = 'black';
-    path.fillColor = 'black';
-    path.strokeWidth = 10;
-
-    
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js"></script>
 
 </head>
 
-<body width="800" height="800">
-  <!--
-  <svg version="1.1" id="aio" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-    width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
+<body>
+  <div id="assets">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="70px" height="70px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+          <path id="opened-eyes-1" stroke="#000000" d="M379.442,192.656c0,103.342,0,103.342-71.472,103.342l0,0
+        c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,88.178,379.442,88.178,379.442,192.656
+        L379.442,192.656z" />
+          <path id="opened-eyes-2" stroke="#000000" d="M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0
+        c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978
+        L563.002,192.978z" />
 
-    <g>
-      <path id="opened-eyes-1" stroke="#000000" d="M379.442,192.656c0,103.342,0,103.342-71.472,103.342l0,0
-		c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,88.178,379.442,88.178,379.442,192.656
-		L379.442,192.656z" />
-      <path id="opened-eyes-2" stroke="#000000" d="M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0
-		c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978
-		L563.002,192.978z" />
-    </g>
+      </svg>  
 
-    <g>
-      <path id="sleeping-eyes-1" stroke="#000000" stroke-miterlimit="10" d="M380.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
-		s31.999,23.5,71.471,23.5C348.443,314.461,380.442,303.939,380.442,290.961z" />
-      <path id="sleeping-eyes-2"  stroke="#000000" stroke-miterlimit="10" d="M562.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
-		s31.999,23.5,71.471,23.5C530.443,314.461,562.442,303.939,562.442,290.961z" />
-    </g>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="70px" height="70px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+          <path id="sleeping-eyes-1" stroke="#000000" stroke-miterlimit="10" d="M380.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5 s31.999,23.5,71.471,23.5C348.443,314.461,380.442,303.939,380.442,290.961z" />
+          <path id="sleeping-eyes-2"  stroke="#000000" stroke-miterlimit="10" d="M562.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5 s31.999,23.5,71.471,23.5C530.443,314.461,562.442,303.939,562.442,290.961z" />
+      </svg>
+  </div>
+  
+  <div class="scripts">
+      <script>
 
-  </svg>
-  -->
-  <canvas id="myCanvas">
+        $(function() {
 
-  </canvas>
+          var type = 'svg';
+          var two = new Two({
+            type: Two.Types[type],
+            fullscreen: true,
+            autostart: true
+          }).appendTo(document.body);
+
+          var dimensions = 500;
+          var shapes = [];
+          var index = 0;
+          var length = 0;
+          var scale = two.width > two.height ? two.height / dimensions : two.width / dimensions;
+          var easing = 0.125;
+
+          $('#assets svg').each(function(i, el) {
+
+            var shape = two.interpret(el).center();
+            shape.fill = 'black';
+            shape.visible = false;
+            shape.noStroke();
+            shape.translation.set(two.width / 2, two.height / 2);
+            shapes.push(shape);
+
+            _.each(shape.children, function(child) {
+              _.each(child.vertices, function(v) {
+                v.ox = v.x;
+                v.oy = v.y;
+              });
+            });
+
+            /*_.each(shape.children, function(child) {
+              console.log( '-------------------------------');
+              _.each(child.vertices, function(v) {
+                console.log( 'x:' + v.ox + ' y:' + v.oy);
+              });
+            });*/
+
+            /*_.each(shape.children, function(child) {
+              console.log( '-------------------------------');
+              _.each(child.vertices, function(v) {
+                console.log( 'x:' + v.ox + ' y:' + v.oy);
+              });
+            });*/
+
+            /*var shape0 = shapes[0].children;
+            var shape1 = shapes[1].children;
+            var shape0_vertices_length = shape0.vertices.length;
+            var shape1_vertices_length = shape1.vertices.length;
+
+            _.each(shape0.vertices, function(v) {
+              console.log( 'x:' + v.ox + ' y:' + v.oy);
+            });*/
+
+            
+
+          });
+
+          /*console.log("vertices_length: "+shapes.length);
+          for(var i=0; i<shapes.length; i++){
+            var child = shapes[i].children
+            var children_length = child.length;
+            console.log("children_length: "+children_length);
+            for( var j = 0; j<children_length; j++ ){
+              var vertices = child[j].vertices;
+              var vertices_length = vertices.length;
+              console.log("vertices_length: "+vertices_length);
+              for( var k = 0; k<vertices_length; k++ ){
+                vertice = vertices[k];
+                console.log( 'x:' + vertice.ox + ' y:' + vertice.oy);
+              }
+            }
+          }*/
+
+          length = shapes.length;
+
+          function getVertices(shape, child){
+            return shapes[shape].children[child].vertices
+          }
+
+          function getShape(shape){
+            return shapes[shape];
+          }
+          
+          var vertices_0 = getVertices(0, 0);
+          var vertices_1 = getVertices(0, 1);
+          var shape_0 = getShape(0);
+
+          for( var i=0; i<vertices_0.length; i++){
+            console.log( 'x0:' + vertices_0[i].ox + ' y0:' + vertices_0[i].oy);
+            console.log( 'x1:' + vertices_1[i].ox + ' y1:' + vertices_1[i].oy);
+          }
+
+          two.bind('update', function() {
+
+            shape_0.visible=true;
+            for( var i=0; i<vertices_0.length; i++){
+              if( i%2 == 0 ){
+                var x = vertices_1[i].ox - 10;
+                vertices_1[i].ox = x
+                var y = vertices_1[i].oy + 10;
+                vertices_1[i].oy = y
+                vertices_1[i].set(x, y);
+              }
+            }
+            
+
+          });
+
+        });
+
+      </script>
+    </div>
 </body>
 
 </html>
