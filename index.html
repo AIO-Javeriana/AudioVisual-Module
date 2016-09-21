@@ -6,12 +6,8 @@
   <link rel="stylesheet" href="css/aio-ui.css" type="text/css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Create
-  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-  <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
-  <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  -->
+
+
 
   <!-- Clases
   <script src="./js/Module.js"></script>
@@ -42,24 +38,21 @@
 
 <body>
   <div id="assets">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="70px" height="70px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-          <path id="opened-eyes-1" stroke="#000000" d="M379.442,192.656c0,103.342,0,103.342-71.472,103.342l0,0
-        c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,88.178,379.442,88.178,379.442,192.656
-        L379.442,192.656z" />
-          <path id="opened-eyes-2" stroke="#000000" d="M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0
-        c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978
-        L563.002,192.978z" />
-
-      </svg>  
-
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="70px" height="70px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-          <path id="sleeping-eyes-1" stroke="#000000" stroke-miterlimit="10" d="M380.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5 s31.999,23.5,71.471,23.5C348.443,314.461,380.442,303.939,380.442,290.961z" />
-          <path id="sleeping-eyes-2"  stroke="#000000" stroke-miterlimit="10" d="M562.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5 s31.999,23.5,71.471,23.5C530.443,314.461,562.442,303.939,562.442,290.961z" />
-      </svg>
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
+      <path stroke="#000000" stroke-miterlimit="10" d="M471.442,200.656c0,103.342,0,103.342-71.472,103.342l0,0
+	c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C471.442,96.178,471.442,96.178,471.442,200.656
+	L471.442,200.656z" />
+    </svg>
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
+    <path stroke="#000000" stroke-miterlimit="10" d="M471.442,186.96c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
+      s31.999,23.5,71.471,23.5C439.443,210.46,471.442,199.938,471.442,186.96z"/>
+    </svg>
   </div>
-  
+
   <div class="scripts">
-      <script>
+    <script>
 
         $(function() {
 
@@ -145,36 +138,69 @@
           function getShape(shape){
             return shapes[shape];
           }
+
+          function shiftArrayPositions(number, array){
+            var array = [];
+            for(var i=number; i<0; i= i%array.length + 1){
+              array.push(array[i]);
+            }
+            return array;
+          }
           
-          var vertices_0 = getVertices(0, 0);
+          /*var vertices_0 = getVertices(0, 0);
           var vertices_1 = getVertices(0, 1);
           var shape_0 = getShape(0);
 
-          for( var i=0; i<vertices_0.length; i++){
-            console.log( 'x0:' + vertices_0[i].ox + ' y0:' + vertices_0[i].oy);
-            console.log( 'x1:' + vertices_1[i].ox + ' y1:' + vertices_1[i].oy);
+          var half = (vertices_1[7].oy - vertices_1[1].oy)/2;
+          var limite_izquierdo = 3;
+          var limite_derecho = 8; 
+
+          console.log(vertices_1[2]);
+
+          var counter = 0.01;*/
+          two.bind('update', function() {
+            
+            //closeEyes();
+
+
+          
+          });
+
+          function morphShape(shape1, shape2){
+            
           }
 
-          two.bind('update', function() {
+          function closeEyes(){
+            
+            var ease_speed = 0.1;
 
             shape_0.visible=true;
+
             for( var i=0; i<vertices_0.length; i++){
-              if( i%2 == 0 ){
-                var x = vertices_1[i].ox - 10;
-                vertices_1[i].ox = x
-                var y = vertices_1[i].oy + 10;
-                vertices_1[i].oy = y
-                vertices_1[i].set(x, y);
+              if( i >= limite_izquierdo && i <= limite_derecho ){
+                if( vertices_1[i].oy < 200){  
+                  var oy = vertices_1[i].oy += Math.log(counter);
+                  vertices_1[i].y += Math.log(counter);
+                  vertices_1[i].controls.left.y = 0;
+                  vertices_1[i].controls.right.y = 0;
+                }
+              }else if ( i<limite_izquierdo || i>limite_derecho ){
+                if( vertices_1[i].oy > 200){
+                  var oy = vertices_1[i].oy -= Math.log(counter, 7);
+                  vertices_1[i].y -= Math.log(counter);
+                  vertices_1[i].controls.left.y = 0;
+                  vertices_1[i].controls.right.y = 0;
+                }
               }
             }
-            
+            counter +=0.03;
+          }
 
-          });
 
         });
 
       </script>
-    </div>
+  </div>
 </body>
 
 </html>
