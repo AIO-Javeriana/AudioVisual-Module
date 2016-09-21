@@ -147,30 +147,62 @@
             return array;
           }
           
-          /*var vertices_0 = getVertices(0, 0);
-          var vertices_1 = getVertices(0, 1);
+          var vertices_0 = getVertices(0, 0);
+          var vertices_1 = getVertices(1, 0);
           var shape_0 = getShape(0);
 
-          var half = (vertices_1[7].oy - vertices_1[1].oy)/2;
           var limite_izquierdo = 3;
           var limite_derecho = 8; 
 
           console.log(vertices_1[2]);
 
-          var counter = 0.01;*/
-          two.bind('update', function() {
-            
-            //closeEyes();
-
-
+          var counter = 0.01;
           
-          });
+          //morphShape();
+          function morphShape(shape1, shape2, two){
+            two.bind('update', function() {
+              
+            }).play();
+          }
+          
+          goToTest();
+          function goToTest(){
 
-          function morphShape(shape1, shape2){
-            
+            var a = [3,8,4];
+            var b = [7,5,2];
+            //var a = [3];
+            //var b = [7];
+            var error = 0;
+            var inc = 1;
+            var todosEnCero = false;
+            while( !todosEnCero ){
+              todosEnCero = true;
+              for(var i=0; i<a.length; i++){
+                b[i] = goTo(a[i], b[i], inc, error);
+                if( b[i] != a[i] )
+                  todosEnCero = false;
+              }
+            }
+
+            for(var i=0; i<a.length; i++){
+              console.log(b[i]);
+            }
           }
 
-          function closeEyes(){
+          function goTo(a, b, inc, error){
+            var value;
+            if( b==a )
+              value = 0;
+            if( b-error <= a && a <= b+error )
+              value = 0;
+            if( a > b )
+              value = b + inc;
+            else
+              value = b - inc;
+            return value;
+          }
+
+          /*function closeEyes(){
             
             var ease_speed = 0.1;
 
@@ -194,7 +226,7 @@
               }
             }
             counter +=0.03;
-          }
+          }*/
 
 
         });
