@@ -1,5 +1,3 @@
-var morfeo = new  SVGMorpheus('#face-set', {iconId: 'opened-eyes'});
-morfeo.to('looking-left', {rotation: 'none', duration: 500}, function(){
-	morfeo.to('looking-right', {rotation: 'none', duration: 500});
-});
+var morfeo = new  SVGMorpheus('#face-set', {iconId: 'medium-closed-happy-eyes'});
+morfeo.to('full-closed-happy-eyes', {rotation: 'none', duration: 500});
 	
