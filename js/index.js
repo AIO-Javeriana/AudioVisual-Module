@@ -1,2 +1,2 @@
-var morfeo = new  SVGMorpheus('#face-set');
-morfeo.to('opened-eye', {rotation: 'none'});
+var morfeo = new  SVGMorpheus('#face-set', {iconId: 'opened-eyes'});
+morfeo.to('test', {rotation: 'none', duration: 1500});

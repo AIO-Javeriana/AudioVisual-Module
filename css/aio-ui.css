@@ -16,6 +16,6 @@ canvas{
    padding-left: 0;
 }
 
-#closed-sleeping-eye{
+g:not(:first-child){
     display: none;
 }
