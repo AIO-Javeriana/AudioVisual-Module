@@ -15,3 +15,7 @@ canvas{
    margin: auto;
    padding-left: 0;
 }
+
+g:not(:first-child){
+    display: none;
+}

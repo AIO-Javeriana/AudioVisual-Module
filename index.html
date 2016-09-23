@@ -6,9 +6,6 @@
   <link rel="stylesheet" href="css/aio-ui.css" type="text/css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
-
   <!-- Clases
   <script src="./js/Module.js"></script>
   <script src="./js/Canvas.js"></script>
@@ -21,186 +18,51 @@
   <script src="./js/Main.js"></script>
   -->
 
-  <!-- Two js
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js"></script>
-  
-  -->
-
-  <!--
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="./js/paperjs/dist/paper-full.min.js"></script>
-  -->
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SVG-Morpheus/0.3.2/svg-morpheus.js"></script>
 
 </head>
 
 <body>
-  <div id="assets">
-    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-      width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
-      <path stroke="#000000" stroke-miterlimit="10" d="M471.442,200.656c0,103.342,0,103.342-71.472,103.342l0,0
-	c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C471.442,96.178,471.442,96.178,471.442,200.656
-	L471.442,200.656z" />
-    </svg>
-    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-      width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
-    <path stroke="#000000" stroke-miterlimit="10" d="M471.442,186.96c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
-      s31.999,23.5,71.471,23.5C439.443,210.46,471.442,199.938,471.442,186.96z"/>
-    </svg>
-  </div>
+  <svg version="1.1" id="face-set" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
+    
+    <g id='opened-eyes'>
+      <path stroke="#000000" stroke-miterlimit="10" d="M379.442,192.656c0,103.342,0,103.342-71.472,103.342l0,0
+		c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,88.178,379.442,88.178,379.442,192.656
+		L379.442,192.656z" />
+      <path stroke="#000000" stroke-miterlimit="10" d="M563.002,192.978c0,103.343,0,103.343-71.471,103.343l0,0
+		c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0C563.002,88.5,563.002,88.5,563.002,192.978
+		L563.002,192.978z" />
+    </g>
 
-  <div class="scripts">
-    <script>
+    <g id='closed-sleeping-eyes'>
+      <path stroke="#000000" stroke-miterlimit="10" d="M380.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
+		s31.999,23.5,71.471,23.5C348.443,314.461,380.442,303.939,380.442,290.961z" />
+      <path stroke="#000000" stroke-miterlimit="10" d="M562.442,290.961c0-12.979-31.47,6.5-70.942,6.5c-39.472,0-72-19.479-72-6.5
+		s31.999,23.5,71.471,23.5C530.443,314.461,562.442,303.939,562.442,290.961z" />
+    </g>
 
-        $(function() {
+    <g id='closed-eyes'>
+      <path stroke="#000000" stroke-miterlimit="10" d="M379.442,199.729c0,4.271,0,4.271-71.472,4.271l0,0
+	c-71.471,0-71.471,0-71.471-4.295l0,0c0-4.295,0-4.295,71.471-4.295l0,0C379.442,195.41,379.442,195.41,379.442,199.729
+	L379.442,199.729z" />
+      <path stroke="#000000" stroke-miterlimit="10" d="M563.442,199.729c0,4.271,0,4.271-71.472,4.271l0,0
+	c-71.471,0-71.471,0-71.471-4.295l0,0c0-4.295,0-4.295,71.471-4.295l0,0C563.442,195.41,563.442,195.41,563.442,199.729
+	L563.442,199.729z" />
+    </g>
 
-          var type = 'svg';
-          var two = new Two({
-            type: Two.Types[type],
-            fullscreen: true,
-            autostart: true
-          }).appendTo(document.body);
-
-          var dimensions = 500;
-          var shapes = [];
-          var index = 0;
-          var length = 0;
-          var scale = two.width > two.height ? two.height / dimensions : two.width / dimensions;
-          var easing = 0.125;
-
-          $('#assets svg').each(function(i, el) {
-
-            var shape = two.interpret(el).center();
-            shape.fill = 'black';
-            shape.visible = false;
-            shape.noStroke();
-            shape.translation.set(two.width / 2, two.height / 2);
-            shapes.push(shape);
-
-            _.each(shape.children, function(child) {
-              _.each(child.vertices, function(v) {
-                v.ox = v.x;
-                v.oy = v.y;
-              });
-            });
-
-            /*_.each(shape.children, function(child) {
-              console.log( '-------------------------------');
-              _.each(child.vertices, function(v) {
-                console.log( 'x:' + v.ox + ' y:' + v.oy);
-              });
-            });*/
-
-            /*_.each(shape.children, function(child) {
-              console.log( '-------------------------------');
-              _.each(child.vertices, function(v) {
-                console.log( 'x:' + v.ox + ' y:' + v.oy);
-              });
-            });*/
-
-            /*var shape0 = shapes[0].children;
-            var shape1 = shapes[1].children;
-            var shape0_vertices_length = shape0.vertices.length;
-            var shape1_vertices_length = shape1.vertices.length;
-
-            _.each(shape0.vertices, function(v) {
-              console.log( 'x:' + v.ox + ' y:' + v.oy);
-            });*/
-
-            
-
-          });
-
-          /*console.log("vertices_length: "+shapes.length);
-          for(var i=0; i<shapes.length; i++){
-            var child = shapes[i].children
-            var children_length = child.length;
-            console.log("children_length: "+children_length);
-            for( var j = 0; j<children_length; j++ ){
-              var vertices = child[j].vertices;
-              var vertices_length = vertices.length;
-              console.log("vertices_length: "+vertices_length);
-              for( var k = 0; k<vertices_length; k++ ){
-                vertice = vertices[k];
-                console.log( 'x:' + vertice.ox + ' y:' + vertice.oy);
-              }
-            }
-          }*/
-
-          length = shapes.length;
-
-          function getVertices(shape, child){
-            return shapes[shape].children[child].vertices
-          }
-
-          function getShape(shape){
-            return shapes[shape];
-          }
-
-          function shiftArrayPositions(number, array){
-            var array = [];
-            for(var i=number; i<0; i= i%array.length + 1){
-              array.push(array[i]);
-            }
-            return array;
-          }
-          
-          /*var vertices_0 = getVertices(0, 0);
-          var vertices_1 = getVertices(0, 1);
-          var shape_0 = getShape(0);
-
-          var half = (vertices_1[7].oy - vertices_1[1].oy)/2;
-          var limite_izquierdo = 3;
-          var limite_derecho = 8; 
-
-          console.log(vertices_1[2]);
-
-          var counter = 0.01;*/
-          two.bind('update', function() {
-            
-            //closeEyes();
-
-
-          
-          });
-
-          function morphShape(shape1, shape2){
-            
-          }
-
-          function closeEyes(){
-            
-            var ease_speed = 0.1;
-
-            shape_0.visible=true;
-
-            for( var i=0; i<vertices_0.length; i++){
-              if( i >= limite_izquierdo && i <= limite_derecho ){
-                if( vertices_1[i].oy < 200){  
-                  var oy = vertices_1[i].oy += Math.log(counter);
-                  vertices_1[i].y += Math.log(counter);
-                  vertices_1[i].controls.left.y = 0;
-                  vertices_1[i].controls.right.y = 0;
-                }
-              }else if ( i<limite_izquierdo || i>limite_derecho ){
-                if( vertices_1[i].oy > 200){
-                  var oy = vertices_1[i].oy -= Math.log(counter, 7);
-                  vertices_1[i].y -= Math.log(counter);
-                  vertices_1[i].controls.left.y = 0;
-                  vertices_1[i].controls.right.y = 0;
-                }
-              }
-            }
-            counter +=0.03;
-          }
-
-
-        });
-
-      </script>
-  </div>
+    <g id='test'>
+	<path stroke="#000000" stroke-miterlimit="10" d="M380.442,200.656c0,103.342,0,103.342-71.472,103.342l0,0
+		c-71.471,0-108.166-42.104-108.166-146.013l36.695,42.103c0-103.91,0-103.91,71.471-103.91l0,0
+		C380.442,96.178,380.442,96.178,380.442,200.656L380.442,200.656z"/>
+	<path stroke="#000000" stroke-miterlimit="10" d="M684.263,251.97c0,103.343-120.261,52.351-191.731,52.351l0,0
+		c-71.472,0-71.472,0-71.472-103.91l0,0c0-103.91,0-103.91,71.472-103.91l0,0c71.471,0,71.471,0,71.471,104.478L684.263,251.97z"/>
+</g>
+    
+  </svg>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
