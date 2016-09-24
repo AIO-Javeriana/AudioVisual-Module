@@ -5,7 +5,7 @@ class AudioInput{
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
         window.URL = window.URL || window.webkitURL;
 
-        this.registerSounds():
+        this.registerSounds();
     }
 
     registerSound(path, name){
