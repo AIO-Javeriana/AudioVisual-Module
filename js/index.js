@@ -2,10 +2,39 @@
  * Revisar y arreglar en el uml
  * AudioInput (nombres de las funciones, atributos necesitados y framework usado)
  * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs)
+ * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
  */
 
 //Disables the annoying mic permission asking prompt in chrome.
 var debug = true;
+
+
+
+//VisualModule
+class VisualModule {
+    constructor( imageFiles ){
+        this.availableSVGAssets = this.getAvailableSVGAssets();
+        this.availableImages = imageFiles;
+        this.renderedSVG = new  SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
+    }
+
+    renderSVG(svgId, animationProperties){
+        this.renderedSVG.to(svgid, animationProperties);
+    }
+
+    showPicture(image){
+
+    }
+
+    getAvailableSVGAssets(){
+        var availableSVGAssets = [];
+        $('svg g').each(function(){
+            var svgId = $(this).attr('id');
+            availableSVGAssets.push(svgId);
+        });
+        return availableSVGAssets;
+    }
+}
 
 /**
  * AudioOutput class: plays sounds.
@@ -145,15 +174,9 @@ window.onload = function init() {
     ;
     var availableSounds = ['surprised.mp3'];
     var audioOutputModule = new AudioOutputModule(availableSounds);
+    var visualModule = new VisualModule();
     $(document).on('click','#boton', function(){
-        audioOutputModule.play('surprised.mp3', 0.1);
+        //audioOutputModule.play('surprised.mp3', 0.1);
     })
 
 };
-
- 
-
-/*  
-    var morfeo = new  SVGMorpheus('#face-set', {iconId: 'medium-closed-happy-eyes'});
-    morfeo.to('full-closed-happy-eyes', {rotation: 'none', duration: 500});
-*/
