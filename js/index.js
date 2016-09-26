@@ -8,8 +8,6 @@
 //Disables the annoying mic permission asking prompt in chrome.
 var debug = true;
 
-
-
 //VisualModule
 class VisualModule {
     constructor( imageFiles ){
@@ -19,7 +17,7 @@ class VisualModule {
     }
 
     renderSVG(svgId, animationProperties){
-        this.renderedSVG.to(svgid, animationProperties);
+        this.renderedSVG.to(svgId, animationProperties);
     }
 
     showPicture(image){
@@ -180,8 +178,27 @@ window.onload = function init() {
     var availableSounds = ['surprised.mp3'];
     var audioOutputModule = new AudioOutputModule(availableSounds);
     var visualModule = new VisualModule();
+    var nId = 0;
     $(document).on('click','#boton', function(){
-        visualModule.showPicture('portrait-test.jpg');
+        console.log(nId);
+        switch (nId) {
+            case 0:
+                visualModule.renderSVG('sneaky-looking-right',{
+                    duration: 500,
+                    easing: 'linear',
+                    rotation: 'none'
+                });
+                break;
+            case 1:
+                visualModule.renderSVG('sneaky-looking-left',{
+                    duration: 500,
+                    easing: 'linear',
+                    rotation: 'none'
+                });
+                break;
+            default:
+        }
+        nId = (nId + 1)%2 ;
         //audioOutputModule.play('surprised.mp3', 0.1);
     })
 };
