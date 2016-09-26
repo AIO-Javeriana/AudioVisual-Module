@@ -14,10 +14,14 @@ class VisualModule {
         this.availableSVGAssets = this.getAvailableSVGAssets();
         this.availableImages = imageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
+        this.rendering = false;
     }
 
     renderSVG(svgId, animationProperties){
-        this.renderedSVG.to(svgId, animationProperties);
+        this.rendering = true;
+        this.renderedSVG.to(svgId, animationProperties, function(){
+            this.rendering = false;
+        });
     }
 
     showPicture(image){
@@ -179,8 +183,9 @@ window.onload = function init() {
     var audioOutputModule = new AudioOutputModule(availableSounds);
     var visualModule = new VisualModule();
     var nId = 0;
-    $(document).on('click','#boton', function(){
-        console.log(nId);
+    var time = 2000;
+    window.setInterval(function(){
+        console.log(time)
         switch (nId) {
             case 0:
                 visualModule.renderSVG('sneaky-looking-right',{
@@ -199,6 +204,20 @@ window.onload = function init() {
             default:
         }
         nId = (nId + 1)%2 ;
+
+        switch (time) {
+            case 2000:
+                time = 7000;
+                break;
+            case 7000:
+                time = 2000;
+                break;
+            default:
+                break;
+        }
+
+    }, time);
+    $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised.mp3', 0.1);
     })
 };
