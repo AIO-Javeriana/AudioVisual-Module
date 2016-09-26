@@ -15,7 +15,7 @@ class VisualModule {
     constructor( imageFiles ){
         this.availableSVGAssets = this.getAvailableSVGAssets();
         this.availableImages = imageFiles;
-        this.renderedSVG = new  SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
+        this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
     }
 
     renderSVG(svgId, animationProperties){
@@ -23,7 +23,12 @@ class VisualModule {
     }
 
     showPicture(image){
-
+        $('#image-keeper').css('display','flex');
+        $('#image-keeper #image img').attr('src','./assets/images/'+image);
+        $('#image-keeper #close').on('click', 'button', function(){
+            console.log('holi');
+            $('#image-keeper').css('display','none');
+        })
     }
 
     getAvailableSVGAssets(){
@@ -40,7 +45,7 @@ class VisualModule {
  * AudioOutput class: plays sounds.
  * */
 class AudioOutputModule {
-    
+
     /**
      * Initialize the AudioOutputModule
      * @param soundFiles string array containing the name of all the desired sounds to be played during script perform.
@@ -50,7 +55,7 @@ class AudioOutputModule {
         for(var i=0; i<soundFiles.length; i++){
             var sound = {
                 name : soundFiles,
-                audio : new Audio('assets/sounds/'+soundFiles) 
+                audio : new Audio('assets/sounds/'+soundFiles)
             }
             this.availableSounds.push(sound);
         }
@@ -143,7 +148,7 @@ class AudioInputModule {
 }
 
 /*
- *  main block 
+ *  main block
  */
 window.onload = function init() {
 
@@ -176,7 +181,7 @@ window.onload = function init() {
     var audioOutputModule = new AudioOutputModule(availableSounds);
     var visualModule = new VisualModule();
     $(document).on('click','#boton', function(){
+        visualModule.showPicture('portrait-test.jpg');
         //audioOutputModule.play('surprised.mp3', 0.1);
     })
-
 };

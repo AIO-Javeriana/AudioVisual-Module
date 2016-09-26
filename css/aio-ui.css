@@ -1,21 +1,69 @@
 html, body{
-   padding: 0;
-   margin: 0;
-   width: 100vw;
-   height: 100vh;
-   background-color: #81F781;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   align-content: center;
-}
-
-canvas{
-   display: block;
-   margin: auto;
-   padding-left: 0;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #81F781;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 g:not(:first-child){
     display: none;
+}
+
+#svg{
+    position: relative;
+}
+
+#image-keeper{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+#image-keeper #close{
+    display: flex;
+    justify-content: flex-end;
+    height: 7%;
+    width: 100%;
+    padding-right: 0;
+    padding-top: 0;
+}
+#image-keeper #close button{
+    width: 15vh;
+    border-radius: 0;
+    border-color: rgba(10, 9, 9, 0.8);
+    background-color: rgba(254, 46, 46, 0.4);
+    color: black;
+    font-size: 5vh;
+}
+
+#image-keeper #close button:hover{
+    background-color: rgba(254, 46, 46, 0.6);
+    color: white;
+}
+
+#image-keeper #image{
+    height: 93%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#image-keeper #image img{
+    height: auto;
+    width: : auto;
+    max-height: 100%;
+    max-width: 100%;
 }
