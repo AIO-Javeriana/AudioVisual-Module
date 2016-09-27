@@ -14,16 +14,14 @@ class VisualModule {
         this.availableSVGAssets = this.getAvailableSVGAssets();
         this.availableImages = imageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
-        this.rendering = false;
+        this.renderingSVGId = null;
+        this.SVGSet = null;
     }
 
-    renderSVG(svgId, animationProperties){
-        this.rendering = true;
-        this.renderedSVG.to(svgId, animationProperties, function(){
-            this.rendering = false;
-        });
+    renderSVGSet(SVGSet){
+        renderSVGSet_UTILS(SVGSet,this.renderedSVG);
     }
-
+    //probar con el while y el terminar la funcion de repetir ok?
     showPicture(image){
         $('#image-keeper').css('display','flex');
         $('#image-keeper #image img').attr('src','./assets/images/'+image);
@@ -40,6 +38,10 @@ class VisualModule {
             availableSVGAssets.push(svgId);
         });
         return availableSVGAssets;
+    }
+
+    isRendering(){
+        return this.rendering;
     }
 }
 
@@ -178,21 +180,37 @@ window.onload = function init() {
         });
     }
 
-    ;
     var availableSounds = ['surprised.mp3'];
     var audioOutputModule = new AudioOutputModule(availableSounds);
     var visualModule = new VisualModule();
     var nId = 0;
-    var time = 2000;
-    window.setInterval(function(){
+
+    var toRender = [
+        {
+            id:'sneaky-looking-right',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            }
+        },{
+            id:'sneaky-looking-left',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            }
+        }
+    ];
+
+    
+
+    /*
+    setInterval(function(){
         console.log(time)
         switch (nId) {
             case 0:
-                visualModule.renderSVG('sneaky-looking-right',{
-                    duration: 500,
-                    easing: 'linear',
-                    rotation: 'none'
-                });
+                visualModule.renderSVG('sneaky-looking-right',);
                 break;
             case 1:
                 visualModule.renderSVG('sneaky-looking-left',{
@@ -204,20 +222,11 @@ window.onload = function init() {
             default:
         }
         nId = (nId + 1)%2 ;
+    }, 2000);
+    */
 
-        switch (time) {
-            case 2000:
-                time = 7000;
-                break;
-            case 7000:
-                time = 2000;
-                break;
-            default:
-                break;
-        }
-
-    }, time);
     $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised.mp3', 0.1);
+        visualModule.renderSVGSet(toRender);
     })
 };
