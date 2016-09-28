@@ -3,6 +3,8 @@
  * AudioInput (nombres de las funciones, atributos necesitados y framework usado)
  * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs)
  * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
+ * Revisar lo que hizo Stiven
+ * diseñar y hacer los cuadros de dialogo para el servicio showDialogPrompt
  */
 
 //Disables the annoying mic permission asking prompt in chrome.
@@ -14,19 +16,17 @@ class VisualModule {
         this.availableSVGAssets = this.getAvailableSVGAssets();
         this.availableImages = imageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
-        this.renderingSVGId = null;
-        this.SVGSet = null;
     }
 
     renderSVGSet(SVGSet){
-        renderSVGSet_UTILS(SVGSet,this.renderedSVG);
+        utils_renderSVGSet(SVGSet,this.renderedSVG);
     }
+
     //probar con el while y el terminar la funcion de repetir ok?
     showPicture(image){
         $('#image-keeper').css('display','flex');
         $('#image-keeper #image img').attr('src','./assets/images/'+image);
         $('#image-keeper #close').on('click', 'button', function(){
-            console.log('holi');
             $('#image-keeper').css('display','none');
         })
     }
@@ -38,10 +38,6 @@ class VisualModule {
             availableSVGAssets.push(svgId);
         });
         return availableSVGAssets;
-    }
-
-    isRendering(){
-        return this.rendering;
     }
 }
 
@@ -203,7 +199,7 @@ window.onload = function init() {
         }
     ];
 
-    
+
 
     /*
     setInterval(function(){

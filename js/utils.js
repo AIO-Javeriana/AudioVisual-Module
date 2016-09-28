@@ -7,16 +7,16 @@ var  renderedSVG;
         });
     }
 
-function renderSVGSet_UTILS(SVGSet,renderedSVG_){
+function utils_renderSVGSet(SVGSet,renderedSVG_){
         renderedSVG=renderedSVG_;
-        renderingSVGId = 0; 
-        renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, thingsToDoAfter, renderingSVGId, SVGSet);
+        renderingSVGId = 0;
+        renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, renderSVGSetCallback, renderingSVGId, SVGSet);
     }
 
-function thingsToDoAfter(renderingSVGId, SVGSet){
+function renderSVGSetCallback(renderingSVGId, SVGSet){
         renderingSVGId ++;
         if (renderingSVGId < SVGSet.length){
-            renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, thingsToDoAfter, renderingSVGId, SVGSet )
+            renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, renderSVGSetCallback, renderingSVGId, SVGSet )
         }else{
             console.log('termino la animación');
         }
