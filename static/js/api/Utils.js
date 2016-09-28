@@ -1,23 +1,24 @@
 
 var  renderedSVG;
- function renderSVG(svgId, animationProperties, callback, renderingSVGId, SVGSet){
+ function renderSVG(svgId, animationProperties, callback, SVGIterator, SVGSet){
     renderedSVG.to(svgId, animationProperties, function(){
-        console.log(renderingSVGId);
-        callback(renderingSVGId, SVGSet);
+        callback(SVGIterator, SVGSet);
     });
 }
 
 function utils_renderSVGSet(SVGSet,renderedSVG_){
     renderedSVG=renderedSVG_;
-    renderingSVGId = 0;
-    renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, renderSVGSetCallback, renderingSVGId, SVGSet);
+    var SVGIterator = 0;
+    setTimeout( function(){
+        renderSVG(SVGSet[SVGIterator].id, SVGSet[SVGIterator].properties, renderSVGSetCallback, SVGIterator, SVGSet);
+    }  , SVGSet[SVGIterator].delay );
 }
 
-function renderSVGSetCallback(renderingSVGId, SVGSet){
-    renderingSVGId ++;
-    if (renderingSVGId < SVGSet.length){
-        renderSVG(SVGSet[renderingSVGId].id, SVGSet[renderingSVGId].properties, renderSVGSetCallback, renderingSVGId, SVGSet )
-    }else{
-        console.log('termino la animación');
+function renderSVGSetCallback(SVGIterator, SVGSet){
+    SVGIterator ++;
+    if (SVGIterator < SVGSet.length){
+        setTimeout( function(){
+            renderSVG(SVGSet[SVGIterator].id, SVGSet[SVGIterator].properties, renderSVGSetCallback, SVGIterator, SVGSet);
+        }  , SVGSet[SVGIterator].delay );
     }
 }

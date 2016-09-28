@@ -5,7 +5,8 @@
  * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
  * Revisar lo que hizo Stiven
  * diseñar y hacer los cuadros de dialogo para el servicio showDialogPrompt.
- * VisualModule
+ * VisualModule: Añadir showDialogPrompt, showSVGSet, getAvailableSVGAssets. Borrar paint() del modelo de UML.
+ * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
  */
 
 //Disables the annoying mic permission asking prompt in chrome.
@@ -52,38 +53,42 @@ window.onload = function init() {
                 duration: 500,
                 easing: 'linear',
                 rotation: 'none'
-            }
+            },
+            delay: 0
         },{
             id:'sneaky-looking-left',
             properties: {
                 duration: 500,
                 easing: 'linear',
                 rotation: 'none'
-            }
+            },
+            delay: 500
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-closed-eyes',
+            properties: {
+                duration: 250,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 250,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
         }
     ];
-
-
-
-    /*
-    setInterval(function(){
-        console.log(time)
-        switch (nId) {
-            case 0:
-                visualModule.renderSVG('sneaky-looking-right',);
-                break;
-            case 1:
-                visualModule.renderSVG('sneaky-looking-left',{
-                    duration: 500,
-                    easing: 'linear',
-                    rotation: 'none'
-                });
-                break;
-            default:
-        }
-        nId = (nId + 1)%2 ;
-    }, 2000);
-    */
 
     $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised.mp3', 0.1);

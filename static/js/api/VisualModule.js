@@ -29,6 +29,6 @@ class VisualModule {
     }
 
     showDialogFrame(dialog){
-        
+
     }
 }
