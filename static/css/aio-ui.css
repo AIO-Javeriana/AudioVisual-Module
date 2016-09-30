@@ -9,6 +9,7 @@ html, body{
     justify-content: center;
     align-items: center;
     align-content: center;
+    overflow: hidden;
 }
 
 g:not(:first-child){
