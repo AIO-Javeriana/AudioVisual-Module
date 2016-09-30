@@ -31,22 +31,18 @@ g:not(:first-child){
     height: 100vh;
     padding: 0;
     margin: 0;
+    z-index: 2;
 }
 
 #image-keeper #close{
-    display: flex;
-    justify-content: flex-end;
-    height: 7%;
-    width: 100%;
-    padding-right: 0;
-    padding-top: 0;
+    position: absolute;
+    top: 0;
+    right: 10px;
 }
 #image-keeper #close button{
-    width: 15vh;
-    border-radius: 0;
-    border-color: rgba(10, 9, 9, 0.8);
-    background-color: rgba(254, 46, 46, 0.4);
-    color: black;
+    border: none;
+    background: none;
+    color: white;
     font-size: 5vh;
 }
 
@@ -73,4 +69,8 @@ g:not(:first-child){
     position: absolute;
     top:10px;
     right: 30px;
+}
+
+#msg{
+    z-index: 3;
 }
