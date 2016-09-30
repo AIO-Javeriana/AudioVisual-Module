@@ -9,41 +9,39 @@
  * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
  */
 
-//Disables the annoying mic permission asking prompt in chrome.
-var debug = true;
-
 /*
  *  main block
  */
 window.onload = function init() {
 
     //Asking browser for mic permission
-    if (!debug) {
-        try {
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-            window.URL = window.URL || window.webkitURL;
-        } catch (e) {
-            throw 'No web audio support in this browser!';
-        }
-
-        //Resourses for mic correctly working
-        navigator.getUserMedia({ audio: true }, function (stream) {
-            audioContext = new AudioContext();
-            var mediaStreamSource = audioContext.createMediaStreamSource(stream);
-            mediaStreamSource.connect(audioContext.destination);
-
-            //For now audioInput needs to be here to work correctly
-            audioInputModule = new AudioInputModule(mediaStreamSource);
-
-        }, function (error) {
-            throw ('Error: you need to allow the application to use the microphone.' + error);
-        });
+    /*
+    try {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+    } catch (e) {
+        throw 'No web audio support in this browser!';
     }
 
+    //Resourses for mic correctly working
+    navigator.getUserMedia({ audio: true }, function (stream) {
+        audioContext = new AudioContext();
+        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+        mediaStreamSource.connect(audioContext.destination);
+
+        //For now audioInput needs to be here to work correctly
+        audioInputModule = new AudioInputModule(mediaStreamSource);
+
+    }, function (error) {
+        throw ('Error: you need to allow the application to use the microphone.' + error);
+    });
+    */
+    
     var availableSounds = ['surprised.mp3'];
     var audioOutputModule = new AudioOutputModule(availableSounds);
     var visualModule = new VisualModule();
+    var communication_channel = new CommunicationChannel("localhost","1234",{visualModule:visualModule,audioOutputModule:audioOutputModule});
     var nId = 0;
 
     var toRender = [

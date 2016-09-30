@@ -4,8 +4,10 @@
 <head>
   <title>aio-ui</title>
   <link rel="stylesheet" href="./static/css/aio-ui.css" type="text/css" />
+  <link rel="stylesheet" href="./static/css/visual_module.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/sidebar.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/materialize.min.css" type="text/css" />
+  <link rel="stylesheet" href="./static/css/bootstrap.css" type="text/css" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -178,9 +180,13 @@
       </div>
     </div>
   </div>
+  <div id="msg" style="display:none" role="alert"></div>
   <!-- jquery v3.1.0: openSource library for DOM manipulating -->
   <script type="text/javascript" src="./static/js/external/jquery.v3.1.0.min.js"></script>
 
+  <!-- Socket IO -->
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  
   <!-- Taken from https://github.com/alexk111/SVG-Morpheus MIT Licensed -->
   <script type="text/javascript" src="./static/js/external/svg-morpheus.v0.3.2.min.js"></script>
 
@@ -201,6 +207,7 @@
   <script src="./static/js/api/AudioInputModule.js"></script>
   <script src="./static/js/api/Utils.js"></script>
   <script src="./static/js/index.js"></script>
+  <script src="./static/js/api/CommunicationChannel.js"></script>
 </body>
 
 </html>
