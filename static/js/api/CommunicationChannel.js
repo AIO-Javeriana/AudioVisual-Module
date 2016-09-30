@@ -5,21 +5,16 @@ class CommunicationChannel{
         this.commands = [{"COMMAND":"BLINK","PARAMS":[], "INTERRUPTIBLE": false}];
         this.HOSTNAME = hostname;
         this.PORT = port;
+        //BATTERY LEVEL
+            // TODO: associate with a socket event
+            var level = Math.floor((Math.random() * 100) + 1);
+            modules.visualModule.update_battery_status(level); 
         //*
         this.socket = io.connect(this.HOSTNAME+":"+this.PORT);
         this.socket.on('connect_error', function(err) {
             var i = Math.floor((Math.random() * 10) + 1);
-            if(i % 2 == 0){
-                var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}, {msg: "Que mala suerte!!", tone:"YELL"}];
-                modules.visualModule.showDialogFrame(dialog, "error","slow");
-            }else{
-                var dialog = [{msg: "Hola!!!", tone:"YELL"}, {msg: "Soy AIO", tone:"NORMAL"}];
-                modules.visualModule.showDialogFrame(dialog, "info","slow");
-            }
-            //BATTERY LEVEL
-            // TODO: associate with a socket event
-            var level = Math.floor((Math.random() * 100) + 1);
-            modules.visualModule.update_battery_status(level);    
+            var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}, {msg: "Que mala suerte!!", tone:"YELL"}];
+            modules.visualModule.showDialogFrame(dialog, "error","slow");
         });
         
         this.socket.on('connect', function(){
