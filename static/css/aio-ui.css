@@ -70,7 +70,3 @@ g:not(:first-child){
     top:10px;
     right: 30px;
 }
-
-#msg{
-    z-index: 3;
-}

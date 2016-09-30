@@ -40,10 +40,12 @@ class VisualModule {
         
         //probar con el while y el terminar la funcion de repetir ok?
         this.showPicture = function(image){
+            $('#msg').css('z-index', 3);
             $('#image-keeper').css('display','flex');
             $('#image-keeper #image img').attr('src','./assets/images/'+image);
             $('#image-keeper #close').on('click', 'button', function(){
                 $('#image-keeper').css('display','none');
+                $('#msg').css('z-index', 0);
             })
         }
         

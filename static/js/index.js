@@ -43,7 +43,6 @@ window.onload = function init() {
     var visualModule = new VisualModule();
     var communication_channel = new CommunicationChannel("localhost","1234",{visualModule:visualModule,audioOutputModule:audioOutputModule});
     var nId = 0;
-
     var toRender = [
         {
             id:'sneaky-looking-right',
