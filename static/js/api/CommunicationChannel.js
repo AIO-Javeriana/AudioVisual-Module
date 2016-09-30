@@ -16,7 +16,10 @@ class CommunicationChannel{
                 var dialog = [{msg: "Hola!!!", tone:"YELL"}, {msg: "Soy AIO", tone:"NORMAL"}];
                 modules.visualModule.showDialogFrame(dialog, "info","slow");
             }
-            
+            //BATTERY LEVEL
+            // TODO: associate with a socket event
+            var level = Math.floor((Math.random() * 100) + 1);
+            modules.visualModule.update_battery_status(level);    
         });
         
         this.socket.on('connect', function(){
@@ -30,6 +33,7 @@ class CommunicationChannel{
             });    
         })
         //*/
+        
     }    
     
 }

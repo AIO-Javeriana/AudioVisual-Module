@@ -55,5 +55,41 @@ class VisualModule {
             });
             return availableSVGAssets;
         }
+        
+        this.update_battery_status = function(level){
+            $("#battery_status").children("i").hide();
+            switch (true) {
+                case (level<10):
+                    $("#battery_empty").show();
+                    break;
+                case (level>=10 && level<20):
+                    $("#battery_10").show();
+                    break;
+                case (level>=20 && level<30):
+                    $("#battery_20").show();
+                    break;
+                case (level>=30 && level<40):
+                    $("#battery_40").show();
+                    break;
+                case (level>=40 && level<50):
+                    $("#battery_50").show();
+                    break;
+                case (level>=50 && level<60):
+                    $("#battery_60").show();
+                    break;
+                case (level>=60 && level<70):
+                    $("#battery_70").show();
+                    break;    
+                case (level>=70 && level<80):
+                    $("#battery_80").show();
+                    break;
+                case (level>=80 && level<90):
+                    $("#battery_90").show();
+                    break;
+                case (level>=90):
+                    $("#battery_full").show();
+                    break;
+            }
+        }
     }
 }
