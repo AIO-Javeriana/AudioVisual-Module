@@ -14,7 +14,7 @@ class CommunicationChannel{
         this.socket.on('connect_error', function(err) {
             var i = Math.floor((Math.random() * 10) + 1);
             var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}, {msg: "Que mala suerte!!", tone:"YELL"}];
-            modules.visualModule.showDialogFrame(dialog, "error","slow");
+            //modules.visualModule.showDialogFrame(dialog, "error","slow");
         });
         
         this.socket.on('connect', function(){

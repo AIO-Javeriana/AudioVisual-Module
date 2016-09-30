@@ -57,37 +57,38 @@ class VisualModule {
         }
         
         this.update_battery_status = function(level){
-            $("#battery_status").children("i").hide();
+            $("#battery_status").removeClass();
+            $("#battery_status").addClass("mdi mdi-light mdi-18px");
             switch (true) {
                 case (level<10):
-                    $("#battery_empty").show();
+                    $("#battery_status").addClass("mdi-battery-alert");
                     break;
                 case (level>=10 && level<20):
-                    $("#battery_10").show();
+                    $("#battery_status").addClass("mdi-battery-10");
                     break;
                 case (level>=20 && level<30):
-                    $("#battery_20").show();
+                    $("#battery_status").addClass("mdi-battery-20");
                     break;
                 case (level>=30 && level<40):
-                    $("#battery_40").show();
+                    $("#battery_status").addClass("mdi-battery-30");
                     break;
                 case (level>=40 && level<50):
-                    $("#battery_50").show();
+                    $("#battery_status").addClass("mdi-battery-40");
                     break;
                 case (level>=50 && level<60):
-                    $("#battery_60").show();
+                    $("#battery_status").addClass("mdi-battery-50");
                     break;
                 case (level>=60 && level<70):
-                    $("#battery_70").show();
+                    $("#battery_status").addClass("mdi-battery-60");
                     break;    
                 case (level>=70 && level<80):
-                    $("#battery_80").show();
+                    $("#battery_status").addClass("mdi-battery-70");
                     break;
                 case (level>=80 && level<90):
-                    $("#battery_90").show();
+                    $("#battery_status").addClass("mdi-battery-80");
                     break;
                 case (level>=90):
-                    $("#battery_full").show();
+                    $("#battery_status").addClass("mdi-battery");
                     break;
             }
         }

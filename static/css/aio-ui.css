@@ -69,12 +69,8 @@ g:not(:first-child){
     max-width: 100%;
 }
 
-#battery_status{
+#battery_status_container{
     position: absolute;
     top:10px;
     right: 30px;
-}
-
-#battery_status i{
-    display: none;
 }
