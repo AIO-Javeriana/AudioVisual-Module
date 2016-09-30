@@ -37,7 +37,7 @@ $(document).ready(function() {
     return "M0,0 "+top+",0 a"+ax+",250 0 1,"+dir+" 0,500 L0,500";
   }
 
-  var startD = createD(50,0,1),
+  var startD = createD(10,0,1),
       midD = createD(125,75,0),
       finalD = createD(200,0,1),
       clickMidD = createD(300,80,0),
