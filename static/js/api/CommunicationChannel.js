@@ -5,8 +5,7 @@ class CommunicationChannel{
         this.commands = [{"COMMAND":"BLINK","PARAMS":[], "INTERRUPTIBLE": false}];
         this.HOSTNAME = hostname;
         this.PORT = port;
-        //BATTERY LEVEL
-            // TODO: associate with a socket event
+        //BATTERY LEVEL EMULATION
             var level = Math.floor((Math.random() * 100) + 1);
             modules.visualModule.update_battery_status(level); 
         //*
@@ -14,7 +13,7 @@ class CommunicationChannel{
         this.socket.on('connect_error', function(err) {
             var i = Math.floor((Math.random() * 10) + 1);
             var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}, {msg: "Que mala suerte!!", tone:"YELL"}];
-            //modules.visualModule.showDialogFrame(dialog, "error","slow");
+            modules.visualModule.showDialogFrame(dialog, "error","slow");
         });
         
         this.socket.on('connect', function(){
@@ -26,6 +25,10 @@ class CommunicationChannel{
                     this.ID = message;
                 }
             });    
+        })
+        
+        this.socket.on('BATTERY_LVL', function(level) {
+            modules.visualModule.update_battery_status(level); 
         })
         //*/
         
