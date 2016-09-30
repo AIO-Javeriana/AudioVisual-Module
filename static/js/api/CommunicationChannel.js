@@ -8,8 +8,15 @@ class CommunicationChannel{
         //*
         this.socket = io.connect(this.HOSTNAME+":"+this.PORT);
         this.socket.on('connect_error', function(err) {
-            var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}];
-            modules.visualModule.showDialogFrame(dialog, "error","slow");
+            var i = Math.floor((Math.random() * 10) + 1);
+            if(i % 2 == 0){
+                var dialog = [{msg: "Oh No!!!", tone:"YELL"}, {msg: "Error de conexión", tone:"NORMAL"}, {msg: "Que mala suerte!!", tone:"YELL"}];
+                modules.visualModule.showDialogFrame(dialog, "error","slow");
+            }else{
+                var dialog = [{msg: "Hola!!!", tone:"YELL"}, {msg: "Soy AIO", tone:"NORMAL"}];
+                modules.visualModule.showDialogFrame(dialog, "info","slow");
+            }
+            
         });
         
         this.socket.on('connect', function(){

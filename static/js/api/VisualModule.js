@@ -10,31 +10,32 @@ class VisualModule {
         }
         
         this.showDialogFrame = function(dialog, msg_type, velocity){
-            this.msg.fadeOut(velocity);
-            this.msg.removeClass();
-            this.msg.empty();
-            this.msg.addClass("alert");
-            switch (msg_type) {
-                case 'error':
-                    this.msg.addClass("alert-danger");
-                    break;
-                case 'info':
-                    this.msg.addClass("alert-info");
-                    break;
-            }
-            var msg_text = "";
-            $.each( dialog, function( index, value ){
-                switch (value.tone) {
-                    case 'YELL':
-                        msg_text += "<strong>" + value.msg + "</strong>";
+            this.msg.fadeOut(velocity, function(){
+                $( this ).removeClass();
+                $( this ).empty();
+                $( this ).addClass("alert");
+                switch (msg_type) {
+                    case 'error':
+                        $( this ).addClass("alert-danger");
                         break;
-                    case 'NORMAL':
-                        msg_text += value.msg;
+                    case 'info':
+                        $( this ).addClass("alert-info");
                         break;
                 }
+                var msg_text = "";
+                $.each( dialog, function( index, value ){
+                    switch (value.tone) {
+                        case 'YELL':
+                            msg_text += "<strong>" + value.msg + "</strong>";
+                            break;
+                        case 'NORMAL':
+                            msg_text += value.msg;
+                            break;
+                    }
+                });
+                $( this ).html(msg_text);
+                $( this ).fadeIn(velocity);
             });
-            this.msg.append(msg_text);
-            this.msg.fadeIn(velocity);
         }
         
         //probar con el while y el terminar la funcion de repetir ok?
