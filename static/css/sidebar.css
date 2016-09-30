@@ -54,7 +54,7 @@ svg {
   z-index: 1;
   position: absolute;
   top: 0;
-  right: -260px;
+  right: 0;
   display: block;
   height: 100vh; }
 
