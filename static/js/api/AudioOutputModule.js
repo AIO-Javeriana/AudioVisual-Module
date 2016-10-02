@@ -2,21 +2,57 @@
  * AudioOutput class: plays sounds.
  * @author Fabián Andrés Merchán Jiménez
  * */
-class AudioOutputModule {
+class AudioOutputModule extends Module {
 
     /**
      * Initialize the AudioOutputModule
      * @param soundFiles string array containing the name of all the desired sounds to be played during script perform.
-    */
-    constructor( soundFiles ) {
-        this.availableSounds = [];
+     */
+    constructor( id, soundFiles ) {
+        super(id);
+        this.availableSounds = createAudioObjects(soundFiles);
+    }
+
+    /**
+     *  Delegates the task of create the audio objects, to createAudioObjectsFromArray
+     *  if there is an array containing the soundFles and is sent.
+     *  Note: The sound files must be stored in the path "/assets/sounds."
+     *  @param soundObject The soundObject structure is the following:
+     *  soundObject = {
+     *       soundFiles: string array containing the name of all the desired sounds to be played during script perform.
+     *       path: url where the sound files are hosted.
+     *  }
+     */
+    createAudioObjects(soundObject){
+        if(soundObject.path == null)
+            createAudioObjectsFromFolder(soundObject.soundFiles);
+        else
+            createAudioObjectsFromArray(soundObject.path);
+    }
+
+    /**
+     *  Creates audio objects if a array containing the audio file's name is provided.
+     *  Note: The sound files must be stored in the path "/assets/sounds."
+     */
+    createAudioObjectsFromArray(soundFiles){
+        var temp = [];
         for(var i=0; i<soundFiles.length; i++){
             var sound = {
                 name : soundFiles,
                 audio : new Audio('assets/sounds/'+soundFiles)
             }
-            this.availableSounds.push(sound);
+            temp.push(sound);
         }
+        return temp;
+    }
+
+    /**
+     * Creates audio objects from a path wich contains audioFiles.
+     * @throws unimplementedFunction Because the function doesn´t need to be implemented yet.
+     */
+    createAudioObjectsFromFolder(path){
+        var unimplementedFunction = 'unimplemented function';
+        throw unimplementedFunction;
     }
 
     /**
