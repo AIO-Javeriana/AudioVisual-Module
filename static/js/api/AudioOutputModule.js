@@ -5,41 +5,59 @@
 class AudioOutputModule extends Module {
 
     /**
-     * Initialize the AudioOutputModule
-     * @param soundFiles string array containing the name of all the desired sounds to be played during script perform.
+     *  Initialize the AudioOutputModule
+     *  @param soundFiles Object with an string array containing the name of all
+     *      the desired sounds to be played during script perform and the path where the files are gonna be hosted.
+     *      {
+     *          path: path where the audio files are hosted,
+     *          availableSoundFiles:[
+     *              {
+     *                  name: name or tag for the sound file,
+     *                  file: name of the file.
+     *              }
+     *          ]
+     *      }
      */
     constructor( id, soundFiles ) {
         super(id);
-        this.availableSounds = createAudioObjects(soundFiles);
+        if(soundFiles.path != null){
+            this.resourcesPath = soundFiles.path;
+            this.availableSounds = this.createAudioObjects(soundFiles.availableSoundFiles);
+        }
     }
 
     /**
-     *  Delegates the task of create the audio objects, to createAudioObjectsFromArray
-     *  if there is an array containing the soundFles and is sent.
-     *  Note: The sound files must be stored in the path "/assets/sounds."
-     *  @param soundObject The soundObject structure is the following:
-     *  soundObject = {
-     *       soundFiles: string array containing the name of all the desired sounds to be played during script perform.
-     *       path: url where the sound files are hosted.
-     *  }
+     *  If an array of available sound files is not provided, it will try to retrieve
+     *  the information of available sound files.
+     *  @param availableSoundFiles object which contains the information of available
+     *      sound resources.
+     *      {
+     *           name: name or tag of the sound,
+     *           file: name of the audio file
+     *       }
      */
-    createAudioObjects(soundObject){
-        if(soundObject.path == null)
-            createAudioObjectsFromFolder(soundObject.soundFiles);
-        else
-            createAudioObjectsFromArray(soundObject.path);
+    createAudioObjects(availableSoundFiles){
+        if(availableSoundFiles != null){
+            return this.createAudioObjectsFromArray(availableSoundFiles);
+        }else{
+            try {
+                return this.createAudioObjectsFromFolder();
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 
     /**
-     *  Creates audio objects if a array containing the audio file's name is provided.
-     *  Note: The sound files must be stored in the path "/assets/sounds."
+     *  Creates the audio objects if an array with the sound information is provided.
      */
-    createAudioObjectsFromArray(soundFiles){
+    createAudioObjectsFromArray(availableSoundFiles){
         var temp = [];
-        for(var i=0; i<soundFiles.length; i++){
+        for(var i=0; i<availableSoundFiles.length; i++){
             var sound = {
-                name : soundFiles,
-                audio : new Audio('assets/sounds/'+soundFiles)
+                name : availableSoundFiles[i].name,
+                file : availableSoundFiles[i].file,
+                audio : new Audio(this.resourcesPath+availableSoundFiles[i].file)
             }
             temp.push(sound);
         }
@@ -50,31 +68,35 @@ class AudioOutputModule extends Module {
      * Creates audio objects from a path wich contains audioFiles.
      * @throws unimplementedFunction Because the function doesn´t need to be implemented yet.
      */
-    createAudioObjectsFromFolder(path){
-        var unimplementedFunction = 'unimplemented function';
+    createAudioObjectsFromFolder(){
+        var unimplementedFunction = 'Unimplemented function exception';
         throw unimplementedFunction;
     }
 
     /**
-     * Looks for a audio Object given a name
-     * @param name sound to look for
-     * @return audio Object corresponding to the sound name. null if not founded.
+     *  Looks for an audio Object given a name
+     *  @param name sound to look for
+     *  @return audio Object corresponding to the sound name. null if not founded.
      */
-    getSound(name){
+    getAudio(name){
         var sound = null;
         for( var i=0; i<this.availableSounds.length; i++ )
             if( this.availableSounds[i].name == name )
-                return this.availableSounds[i].audio;
+                sound = this.availableSounds[i].audio;
+        return sound;
     }
 
     /**
-     * plays a sound.
-     * @param soundName name of the sound.
-     * @param volume level of volume to play the sound.
+     *  Plays a sound.
+     *  @param name Name of the sound to be played.
+     *  @param properties Object containing the properties of the sound to be played.
+     *  {
+     *      volume: volume level of the sound
+     *  }
      */
-    play( soundName, volume ) {
-        var audio = this.getSound(soundName);
-        audio.volume = volume;
+    play( name, properties ) {
+        var audio = this.getAudio(name);
+        audio.volume = properties.volume;
         audio.play();
     }
 }

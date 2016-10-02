@@ -7,9 +7,9 @@
  * VisualModule: Añadir showDialogPrompt, showSVGSet, getAvailableSVGAssets. Borrar paint() del modelo de UML.
  * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
  * ToDo:
- *  - pensar en la forma de como obtener los recursos de imagenes y audio, no pasandolasd desde el index.
- *  - diseñar y hacer los cuadros de dialogo para el servicio showDialogPrompt. Por falta de internet no lo hice durante el congreso de computación.
- *  - showVideo: ¿Otro módulo?, ¿Módulo visual? ¿Pero entonces como se conecta con el modulo de audio?
+ *  - pensar en la forma de como obtener los recursos de imagenes y audio, no pasandolasd desde el index. //
+ *  - diseñar y hacer los cuadros de dialogo para el servicio showDialogPrompt. Por falta de internet no lo hice durante el congreso de computación. // Check
+ *  - showVideo: ¿Otro módulo?, ¿Módulo visual? ¿Pero entonces como se conecta con el modulo de audio?. //check
  */
 
 //Disables the annoying mic permission asking prompt in chrome.
@@ -44,9 +44,18 @@ window.onload = function init() {
         });
     }
 
-    var availableSounds = ['surprised.mp3'];
-    var audioOutputModule = new AudioOutputModule();
-    var visualModule = new VisualModule();
+    var availableSounds = {
+        path: './assets/sounds/',
+        availableSoundFiles: [
+            {
+                name: 'surprised',
+                file: 'surprised.mp3'
+            }
+        ]
+    };
+
+    var audioOutputModule = new AudioOutputModule(1, availableSounds);
+    //var visualModule = new VisualModule();
     var nId = 0;
 
     var toRender = [
@@ -94,7 +103,7 @@ window.onload = function init() {
     ];
 
     $(document).on('click','#boton', function(){
-        //audioOutputModule.play('surprised.mp3', 0.1);
-        visualModule.renderSVGSet(toRender);
+        audioOutputModule.play('surprised', {volume: 1});
+        //visualModule.renderSVGSet(toRender);
     })
 };
