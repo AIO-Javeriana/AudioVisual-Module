@@ -5,12 +5,13 @@
  * @author Fabián Andrés Merchán Jiménez
  **/
 
-class AudioInputModule {
+class AudioInputModule extends Module{
 
     /**
      * @param source media stream source needed to record.
      */
-    constructor(mediaStreamSource) {
+    constructor(id, mediaStreamSource) {
+        super(id);
         this.recording = false;
         this.record = new Recorder(mediaStreamSource, {
             workerPath: "/js/recorderWorker.js"

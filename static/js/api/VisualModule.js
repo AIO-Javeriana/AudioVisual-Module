@@ -1,6 +1,7 @@
 //VisualModule
-class VisualModule {
-    constructor( imageFiles ){
+class VisualModule extends Module{
+    constructor( id, imageFiles ){
+        super(id);
         this.availableImages = imageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
         this.msg = $("#msg");
@@ -58,7 +59,7 @@ class VisualModule {
             return availableSVGAssets;
         }
         
-        this.update_battery_status = function(level){
+        this.updateBatteryStatus = function(level){
             $("#battery_status").removeClass();
             $("#battery_status").addClass("mdi mdi-light mdi-18px");
             switch (true) {

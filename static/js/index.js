@@ -12,38 +12,12 @@
 /*
  *  main block
  */
-window.onload = function init() {
 
-    //Asking browser for mic permission
-    /*
-    try {
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-        window.URL = window.URL || window.webkitURL;
-    } catch (e) {
-        throw 'No web audio support in this browser!';
-    }
+var availableSounds = ['surprised.mp3'];
 
-    //Resourses for mic correctly working
-    navigator.getUserMedia({ audio: true }, function (stream) {
-        audioContext = new AudioContext();
-        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
-        mediaStreamSource.connect(audioContext.destination);
+var availableImages = ['landscape-test.jpg', 'portrait-test.jpg', 'small-size-test.jpg'];
 
-        //For now audioInput needs to be here to work correctly
-        audioInputModule = new AudioInputModule(mediaStreamSource);
-
-    }, function (error) {
-        throw ('Error: you need to allow the application to use the microphone.' + error);
-    });
-    */
-    
-    var availableSounds = ['surprised.mp3'];
-    var audioOutputModule = new AudioOutputModule(availableSounds);
-    var visualModule = new VisualModule();
-    var communication_channel = new CommunicationChannel("localhost","1234",{visualModule:visualModule,audioOutputModule:audioOutputModule});
-    var nId = 0;
-    var toRender = [
+var toRender = [
         {
             id:'sneaky-looking-right',
             properties: {
@@ -87,8 +61,38 @@ window.onload = function init() {
         }
     ];
 
-    $(document).on('click','#boton', function(){
-        //audioOutputModule.play('surprised.mp3', 0.1);
-        visualModule.renderSVGSet(toRender);
-    })
+
+
+
+window.onload = function init() {
+
+    //Asking browser for mic permission
+    /*
+    try {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+    } catch (e) {
+        throw 'No web audio support in this browser!';
+    }
+
+    //Resourses for mic correctly working
+    navigator.getUserMedia({ audio: true }, function (stream) {
+        audioContext = new AudioContext();
+        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+        mediaStreamSource.connect(audioContext.destination);
+
+        //For now audioInput needs to be here to work correctly
+        audioInputModule = new AudioInputModule(mediaStreamSource);
+
+    }, function (error) {
+        throw ('Error: you need to allow the application to use the microphone.' + error);
+    });
+    */
+    
+    var audioOutputModule = new AudioOutputModule('1', availableSounds);
+    var visualModule = new VisualModule('2', availableImages);
+    
+    var communication_channel = new CommunicationChannel("localhost","1234",{visualModule:visualModule,audioOutputModule:audioOutputModule});
+    var nId = 0;
 };

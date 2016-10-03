@@ -2,13 +2,14 @@
  * AudioOutput class: plays sounds.
  * @author Fabián Andrés Merchán Jiménez
  * */
-class AudioOutputModule {
+class AudioOutputModule extends Module{
 
     /**
      * Initialize the AudioOutputModule
      * @param soundFiles string array containing the name of all the desired sounds to be played during script perform.
     */
-    constructor( soundFiles ) {
+    constructor( id, soundFiles ) {
+        super(id);
         this.availableSounds = [];
         for(var i=0; i<soundFiles.length; i++){
             var sound = {
