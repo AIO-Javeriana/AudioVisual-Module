@@ -45,7 +45,7 @@ var toRender = [
         },{
             id:'full-closed-eyes',
             properties: {
-                duration: 250,
+                duration: 125,
                 easing: 'quint-in',
                 rotation: 'none'
             },
@@ -53,7 +53,7 @@ var toRender = [
         },{
             id:'full-opened-eyes',
             properties: {
-                duration: 250,
+                duration: 125,
                 easing: 'quint-in',
                 rotation: 'none'
             },
@@ -61,13 +61,10 @@ var toRender = [
         }
     ];
 
-
-
-
 window.onload = function init() {
 
     //Asking browser for mic permission
-    /*
+    
     try {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
@@ -83,16 +80,27 @@ window.onload = function init() {
         mediaStreamSource.connect(audioContext.destination);
 
         //For now audioInput needs to be here to work correctly
-        audioInputModule = new AudioInputModule(mediaStreamSource);
+        //audioInputModule = new AudioInputModule(mediaStreamSource);
+        audioVisualModule = new AudioVisualModule('localhost','1234',{
+            imagesInfo: availableImages,
+            soundsInfo: availableSounds,
+            audioStreamSource: mediaStreamSource
+        });
 
     }, function (error) {
         throw ('Error: you need to allow the application to use the microphone.' + error);
     });
-    */
     
     var audioOutputModule = new AudioOutputModule('1', availableSounds);
     var visualModule = new VisualModule('2', availableImages);
     
-    var communication_channel = new CommunicationChannel("localhost","1234",{visualModule:visualModule,audioOutputModule:audioOutputModule});
-    var nId = 0;
+    var communication_channel = new CommunicationChannel("localhost","1234",{
+        visualModule:visualModule,
+        audioOutputModule:audioOutputModule
+    });
+
+    $(document).on('click','#boton', function(){
+         //audioOutputModule.play('surprised.mp3', 0.1);
+         visualModule.showPicture('landscape-test.jpg');
+     })
 };

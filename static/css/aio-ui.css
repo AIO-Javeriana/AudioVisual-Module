@@ -39,6 +39,7 @@ g:not(:first-child){
     top: 0;
     right: 10px;
 }
+
 #image-keeper #close button{
     border: none;
     background: none;
@@ -52,7 +53,7 @@ g:not(:first-child){
 }
 
 #image-keeper #image{
-    height: 93%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;

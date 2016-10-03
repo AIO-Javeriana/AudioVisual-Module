@@ -1,4 +1,3 @@
-
 var  renderedSVG;
  function renderSVG(svgId, animationProperties, callback, SVGIterator, SVGSet){
     renderedSVG.to(svgId, animationProperties, function(){
