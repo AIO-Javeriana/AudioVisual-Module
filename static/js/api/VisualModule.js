@@ -84,16 +84,12 @@ class VisualModule extends Module{
      *   Obtains the image source given the name.
      *   @returns The image source, url have priority. Default error image if url and path are null.
      */
-    getImageByName(name){
+    getImageObjectByName(name){
         var length = this.availableImages.length;
-        var toShow = this.errorImageSource;
+        var toShow = null
         for(var i=0; i<length; i++){
             if(this.availableImages[i].name == name){
-                if(typeof this.availableImages[i].url !== "undefined"){
-                    toShow = this.availableImages[i].url;
-                }else if(typeof this.availableImages[i].file !== "undefined" ){
-                    toShow = this.storingPath + this.availableImages[i].file
-                }
+                toShow = this.availableImages[i];
             }
         }
         return toShow;
@@ -126,7 +122,17 @@ class VisualModule extends Module{
      *  @param name Name of the picture to be shown.
      */
     showPicture(name){
-        var image = this.getImageByName(name);
+        var imageObject = this.getImageObjectByName(name);
+        var image = this.errorImageSource;
+
+        if(imageObject != null){
+            if(typeof imageObject.url !== "undefined"){
+                image = imageObject.url;
+            }else if(typeof imageObject.file !== "undefined" ){
+                image = this.storingPath + this.image.file
+            }
+        }        
+
         $('#msg').css('z-index', 3);
         $('#image-keeper').css('display','flex');
         $('#image-keeper #image img')
