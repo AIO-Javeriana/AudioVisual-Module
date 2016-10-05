@@ -97,7 +97,12 @@ class AudioOutputModule extends Module {
      */
     play( name, properties ) {
         var audio = this.getAudio(name);
-        audio.volume = properties.volume;
+        audio.volume = 0.5;
+        if( typeof properties !== "undefined"){
+            if( typeof properties.volume !== "undefined" && properties.volume != null && 0 <= properties.volume && properties.volume <= 1 ){
+                audio.volume = properties.volume;
+            }
+        }
         audio.play();
     }
 }

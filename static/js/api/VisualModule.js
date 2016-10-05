@@ -10,6 +10,7 @@ class VisualModule extends Module{
      *  image files available in the folder  "/assets/images."
      *  @param imageObject The imageObject structure is the following:
      *  imageObject = {
+     *          path: path where the image files are stored.
      *          availableImageFiles:[
      *              {
      *                  name: name or tag for the sound file,
@@ -25,28 +26,29 @@ class VisualModule extends Module{
      */
     constructor(id, imageObject){
         super(id);
+        this.storingPath = imageObject.path;
         this.availableSVGAssets = this.getAvailableSVGAssets();
         this.availableImages = imageObject.availableImageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
         this.msg = $("#msg");
         this.errorImageSource = null;
 
-        if(imageObject.errorImage.url != null){
-            this.errorImageSource = imageObject.errorImage.url;
-        }else if( imageObject.errorImage.path != null ){
-            this.errorImageSource = imageObject.errorImage.path;
-        }else{
-            this.errorImageSource = 'http://hdimagesnew.com/wp-content/uploads/2016/09/image-not-found.jpg';
+        this.errorImageSource = 'http://hdimagesnew.com/wp-content/uploads/2016/09/image-not-found.jpg';
+        if( typeof imageObject.errorImage !== "undefined" ){
+            if( typeof imageObject.errorImage.url !== "undefined" && imageObject.errorImage.url != null)
+                this.errorImageSource = imageObject.errorImage.url;
+            else if( typeof imageObject.errorImage.path !== "undefined" && imageObject.errorImage.path != null)
+                this.errorImageSource = imageObject.errorImage.path;       
         }
         
-        this.renderSVGSet = function(SVGSet){
-            utils_renderSVGSet(SVGSet,this.renderedSVG);
+        this.renderSVGSet = function(SVGSet, endCallback){
+            utils_renderSVGSet(SVGSet,this.renderedSVG, endCallback);
         }
     }
     
     /**
      * Shows a small frame. Useful to show conversation lines.
-     * This function uses bootstrap alerts to do that.
+     * This function uses bootstrap alerts.
      * @param dialog text to be showed.
      */
     showDialogFrame (dialog, msg_type, velocity){
@@ -84,16 +86,17 @@ class VisualModule extends Module{
      */
     getImageByName(name){
         var length = this.availableImages.length;
+        var toShow = this.errorImageSource;
         for(var i=0; i<length; i++){
             if(this.availableImages[i].name == name){
-                if(this.availableImages[i].url != null)
-                    return this.availableImages[i].url;
-                else if( this.availableImages[i].path != null )
-                    return this.availableImages[i].path
-                else
-                    return this.errorImageSource;
+                if(typeof this.availableImages[i].url !== "undefined"){
+                    toShow = this.availableImages[i].url;
+                }else if(typeof this.availableImages[i].file !== "undefined" ){
+                    toShow = this.storingPath + this.availableImages[i].file
+                }
             }
         }
+        return toShow;
     }
 
     /**
@@ -106,7 +109,7 @@ class VisualModule extends Module{
      *                  id: id of the SVG to be rendered,
      *                  properties: {
      *                  duration: duration of the animation being rendered,
-    *                   easing: velocity of the animation. available easings in the github repository,
+     *                  easing: velocity of the animation. available easings in the github repository,
      *                  rotation: rotation of the animation. available rotations in the github repository
      *              },
      *              delay: time to wait before this animation starts.
@@ -119,7 +122,8 @@ class VisualModule extends Module{
     }
 
     /**
-     * Shows a picture available in the image assets folder.
+     *  Shows a picture available in the image assets folder.
+     *  @param name Name of the picture to be shown.
      */
     showPicture(name){
         var image = this.getImageByName(name);

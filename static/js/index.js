@@ -14,16 +14,36 @@
  *  main block
  */
 
-var availableImages = ['landscape-test.jpg', 'portrait-test.jpg', 'small-size-test.jpg'];
+var availableImages = {
+    path: './assets/images/',
+    availableImageFiles: [
+        {
+            name: 'landscape',
+            file: 'landscape-test.jpg'
+        },{
+            name: 'portrait',
+            file: 'portrait-test.jpg'
+        },{
+            name: 'small',
+            file: 'small-size-test.jpg'
+        },{
+            name: 'katy',
+            url: 'http://multimedia.cdn.com.do/2016/08/Estudios-afirman-hombres-con-barba-son-m%C3%A1s-infieles4.jpg'
+        }
+    ],
+    errorImage:{
+        url: 'https://www.quia.com/files/quia/users/sstone13/Emergenciasmedicas/caerse.gif'
+    }
+};
 
 var availableSounds = {
-    path: './assets/sounds/',
-    availableSoundFiles: [
-        {
-            name: 'surprised',
-            file: 'surprised.mp3'
-        }
-    ]
+        path: './assets/sounds/',
+        availableSoundFiles: [
+            {
+                name: 'surprised',
+                file: 'surprised.mp3'
+            }
+        ]
 };
 
 var toRender = [
@@ -90,11 +110,13 @@ window.onload = function init() {
 
         //For now audioInput needs to be here to work correctly
         //audioInputModule = new AudioInputModule(mediaStreamSource);
-        audioVisualModule = new AudioVisualModule('localhost','1234',{
+        /*
+        /audioVisualModule = new AudioVisualModule('localhost','1234',{
             imagesInfo: availableImages,
             soundsInfo: availableSounds,
             audioStreamSource: mediaStreamSource
         });
+        */
 
     }, function (error) {
         throw ('Error: you need to allow the application to use the microphone.' + error);
@@ -103,13 +125,20 @@ window.onload = function init() {
     var audioOutputModule = new AudioOutputModule('1', availableSounds);
     var visualModule = new VisualModule('2', availableImages);
     
+    /*
     var communication_channel = new CommunicationChannel("localhost","1234",{
         visualModule:visualModule,
         audioOutputModule:audioOutputModule
     });
+    */
 
     $(document).on('click','#boton', function(){
-         //audioOutputModule.play('surprised.mp3', 0.1);
-         visualModule.showPicture('landscape-test.jpg');
+         //audioOutputModule.play('surprised', {volume: 1});
+         visualModule.showPicture('katy');
+         /*
+         visualModule.renderSVGSet(toRender, function(){
+             console.log('hola');
+         });
+         */
      })
 };
