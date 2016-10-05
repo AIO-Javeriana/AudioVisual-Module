@@ -10,6 +10,5 @@ class AudioVisualModule extends Module{
         };
 
         this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
-    }
-    
+    }   
 }

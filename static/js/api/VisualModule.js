@@ -1,16 +1,54 @@
-//VisualModule
+/**
+ *  Manages the resources like images and animations the can be shown in the Visual Module.
+ *  To animate the SVG assets we use SVG-Morpheus from github: https://github.com/alexk111/SVG-Morpheus.
+ */
 class VisualModule extends Module{
-    constructor( id, imageFiles ){
+
+    /**
+ *      The image files information can be obtained from a folder if a path is given.
+     *  but in the actual version is needed an string array containing the names of the
+     *  image files available in the folder  "/assets/images."
+     *  @param imageObject The imageObject structure is the following:
+     *  imageObject = {
+     *          availableImageFiles:[
+     *              {
+     *                  name: name or tag for the sound file,
+     *                  file: name of the file.
+     *                  url: url of the image source from the web.
+     *              }
+     *          ],
+     *          errorImage:{
+     *            file: name of the file.
+     *            url: url of the image source from the web.
+     *          }
+     *      }
+     */
+    constructor(id, imageObject){
         super(id);
-        this.availableImages = imageFiles;
+        this.availableSVGAssets = this.getAvailableSVGAssets();
+        this.availableImages = imageObject.availableImageFiles;
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
         this.msg = $("#msg");
+        this.errorImageSource = null;
+
+        if(imageObject.errorImage.url != null){
+            this.errorImageSource = imageObject.errorImage.url;
+        }else if( imageObject.errorImage.path != null ){
+            this.errorImageSource = imageObject.errorImage.path;
+        }else{
+            this.errorImageSource = 'http://hdimagesnew.com/wp-content/uploads/2016/09/image-not-found.jpg';
+        }
         
         this.renderSVGSet = function(SVGSet){
             utils_renderSVGSet(SVGSet,this.renderedSVG);
         }
     }
-        
+    
+    /**
+     * Shows a small frame. Useful to show conversation lines.
+     * This function uses bootstrap alerts to do that.
+     * @param dialog text to be showed.
+     */
     showDialogFrame (dialog, msg_type, velocity){
         this.msg.fadeOut(velocity, function(){
             $( this ).removeClass();
@@ -39,18 +77,68 @@ class VisualModule extends Module{
             $( this ).fadeIn(velocity);
         });
     }
-    
-    
-    showPicture(image){
+
+    /**
+     *   Obtains the image source given the name.
+     *   @returns The image source, url have priority. Default error image if url and path are null.
+     */
+    getImageByName(name){
+        var length = this.availableImages.length;
+        for(var i=0; i<length; i++){
+            if(this.availableImages[i].name == name){
+                if(this.availableImages[i].url != null)
+                    return this.availableImages[i].url;
+                else if( this.availableImages[i].path != null )
+                    return this.availableImages[i].path
+                else
+                    return this.errorImageSource;
+            }
+        }
+    }
+
+    /**
+     * Renders a set of SVG resources. This SVG resources must be correctly available
+     * in the HTML file. For more info check: https://github.com/alexk111/SVG-Morpheus.
+     * @param SVGSet set of SVG assets availables in the HTML file with the following structure
+     *      {
+     *          [
+     *              {
+     *                  id: id of the SVG to be rendered,
+     *                  properties: {
+     *                  duration: duration of the animation being rendered,
+    *                   easing: velocity of the animation. available easings in the github repository,
+     *                  rotation: rotation of the animation. available rotations in the github repository
+     *              },
+     *              delay: time to wait before this animation starts.
+     *          ]
+     *      }
+     * 
+     */
+    renderSVGSet(SVGSet){
+        utils_renderSVGSet(SVGSet,this.renderedSVG);
+    }
+
+    /**
+     * Shows a picture available in the image assets folder.
+     */
+    showPicture(name){
+        var image = this.getImageByName(name);
         $('#msg').css('z-index', 3);
         $('#image-keeper').css('display','flex');
-        $('#image-keeper #image img').attr('src','./assets/images/'+image);
+        $('#image-keeper #image img')
+            .on('error', function() { $(this).attr('src',this.errorImage); })
+            .attr('src',image);
         $('#image-keeper #close').on('click', 'button', function(){
             $('#image-keeper').css('display','none');
             $('#msg').css('z-index', 0);
         })
     }
-    
+
+    /**
+     *  Retrieves from the HTML file the information of all the avilable SVG
+     *  assets that can be rendered.
+     *  @return the id of each available SVG asset.
+     */
     getAvailableSVGAssets(){
         var availableSVGAssets = [];
         $('svg g').each(function(){

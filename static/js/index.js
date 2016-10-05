@@ -1,19 +1,30 @@
 /**
  * Revisar y arreglar en el uml
  * AudioInput (nombres de las funciones, atributos necesitados y framework usado)
- * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs)
+ * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs), el path no es manejable por el usuario.
  * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
  * VisualModule: Añadir showDialogPrompt, showSVGSet, getAvailableSVGAssets. Borrar paint() del modelo de UML.
  * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
+ * ToDo:
+ *  - pensar en la forma de como obtener los recursos de imagenes y audio, no pasandolasd desde el index. //
+ *  - showVideo: ¿Otro módulo?, ¿Módulo visual? ¿Pero entonces como se conecta con el modulo de audio?. //check
  */
 
 /*
  *  main block
  */
 
-var availableSounds = ['surprised.mp3'];
-
 var availableImages = ['landscape-test.jpg', 'portrait-test.jpg', 'small-size-test.jpg'];
+
+var availableSounds = {
+    path: './assets/sounds/',
+    availableSoundFiles: [
+        {
+            name: 'surprised',
+            file: 'surprised.mp3'
+        }
+    ]
+};
 
 var toRender = [
         {

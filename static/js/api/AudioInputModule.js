@@ -8,7 +8,7 @@
 class AudioInputModule extends Module{
 
     /**
-     * @param source media stream source needed to record.
+     * @param mediaStreamSource media stream source needed to record.
      */
     constructor(id, mediaStreamSource) {
         super(id);
@@ -19,7 +19,7 @@ class AudioInputModule extends Module{
     }
 
     /**
-     * Start recording. The function it's explained itself by the name.
+     * Starts to record.
      */
     startRecording() {
         this.record.clear();
@@ -27,14 +27,14 @@ class AudioInputModule extends Module{
     }
 
     /**
-     * Stop recording. The function it's explained itself by the name.
+     * Stops the recording.
      */
     stopRecording() {
         this.record.stop();
     }
 
     /**
-     * Prepares the recording to be downloaded.
+     * Prepares the recording file to be downloaded.
      * @param recording's name
      */
     exportRecording(name) {
@@ -49,7 +49,7 @@ class AudioInputModule extends Module{
 
     /**
      * A play, stop and exportRecording implementation, if not recording
-     * starts to record. If not, stops and saves the recording.
+     * starts to record. If recording, stops and saves the recording.
      * @param name recording's name
      */
     toggleRecord(name) {
