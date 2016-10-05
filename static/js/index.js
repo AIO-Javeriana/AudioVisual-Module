@@ -3,8 +3,6 @@
  * AudioInput (nombres de las funciones, atributos necesitados y framework usado)
  * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs)
  * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
- * Revisar lo que hizo Stiven
- * diseñar y hacer los cuadros de dialogo para el servicio showDialogPrompt. Por falta de internet no lo hice durante el congreso de computación.
  * VisualModule: Añadir showDialogPrompt, showSVGSet, getAvailableSVGAssets. Borrar paint() del modelo de UML.
  * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
  */
