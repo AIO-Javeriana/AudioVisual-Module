@@ -63,12 +63,10 @@ class CommunicationChannel{
             mapCommands[GROUP_ID] = [];
           }
           mapCommands[GROUP_ID].push(JSONmsg);
-          console.log(">>WORK_ASSIGNATION: " + msg);
           this.emit(EventsEnum.WORK_ASSIGNATION_REPLY,JSON.stringify(reply));
         })
 
         this.socket.on(EventsEnum.ALL_BEGINS, function(msg) {
-          console.log(EventsEnum.ALL_BEGINS);
           var JSONmsg = JSON.parse(msg);
           var GROUP_ID = JSONmsg.GROUP_ID;
           var commands = mapCommands[GROUP_ID];
@@ -102,12 +100,22 @@ class CommunicationChannel{
                           delay: 0
                       }
                   ];
-                  console.log(commands[i]);
-                  modules.visualModule.renderSVGSet(toRender,function(){
-                    console.log(commands[i]);
-                    var reply = {MODULE_ID:"AUDIO_VISUAL", COMMAND_ID: commands[i].COMMAND_ID, GROUP_ID: commands[i].GROUP_ID, STATUS:"DONE", MSG:""};
-                    sonsole.log("END BLINK");
-                    this.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
+                  var dataCallback = {
+                      socket: this,
+                      command: commands[i]
+                  };
+                  
+                  modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
+                    
+                    var reply = {
+                        MODULE_ID:"AUDIO_VISUAL", 
+                        COMMAND_ID: dataCallback.command.COMMAND_ID, 
+                        GROUP_ID: dataCallback.command.GROUP_ID, 
+                        STATUS:"DONE", 
+                        MSG:""
+                    };
+
+                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
                   });
               break;
             }

@@ -110,35 +110,20 @@ window.onload = function init() {
 
         //For now audioInput needs to be here to work correctly
         //audioInputModule = new AudioInputModule(mediaStreamSource);
-        /*
-        /audioVisualModule = new AudioVisualModule('localhost','1234',{
+        
+        audioVisualModule = new AudioVisualModule('http://localhost','9090',{
             imagesInfo: availableImages,
             soundsInfo: availableSounds,
             audioStreamSource: mediaStreamSource
         });
-        */
-
+        
     }, function (error) {
         throw ('Error: you need to allow the application to use the microphone.' + error);
     });
     
-    var audioOutputModule = new AudioOutputModule('1', availableSounds);
-    var visualModule = new VisualModule('2', availableImages);
-    
-    /*
-    var communication_channel = new CommunicationChannel("localhost","1234",{
-        visualModule:visualModule,
-        audioOutputModule:audioOutputModule
-    });
-    */
-
     $(document).on('click','#boton', function(){
          //audioOutputModule.play('surprised', {volume: 1});
-         visualModule.showPicture('katy');
-         /*
-         visualModule.renderSVGSet(toRender, function(){
-             console.log('hola');
-         });
-         */
+         //visualModule.showPicture('katy');
+         audioVisualModule.availableModules.visualModule.renderSVGSet(toRender);
      })
 };
