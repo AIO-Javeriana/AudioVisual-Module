@@ -14,7 +14,7 @@ class AudioOutputModule extends Module {
      *          availableSoundFiles:[
      *              {
      *                  name: name or tag for the sound file,
-     *                  file: name of the file.
+     *                  file: name of the file
      *              }
      *          ]
      *      }
@@ -25,6 +25,26 @@ class AudioOutputModule extends Module {
             this.resourcesPath = soundFiles.path;
             this.availableSounds = this.createAudioObjects(soundFiles.availableSoundFiles);
         }
+    
+        /**
+         *  Plays a sound.
+         *  @param name Name of the sound to be played.
+         *  @param properties Object containing the properties of the sound to be played.
+         *  {
+         *      volume: volume level of the sound
+         *  }
+         */
+        this.play = function( name, properties ) {
+            var audio = this.getAudio(name);
+            audio.volume = 0.5;
+            if( typeof properties !== "undefined"){
+                if( typeof properties.volume !== "undefined" && properties.volume != null && 0 <= properties.volume && properties.volume <= 1 ){
+                    audio.volume = properties.volume;
+                }
+            }
+            audio.play();
+        }
+
     }
 
     /**
@@ -37,7 +57,7 @@ class AudioOutputModule extends Module {
      *           file: name of the audio file
      *       }
      */
-    createAudioObjects(availableSoundFiles){
+     createAudioObjects(availableSoundFiles){
         if(availableSoundFiles != null){
             return this.createAudioObjectsFromArray(availableSoundFiles);
         }else{
@@ -87,22 +107,4 @@ class AudioOutputModule extends Module {
         return sound;
     }
 
-    /**
-     *  Plays a sound.
-     *  @param name Name of the sound to be played.
-     *  @param properties Object containing the properties of the sound to be played.
-     *  {
-     *      volume: volume level of the sound
-     *  }
-     */
-    play( name, properties ) {
-        var audio = this.getAudio(name);
-        audio.volume = 0.5;
-        if( typeof properties !== "undefined"){
-            if( typeof properties.volume !== "undefined" && properties.volume != null && 0 <= properties.volume && properties.volume <= 1 ){
-                audio.volume = properties.volume;
-            }
-        }
-        audio.play();
-    }
 }

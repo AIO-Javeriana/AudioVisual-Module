@@ -90,6 +90,22 @@ var toRender = [
         }
     ];
 
+var videos = {
+    path: './assets/sounds/',
+    availableVideoFiles:[
+        {
+            name: 'digimon',
+            url: 'https://www.youtube.com/watch?v=b1uH4BnswKQ'
+        },{
+            name: 'dora',
+            url: 'https://www.youtube.com/watch?v=EdgV1FMFDq4'
+        }
+    ],
+    errorVideo: {
+        url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
+    }
+}
+
 window.onload = function init() {
 
     //Asking browser for mic permission
@@ -121,9 +137,27 @@ window.onload = function init() {
         throw ('Error: you need to allow the application to use the microphone.' + error);
     });
     
+    var audioOutputModule = new AudioOutputModule('1', availableSounds);
+    var visualModule = new VisualModule('2', availableImages);
+    var videoModule = new VideoModule('3',videos);
+    
+    /*
+    var communication_channel = new CommunicationChannel("localhost","1234",{
+        visualModule:visualModule,
+        audioOutputModule:audioOutputModule
+    });
+    */
+
     $(document).on('click','#boton', function(){
          //audioOutputModule.play('surprised', {volume: 1});
          //visualModule.showPicture('katy');
-         audioVisualModule.availableModules.visualModule.renderSVGSet(toRender);
+         videoModule.showVideo('digimon',{autoplay: true}, function(){
+             alert('done');
+         });
+         /*
+         visualModule.renderSVGSet(toRender, function(){
+             console.log('hola');
+         });
+         */
      })
 };
