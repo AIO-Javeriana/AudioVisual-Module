@@ -16,49 +16,51 @@ class AudioInputModule extends Module{
         this.record = new Recorder(mediaStreamSource, {
             workerPath: "/js/recorderWorker.js"
         });
-    }
+    
 
-    /**
-     * Starts to record.
-     */
-    startRecording() {
-        this.record.clear();
-        this.record.record();
-    }
-
-    /**
-     * Stops the recording.
-     */
-    stopRecording() {
-        this.record.stop();
-    }
-
-    /**
-     * Prepares the recording file to be downloaded.
-     * @param recording's name
-     */
-    exportRecording(name) {
-        this.record.exportWAV(function (blob) {
-            var url = URL.createObjectURL(blob);
-            var download = document.createElement('a');
-            download.href = url;
-            download.download = name + '.wav';
-            download.click();
-        });
-    }
-
-    /**
-     * A play, stop and exportRecording implementation, if not recording
-     * starts to record. If recording, stops and saves the recording.
-     * @param name recording's name
-     */
-    toggleRecord(name) {
-        if (!this.recording) {
-            this.startRecording();
-        } else {
-            this.stopRecording();
-            this.exportRecording(name);
+        /**
+         * Starts to record.
+         */
+        this.startRecording = function(){
+            this.record.clear();
+            this.record.record();
         }
-        this.recording = !this.recording;
+
+        /**
+         * Stops the recording.
+         */
+        this.stopRecording = function() {
+            this.record.stop();
+        }
+
+        /**
+         * Prepares the recording file to be downloaded.
+         * @param recording's name
+         */
+        this.exportRecording = function(name) {
+            this.record.exportWAV(function (blob) {
+                var url = URL.createObjectURL(blob);
+                var download = document.createElement('a');
+                download.href = url;
+                download.download = name + '.wav';
+                download.click();
+            });
+        }
+
+        /**
+         * A play, stop and exportRecording implementation, if not recording
+         * starts to record. If recording, stops and saves the recording.
+         * @param name recording's name
+         */
+        this.toggleRecord = function(name){
+            if (!this.recording) {
+                this.startRecording();
+            } else {
+                this.stopRecording();
+                this.exportRecording(name);
+            }
+            this.recording = !this.recording;
+        }
+
     }
 }

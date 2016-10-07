@@ -41,68 +41,69 @@ class VideoModule extends Module{
                     url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
                 }
         }
-    }
+    
+        /**
+         *  Show a video. The played video will depend on the parameters of the videoObject.
+         *  @param videoObject  Object containing the information of the video to be played.
+         *  {
+         *      name: name of the video,
+         *      url: url of the video to be played (Only YouTube is supported at the moment),
+         *      file: video file to be played.
+         *  }
+         *  Passing the url or the file is enough. But if the two parameters are passed to the function,
+         *  playing the video from the url is priority.
+         */
+        this.showVideo = function(name, options){
+            var videoObject = getVideoObjectByName(name);
 
-    /**
-     *  Show a video. The played video will depend on the parameters of the videoObject.
-     *  @param videoObject  Object containing the information of the video to be played.
-     *  {
-     *      name: name of the video,
-     *      url: url of the video to be played (Only YouTube is supported at the moment),
-     *      file: video file to be played.
-     *  }
-     *  Passing the url or the file is enough. But if the two parameters are passed to the function,
-     *  playing the video from the url is priority.
-     */
-    showVideo(name, options){
-        var videoObject = getVideoObjectByName(name);
+            if( videoObject == null )
+                videoObject = this.errorVideo;
+            else{
+                if(typeof videoObject.url !== "undefined"){
+                    showVideoFromYouTube(videoObject.url);
+                }else if(typeof videoObject.file !== "undefined" ){
+                    showVideoFile(this.storingPath + this.image.file);
+                }
+            }  
+        }
 
-        if( videoObject == null )
-            videoObject = this.errorVideo;
-        else{
-            if(typeof videoObject.url !== "undefined"){
-                showVideoFromYouTube(videoObject.url);
-            }else if(typeof videoObject.file !== "undefined" ){
-                showVideoFile(this.storingPath + this.image.file);
-            }
-        }  
-    }
+        /**
+         *  Obtains a video from the list of available videos and returns it.
+         *  @returns source of the video from the requested name.
+         */
+        this.getVideoObjectByName = function(name){
+            var length = this.availableVideos.length;
+            var toShow = null;
+            for(var i=0; i<length; i++){
+                if( this.availableVideos[i].name == name)
+                    toShow = this.availableVideos[i];
+            } 
+            return toShow;
+        }
 
-    /**
-     *  Obtains a video from the list of available videos and returns it.
-     *  @returns source of the video from the requested name.
-     */
-    getVideoObjectByName(name){
-        var length = this.availableVideos.length;
-        var toShow = null;
-        for(var i=0; i<length; i++){
-            if( this.availableVideos[i].name == name)
-                toShow = this.availableVideos[i];
-        } 
-        return toShow;
-    }
+        /**
+         *  Plays a video from YouTube with the given url
+         *  @param url url of the video to be played.
+         */
+        this.showVideoFromYouTube = function(url){
+            throw 'Not implemented function exception';
+        }
 
-    /**
-     *  Plays a video from YouTube with the given url
-     *  @param url url of the video to be played.
-     */
-    showVideoFromYouTube(url){
-        throw 'Not implemented function exception';
-    }
+        /**
+         *  Plays a video from a folder of video resources.
+         *  @param videoObject object which contains the path of the folder and optionally the available videos to be played.
+         */
+        this.showVideoFile = function(file){
+            throw 'Not implemented function exception';
+        }
 
-    /**
-     *  Plays a video from a folder of video resources.
-     *  @param videoObject object which contains the path of the folder and optionally the available videos to be played.
-     */
-    showVideoFile(file){
-        throw 'Not implemented function exception';
-    }
+        /**
+         *  Gets the video resources from path.
+         *  @param name name of the video to be played.
+         */
+        this.getVideoFilesFromFolder = function(path){
+            throw 'Not implemented function exception';
+        }
 
-    /**
-     *  Gets the video resources from path.
-     *  @param name name of the video to be played.
-     */
-    getVideoFilesFromFolder(path){
-        throw 'Not implemented function exception';
     }
 }
