@@ -34,20 +34,20 @@ g:not(:first-child){
     z-index: 2;
 }
 
-#image-keeper #close{
+#close{
     position: absolute;
     top: 0;
     right: 10px;
 }
 
-#image-keeper #close button{
+#close button{
     border: none;
     background: none;
     color: white;
     font-size: 5vh;
 }
 
-#image-keeper #close button:hover{
+#close button:hover{
     background-color: rgba(254, 46, 46, 0.6);
     color: white;
 }

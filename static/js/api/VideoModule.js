@@ -54,15 +54,15 @@ class VideoModule extends Module{
          *  playing the video from the url is priority.
          */
         this.showVideo = function(name, options){
-            var videoObject = getVideoObjectByName(name);
+            var videoObject = this.getVideoObjectByName(name);
 
             if( videoObject == null )
                 videoObject = this.errorVideo;
             else{
                 if(typeof videoObject.url !== "undefined"){
-                    showVideoFromYouTube(videoObject.url);
+                    this.showVideoFromYouTube(videoObject.url);
                 }else if(typeof videoObject.file !== "undefined" ){
-                    showVideoFile(this.storingPath + this.image.file);
+                    this.showVideoFile(this.storingPath + this.image.file);
                 }
             }  
         }
@@ -86,9 +86,52 @@ class VideoModule extends Module{
      *  Plays a video from YouTube with the given url
      *  @param url url of the video to be played.
      */
-    showVideoFromYouTube(url){
+    showVideoFromYouTube(url, properties){
+        /*var url = url.replace("watch?v=", "v/");
+        if (typeof properties !== "undefined"){
+            if(typeof properties.autoplay !== "undefined"){
+                if(properties.autoplay)
+                    url = url + "?autoplay=1";
+            }
+        }*/
+
+        var player = new YT.Player('youtube-video', {
+                height: '390',
+                width: '640',
+                videoId: '0Bmhjf0rKe8',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+        // autoplay video
+        function onPlayerReady(event) {
+            event.target.playVideo();
+            $('#youtube-video').css('display','flex');
+            $('#youtube-video #close').on('click', 'button', function(){
+                $('#youtube-video').css('display','none');
+                $('#msg').css('z-index', 0);
+            }
+        }
+
+        // when video ends
+        function onPlayerStateChange(event) {        
+            if(event.data === 0) {            
+                alert('done');
+            }
+        }
+        
+        /*$('#youtube-video').css('display','flex');
+        $('#msg').css('z-index', 3);
         $('#youtube-video').css('display','flex');
+        //$('#youtube-video iframe').attr('src',url);
+        $('#youtube-video #close').on('click', 'button', function(){
+            $('#youtube-video').css('display','none');
+            $('#msg').css('z-index', 0);
+        })*/
     }
+
 
     /**
      *  Plays a video from a folder of video resources.

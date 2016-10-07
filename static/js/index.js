@@ -152,7 +152,7 @@ window.onload = function init() {
     $(document).on('click','#boton', function(){
          //audioOutputModule.play('surprised', {volume: 1});
          //visualModule.showPicture('katy');
-         videoModule = new VideoModule()
+         videoModule.showVideo('digimon');
          /*
          visualModule.renderSVGSet(toRender, function(){
              console.log('hola');
