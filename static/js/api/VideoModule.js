@@ -41,7 +41,10 @@ class VideoModule extends Module{
                     url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
                 }
         }
-    
+
+        this.player = null;
+
+        
         /**
          *  Show a video. The played video will depend on the parameters of the videoObject.
          *  @param videoObject  Object containing the information of the video to be played.
@@ -53,7 +56,7 @@ class VideoModule extends Module{
          *  Passing the url or the file is enough. But if the two parameters are passed to the function,
          *  playing the video from the url is priority.
          */
-        this.showVideo = function(name, options){
+        this.showVideo = function(name, options, callback){
             var videoObject = this.getVideoObjectByName(name);
 
             if( videoObject == null )
@@ -86,50 +89,59 @@ class VideoModule extends Module{
      *  Plays a video from YouTube with the given url
      *  @param url url of the video to be played.
      */
-    showVideoFromYouTube(url, properties){
-        /*var url = url.replace("watch?v=", "v/");
-        if (typeof properties !== "undefined"){
-            if(typeof properties.autoplay !== "undefined"){
-                if(properties.autoplay)
-                    url = url + "?autoplay=1";
-            }
-        }*/
+    showVideoFromYouTube(url, properties, callback){
 
-        var player = new YT.Player('youtube-video', {
-                height: '390',
-                width: '640',
-                videoId: '0Bmhjf0rKe8',
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-
-        // autoplay video
-        function onPlayerReady(event) {
-            event.target.playVideo();
-            $('#youtube-video').css('display','flex');
-            $('#youtube-video #close').on('click', 'button', function(){
-                $('#youtube-video').css('display','none');
-                $('#msg').css('z-index', 0);
-            }
-        }
-
-        // when video ends
-        function onPlayerStateChange(event) {        
-            if(event.data === 0) {            
-                alert('done');
-            }
-        }
-        
-        /*$('#youtube-video').css('display','flex');
         $('#msg').css('z-index', 3);
-        $('#youtube-video').css('display','flex');
-        //$('#youtube-video iframe').attr('src',url);
-        $('#youtube-video #close').on('click', 'button', function(){
-            $('#youtube-video').css('display','none');
+        var videoPlayer = $('<div>',{
+            'id': 'video-player'
+        })
+        $('#show-video').append(videoPlayer);
+        $('#show-video').css('display','flex');
+        
+        var id = this.getParameterByName('v', url);
+
+        var player = new YT.Player('video-player', {
+            height: '400',
+            width: '800',
+            videoId: id,
+            events: {
+                'onReady': this.onPlayerReady,
+                'onStateChange': this.onPlayerStateChange
+            }
+        });
+        
+        //setTimeout(function(){ player.stopVideo() }, 3000);
+
+        $('#show-video #close').on('click', 'button', function(){
+            $('#show-video').css('display','none');
             $('#msg').css('z-index', 0);
-        })*/
+            player.stopVideo()
+            $('#show-video').remove('#video-player');
+        })
+
+        //player.playVideo();
+    }
+
+    // autoplay video
+    onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    // when video ends
+    onPlayerStateChange(event) {        
+        if(event.data === 0) {            
+            alert('done');
+        }
+    }
+
+    getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
 

@@ -72,7 +72,7 @@ g:not(:first-child){
     right: 30px;
 }
 
-#youtube-video{
+#show-video{
     position: absolute;
     display: none;
     flex-direction: column;
