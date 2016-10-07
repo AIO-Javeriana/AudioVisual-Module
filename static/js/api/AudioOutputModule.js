@@ -14,7 +14,7 @@ class AudioOutputModule extends Module {
      *          availableSoundFiles:[
      *              {
      *                  name: name or tag for the sound file,
-     *                  file: name of the file.
+     *                  file: name of the file
      *              }
      *          ]
      *      }

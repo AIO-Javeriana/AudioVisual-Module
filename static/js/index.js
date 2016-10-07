@@ -90,6 +90,22 @@ var toRender = [
         }
     ];
 
+var videos = {
+    path: './assets/sounds/',
+    availableVideoFiles:[
+        {
+            name: 'digimon',
+            url: 'https://www.youtube.com/watch?v=b1uH4BnswKQ'
+        },{
+            name: 'dora',
+            url: 'https://www.youtube.com/watch?v=EdgV1FMFDq4'
+        }
+    ],
+    errorVideo: {
+        url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
+    }
+}
+
 window.onload = function init() {
 
     //Asking browser for mic permission
@@ -124,6 +140,7 @@ window.onload = function init() {
     
     var audioOutputModule = new AudioOutputModule('1', availableSounds);
     var visualModule = new VisualModule('2', availableImages);
+    var videoModule = new VideoModule('3',videos);
     
     /*
     var communication_channel = new CommunicationChannel("localhost","1234",{
@@ -134,7 +151,8 @@ window.onload = function init() {
 
     $(document).on('click','#boton', function(){
          //audioOutputModule.play('surprised', {volume: 1});
-         visualModule.showPicture('katy');
+         //visualModule.showPicture('katy');
+         videoModule = new VideoModule()
          /*
          visualModule.renderSVGSet(toRender, function(){
              console.log('hola');

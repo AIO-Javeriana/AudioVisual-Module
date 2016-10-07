@@ -87,7 +87,7 @@ class VideoModule extends Module{
      *  @param url url of the video to be played.
      */
     showVideoFromYouTube(url){
-        throw 'Not implemented function exception';
+        $('#youtube-video').css('display','flex');
     }
 
     /**
