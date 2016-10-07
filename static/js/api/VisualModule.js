@@ -5,7 +5,7 @@
 class VisualModule extends Module{
 
     /**
- *      The image files information can be obtained from a folder if a path is given.
+     *  The image files information can be obtained from a folder if a path is given.
      *  but in the actual version is needed an string array containing the names of the
      *  image files available in the folder  "/assets/images."
      *  @param imageObject The imageObject structure is the following:
@@ -79,20 +79,6 @@ class VisualModule extends Module{
             });
         }
 
-        /**
-         *   Obtains the image source given the name.
-         *   @returns The image source, url have priority. Default error image if url and path are null.
-         */
-        this.getImageObjectByName = function(name){
-            var length = this.availableImages.length;
-            var toShow = null
-            for(var i=0; i<length; i++){
-                if(this.availableImages[i].name == name){
-                    toShow = this.availableImages[i];
-                }
-            }
-            return toShow;
-        }
 
         /**
          * Renders a set of SVG resources. This SVG resources must be correctly available
@@ -120,7 +106,7 @@ class VisualModule extends Module{
          *  Shows a picture available in the image assets folder.
          *  @param name Name of the picture to be shown.
          */
-        this.showPicture(name){
+        this.showPicture = function(name){
             var imageObject = this.getImageObjectByName(name);
             var image = this.errorImageSource;
 
@@ -141,20 +127,6 @@ class VisualModule extends Module{
                 $('#image-keeper').css('display','none');
                 $('#msg').css('z-index', 0);
             })
-        }
-
-        /**
-         *  Retrieves from the HTML file the information of all the avilable SVG
-         *  assets that can be rendered.
-         *  @return the id of each available SVG asset.
-         */
-        this.getAvailableSVGAssets = function(){
-            var availableSVGAssets = [];
-            $('svg g').each(function(){
-                var svgId = $(this).attr('id');
-                availableSVGAssets.push(svgId);
-            });
-            return availableSVGAssets;
         }
         
         this.updateBatteryStatus = function(level){
@@ -193,5 +165,34 @@ class VisualModule extends Module{
                     break;
             }
         }
+    }
+
+    /**
+     *   Obtains the image source given the name.
+     *   @returns The image source, url have priority. Default error image if url and path are null.
+     */
+    getImageObjectByName(name){
+        var length = this.availableImages.length;
+        var toShow = null
+        for(var i=0; i<length; i++){
+            if(this.availableImages[i].name == name){
+                toShow = this.availableImages[i];
+            }
+        }
+        return toShow;
+    }
+
+    /**
+     *  Retrieves from the HTML file the information of all the avilable SVG
+     *  assets that can be rendered.
+     *  @return the id of each available SVG asset.
+     */
+    getAvailableSVGAssets(){
+        var availableSVGAssets = [];
+        $('svg g').each(function(){
+            var svgId = $(this).attr('id');
+            availableSVGAssets.push(svgId);
+        });
+        return availableSVGAssets;
     }
 }
