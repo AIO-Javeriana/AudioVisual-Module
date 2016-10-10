@@ -125,7 +125,7 @@ window.onload = function init() {
         mediaStreamSource.connect(audioContext.destination);
 
         //For now audioInput needs to be here to work correctly
-        //audioInputModule = new AudioInputModule(mediaStreamSource);
+        audioInputModule = new AudioInputModule(mediaStreamSource);
         
         audioVisualModule = new AudioVisualModule('http://localhost','9090',{
             imagesInfo: availableImages,
@@ -140,13 +140,6 @@ window.onload = function init() {
     var audioOutputModule = new AudioOutputModule('1', availableSounds);
     var visualModule = new VisualModule('2', availableImages);
     var videoModule = new VideoModule('3',videos);
-    
-    /*
-    var communication_channel = new CommunicationChannel("localhost","1234",{
-        visualModule:visualModule,
-        audioOutputModule:audioOutputModule
-    });
-    */
 
     $(document).on('click','#boton', function(){
          //audioOutputModule.play('surprised', {volume: 1});
