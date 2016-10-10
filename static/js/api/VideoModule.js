@@ -41,9 +41,6 @@ class VideoModule extends Module{
                     url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
                 }
         }
-
-        this.player = null;
-
         
         /**
          *  Show a video. The played video will depend on the parameters of the videoObject.
@@ -63,7 +60,7 @@ class VideoModule extends Module{
                 videoObject = this.errorVideo;
             else{
                 if(typeof videoObject.url !== "undefined"){
-                    this.showVideoFromYouTube(videoObject.url);
+                    this.showVideoFromYouTube(videoObject);
                 }else if(typeof videoObject.file !== "undefined" ){
                     this.showVideoFile(this.storingPath + this.image.file);
                 }
@@ -86,21 +83,50 @@ class VideoModule extends Module{
     }
 
     /**
+     * Creates necesary elements for a youtube video to be played correctly.
+     * @param videoObject:Object Contains video info. 
+    */
+    createYouTubeElement(videoObject){
+        var url = 'http://www.youtube.com/embed/' + this.getParameterByName('v', videoObject.url) + '?enablejsapi=1';
+        $('body').append('<div id="show-video">'+
+            '<div id="close">'+
+                '<button>X</button>'+
+                '</div>'+
+                '<div id="'+videoObject.name+'">'+
+                    '<iframe width="800" height="400" frameborder="0" title="YouTube video player" type="text/html" src="'+url+'">'+
+                    '</iframe>'+
+                '</div>'+
+            '</div>');
+    }
+
+    /**
      *  Plays a video from YouTube with the given url
      *  @param url url of the video to be played.
      */
-    showVideoFromYouTube(url, properties, callback){
-        //utils_showVideo(url, properties, callback);
+    showVideoFromYouTube(videoObject, properties, callback){
+        //See http://stackoverflow.com/questions/7443578/youtube-iframe-api-how-do-i-control-a-iframe-player-thats-already-in-the-html?rq=1
+        this.createYouTubeElement(videoObject);
+        $('#show-video').css('display','flex');
+        setTimeout(function() {
+            callPlayer(videoObject.name,"playVideo");
+        }, 500);
         $('#show-video #close').on('click', 'button', function(){
-            $('#show-video').remove('#vi    deo-player');
             $('#show-video').css('display','none');
             $('#msg').css('z-index', 0);
-            console.log(player);
-            player.stopVideo();
-            
-        })    
+            callPlayer(videoObject.name,"stopVideo");
+        });
     }
 
+    
+    getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
     /**
      *  Plays a video from a folder of video resources.
