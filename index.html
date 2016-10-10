@@ -179,8 +179,13 @@
           <div id="close">
               <button>X</button>
           </div>
+          <div id="whateverID">
+            <iframe width="640" height="390" frameborder="0" title="YouTube video player" type="text/html" src="http://www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1">
+            </iframe>
+          </div>
       </div>
-      
+      <a href="javascript:void callPlayer(&quot;whateverID&quot;,&quot;playVideo&quot;)">Start</a> &bull; <a href="javascript:void callPlayer(&quot;whateverID&quot;,&quot;pauseVideo&quot;)">Pause</a> &bull; <a href="javascript:void callPlayer(&quot;whateverID&quot;,&quot;stopVideo&quot;)">Stop</a> - Hover over the links to see the called function
+      <br />
       <div id ="battery_status_container">
         <i id ="battery_status"></i>
       </div>
@@ -219,6 +224,8 @@
 
   <!-- Sidebar Js -->
   <script type="text/javascript" src="./static/js/external/sidebar.js"></script>
+
+  <script type="text/javascript" src="./static/js/external/callPlayer.js"></script>
   
   <!-- Local resources -->
   <script src="./static/js/api/Module.js"></script>

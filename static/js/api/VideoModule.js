@@ -90,58 +90,15 @@ class VideoModule extends Module{
      *  @param url url of the video to be played.
      */
     showVideoFromYouTube(url, properties, callback){
-
-        $('#msg').css('z-index', 3);
-        var videoPlayer = $('<div>',{
-            'id': 'video-player'
-        })
-        $('#show-video').append(videoPlayer);
-        $('#show-video').css('display','flex');
-        
-        var id = this.getParameterByName('v', url);
-
-        var player = new YT.Player('video-player', {
-            height: '400',
-            width: '800',
-            videoId: id,
-            events: {
-                'onReady': this.onPlayerReady,
-                'onStateChange': this.onPlayerStateChange
-            }
-        });
-        
-        //setTimeout(function(){ player.stopVideo() }, 3000);
-
+        //utils_showVideo(url, properties, callback);
         $('#show-video #close').on('click', 'button', function(){
+            $('#show-video').remove('#vi    deo-player');
             $('#show-video').css('display','none');
             $('#msg').css('z-index', 0);
-            player.stopVideo()
-            $('#show-video').remove('#video-player');
-        })
-
-        //player.playVideo();
-    }
-
-    // autoplay video
-    onPlayerReady(event) {
-        event.target.playVideo();
-    }
-
-    // when video ends
-    onPlayerStateChange(event) {        
-        if(event.data === 0) {            
-            alert('done');
-        }
-    }
-
-    getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
+            console.log(player);
+            player.stopVideo();
+            
+        })    
     }
 
 
