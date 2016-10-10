@@ -1,0 +1,13 @@
+
+#msg{
+    position: absolute;
+    bottom:-5px;
+    width: 100vw;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#msg strong{
+    margin-left: 4px;
+    margin-right: 4px;
+}
