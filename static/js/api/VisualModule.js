@@ -124,27 +124,33 @@ class VisualModule extends Module{
          *  Shows a picture available in the image assets folder.
          *  @param name Name of the picture to be shown.
          */
-        this.showPicture = function(name){
+        this.showPicture = function(name, options, callback){
             var imageObject = this.getImageObjectByName(name);
             var image = this.errorImageSource;
-
+            var time = 0;
             if(imageObject != null){
                 if(typeof imageObject.url !== "undefined"){
                     image = imageObject.url;
                 }else if(typeof imageObject.file !== "undefined" ){
                     image = this.storingPath + this.image.file
                 }
-            }        
 
-            $('#msg').css('z-index', 3);
-            $('#image-keeper').css('display','flex');
-            $('#image-keeper #image img')
-                .on('error', function() { $(this).attr('src',this.errorImage); })
-                .attr('src',image);
+                if(typeof options.timeout !== "undefined"){
+                    time = options.timeout;
+                }
+            }        
+            
+            this.showImagePreview(image);
+            var that = this;
+            var callback_ = callback;
             $('#image-keeper #close').on('click', 'button', function(){
-                $('#image-keeper').css('display','none');
-                $('#msg').css('z-index', 0);
-            })
+                that.closeImagePreview(); 
+                callback();
+            });
+            setTimeout(function(){
+                that.closeImagePreview(); 
+                callback();
+            }, time);
         }
         
         this.updateBatteryStatus = function(level){
@@ -183,6 +189,25 @@ class VisualModule extends Module{
                     break;
             }
         }
+    }
+
+    /**
+     * Closes the show picture preview window
+     */
+    closeImagePreview(){
+        $('#image-keeper').css('display','none');
+        $('#msg').css('z-index', 0);
+    }
+
+    /**
+     * Shows up the show picture preview window
+     */
+    showImagePreview(image){
+        $('#msg').css('z-index', 3);
+        $('#image-keeper').css('display','flex');
+        $('#image-keeper #image img')
+            .on('error', function() { $(this).attr('src',this.errorImage); })
+            .attr('src',image);
     }
 
     /**
