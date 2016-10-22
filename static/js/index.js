@@ -174,11 +174,15 @@ window.onload = function init() {
 
         $('li button').each(function(){
             if(!pressed)
-                position -= 80;
+                position += 80;
             $(this).css('transition-duration','0.5s');
             $(this).css('transition-timing-function','ease');
-            $(this).css('transform','translate('+position+'px,0px)');
+            $(this).css('transform','translate(0px,'+position+'px)');
         });        
         pressed = !pressed;
+    });
+
+    $(document).on('click','#clear', function(){
+        audioOutputModule.textToSpeech('Hola fabian como estas');
     });
 };
