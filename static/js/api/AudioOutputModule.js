@@ -45,6 +45,63 @@ class AudioOutputModule extends Module {
             audio.play();
         }
 
+        this.textToSpeech= function(message, options, callback){
+            var entityMap = {
+                "á": "a",
+                "é": "e",
+                "í": "i",
+                'ó': 'o',
+                "ú": 'u',
+                "Á": 'A',
+                "É": "E",
+                "Í": "I",
+                "Ó": "O",
+                'Ú': 'U;',
+                "?": '',
+                "¿": '',
+                "!": '',
+                "¡": ''
+            };
+
+            message = this.escapeHtml(message, entityMap);
+            var properties = {
+                message: '', 
+                volume: 0.5,
+                rate: 1,
+                pitch: 2,
+                onend: function(){}
+            }
+
+            properties.message = message;
+            if(typeof options !== "undefined"){
+                if(typeof options.volume !== "undefined")
+                    properties.volume = options.volume;
+                if(typeof options.rate !== "undefined")
+                    properties.rate = options.rate;
+                if(typeof options.pitch !== "undefined")
+                    properties.pitch = options.pitch;
+                if(typeof options !== "undefined")
+                    properties.onend = callback;
+            }
+            
+            if('speechSynthesis' in window){
+                var msg = new SpeechSynthesisUtterance(message);
+                var voices = window.speechSynthesis.getVoices();
+                
+                msg.voiceURI = 'native';
+                msg.volume = properties.volume;
+                msg.rate = properties.rate;
+                msg.pitch = properties.pitch;
+                msg.text = properties.message;
+                msg.lang = 'es-ES';
+                msg.onend = properties.onend;
+
+                speechSynthesis.speak(msg);
+            }else{
+                throw 'Text to speech not available'
+            }
+        }
+
     }
 
     /**
@@ -105,6 +162,12 @@ class AudioOutputModule extends Module {
             if( this.availableSounds[i].name == name )
                 sound = this.availableSounds[i].audio;
         return sound;
+    }
+
+    escapeHtml(string, entityMap) {
+        return String(string).replace(/[áéíóúÁÉÍÓÚ?¿!¡]/g, function (s) {
+            return entityMap[s];
+        });
     }
 
 }
