@@ -41,7 +41,7 @@ class VisualModule extends Module{
                 this.errorImageSource = imageObject.errorImage.path;       
         }
         
-        /**
+         /**
          * Renders a set of SVG resources. This SVG resources must be correctly available
          * in the HTML file. For more info check: https://github.com/alexk111/SVG-Morpheus.
          * @param SVGSet set of SVG assets availables in the HTML file with the following structure
@@ -96,30 +96,7 @@ class VisualModule extends Module{
                 $( this ).fadeIn(velocity);
             });
         }
-
-
-        /**
-         * Renders a set of SVG resources. This SVG resources must be correctly available
-         * in the HTML file. For more info check: https://github.com/alexk111/SVG-Morpheus.
-         * @param SVGSet set of SVG assets availables in the HTML file with the following structure
-         *      {
-         *          [
-         *              {
-         *                  id: id of the SVG to be rendered,
-         *                  properties: {
-         *                  duration: duration of the animation being rendered,
-         *                  easing: velocity of the animation. available easings in the github repository,
-         *                  rotation: rotation of the animation. available rotations in the github repository
-         *              },
-         *              delay: time to wait before this animation starts.
-         *          ]
-         *      }
-         * 
-         */
-        this.renderSVGSet = function(SVGSet){
-            utils_renderSVGSet(SVGSet,this.renderedSVG);
-        }
-
+        
         /**
          *  Shows a picture available in the image assets folder.
          *  @param name Name of the picture to be shown.

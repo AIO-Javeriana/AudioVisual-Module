@@ -13,11 +13,11 @@ class AudioInputModule extends Module{
     constructor(id, mediaStreamSource) {
         super(id);
         this.recording = false;
+        console.log(dir);
         this.record = new Recorder(mediaStreamSource, {
-            workerPath: "/js/recorderWorker.js"
+            workerPath: "./js/external/recorderWorker.js"
         });
     
-
         /**
          * Starts to record.
          */

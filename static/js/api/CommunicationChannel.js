@@ -34,9 +34,6 @@ class CommunicationChannel{
         //Battery level emulation
         var level = Math.floor((Math.random() * 100) + 1);
         this.modules.visualModule.updateBatteryStatus(level);
-
-
-
         this.socket = io.connect(this.host+":"+this.port);
         this.socket.on('connect_error', function(err) {
             var i = Math.floor((Math.random() * 10) + 1);
@@ -112,9 +109,9 @@ class CommunicationChannel{
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
                         GROUP_ID: dataCallback.command.GROUP_ID, 
                         STATUS:"DONE", 
-                        MSG:""
+                        ERROR_MESSAGE:"",
+                        FINISH_MESSAGE: ""
                     };
-
                     dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
                   });
               break;
@@ -122,6 +119,15 @@ class CommunicationChannel{
           }
         });
         
+        // TODO: CHECK IF IS WORKING
+        this.socket.on(EventsEnum.WORK_STATUS, function(msg){
+          var JSONmsg = JSON.parse(msg);
+          var GROUP_ID = JSONmsg.GROUP_ID;
+          var COMMAND_ID = JSONmsg.COMMAND_ID;
+          var reply = {MODULE_ID: "AUDIO_VISUAL", STATUS: "WORKING", COMMAND_ID:COMMAND_ID, GROUP_ID:GROUP_ID, MSG: ""};
+          this.emit(EventsEnum.WORK_STATUS_REPLY,JSON.stringify(reply));
+        })
+
         this.socket.on('BATTERY_LVL', function(level) {
             modules.visualModule.updateBatteryStatus(level); 
         });

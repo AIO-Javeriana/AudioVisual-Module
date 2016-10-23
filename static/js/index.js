@@ -123,10 +123,8 @@ window.onload = function init() {
         audioContext = new AudioContext();
         var mediaStreamSource = audioContext.createMediaStreamSource(stream);
         mediaStreamSource.connect(audioContext.destination);
-
         //For now audioInput needs to be here to work correctly
-        audioInputModule = new AudioInputModule(mediaStreamSource);
-        
+        //audioInputModule = new AudioInputModule(mediaStreamSource);
         audioVisualModule = new AudioVisualModule('http://localhost','9090',{
             imagesInfo: availableImages,
             soundsInfo: availableSounds,
@@ -136,10 +134,10 @@ window.onload = function init() {
     }, function (error) {
         throw ('Error: you need to allow the application to use the microphone.' + error);
     });
-    
-    var audioOutputModule = new AudioOutputModule('1', availableSounds);
-    var visualModule = new VisualModule('2', availableImages);
-    var videoModule = new VideoModule('3',videos);
+
+    //var audioOutputModule = new AudioOutputModule('1', availableSounds);
+    //var visualModule = new VisualModule('2', availableImages);
+    //var videoModule = new VideoModule('3',videos);
 
     $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised', {volume: 1});
@@ -156,7 +154,6 @@ window.onload = function init() {
         */
     });
 
-    var pressed = false;
     $('#menu').on('click','#main',function(){
         var $img = $(this).find('img');
         var position = 0;
