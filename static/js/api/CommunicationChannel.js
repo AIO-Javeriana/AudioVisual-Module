@@ -26,7 +26,6 @@ var mapCommands = [];
 class CommunicationChannel{
     constructor(host, port, modules){
         this.id = 'CommunicationChannel'
-        this.commands = [{"COMMAND":"BLINK","PARAMS":[], "INTERRUPTIBLE": false}];
         this.host = host;
         this.port = port;
         this.modules = modules;
@@ -43,7 +42,7 @@ class CommunicationChannel{
         
         this.socket.on('connect', function(){
             var ID = "AUDIO_VISUAL";
-            var commands = [{COMMAND:"BLINK",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}];
+            var commands = [{COMMAND:"BLINK",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}, {COMMAND:"DECIR", PARAMS:["TEXTO","TONO"], INTERRUPTIBLE:false, SERVICE:false}];
             var module_info = {
                 MODULE_ID:ID,
                 COMMANDS:commands
@@ -105,6 +104,25 @@ class CommunicationChannel{
                   modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
                     
                     var reply = {
+                        MODULE_ID:"AUDIO_VISUAL", 
+                        COMMAND_ID: dataCallback.command.COMMAND_ID, 
+                        GROUP_ID: dataCallback.command.GROUP_ID, 
+                        STATUS:"DONE", 
+                        ERROR_MESSAGE:"",
+                        FINISH_MESSAGE: ""
+                    };
+                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
+                  });
+              break;
+
+              case "DECIR":
+                  var params = commands[i].PARAMS;
+                  var dataCallback = {
+                      socket: this,
+                      command: commands[i]
+                  };
+                  modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
+                      var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
                         GROUP_ID: dataCallback.command.GROUP_ID, 

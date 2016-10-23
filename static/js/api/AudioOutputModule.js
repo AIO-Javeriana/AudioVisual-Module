@@ -45,7 +45,7 @@ class AudioOutputModule extends Module {
             audio.play();
         }
 
-        this.textToSpeech= function(message, options, callback){
+        this.textToSpeech= function(message, options, dataCallback, callback){
             var entityMap = {
                 "á": "a",
                 "é": "e",
@@ -73,14 +73,14 @@ class AudioOutputModule extends Module {
             }
 
             properties.message = message;
-            if(typeof options !== "undefined"){
-                if(typeof options.volume !== "undefined")
+            if(options != null){
+                if(options.volume != null)
                     properties.volume = options.volume;
-                if(typeof options.rate !== "undefined")
+                if(options.rate != null)
                     properties.rate = options.rate;
-                if(typeof options.pitch !== "undefined")
+                if(options.pitch != null)
                     properties.pitch = options.pitch;
-                if(typeof options !== "undefined")
+                if(options != null)
                     properties.onend = callback;
             }
             
