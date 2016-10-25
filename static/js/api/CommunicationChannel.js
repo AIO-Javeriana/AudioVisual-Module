@@ -67,42 +67,48 @@ class CommunicationChannel{
           var GROUP_ID = JSONmsg.GROUP_ID;
           var commands = mapCommands[GROUP_ID];
           for (var i = 0; i < commands.length; i++) {
+            var params = commands[i].PARAMS;  
             switch(commands[i].COMMAND){
-                case "BLINK":
-                  var toRender = [
-                      {
-                          id:'full-opened-eyes',
-                          properties: {
-                              duration: 500,
-                              easing: 'linear',
-                              rotation: 'none'
-                          },
-                          delay: 500
-                      },{
-                          id:'full-closed-eyes',
-                          properties: {
-                              duration: 250,
-                              easing: 'quint-in',
-                              rotation: 'none'
-                          },
-                          delay: 0
-                      },{
-                          id:'full-opened-eyes',
-                          properties: {
-                              duration: 250,
-                              easing: 'quint-in',
-                              rotation: 'none'
-                          },
-                          delay: 0
-                      }
-                  ];
+                case "ATTENTION-CYCLE":
+                  var dice = Math.floor((Math.random() * 10) + 1);
+                  if(dice > 10){
+                    // TODO
+                  }else{
+                    var toRender = [
+                        {
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        },{
+                            id:'full-closed-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        },{
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        }
+                    ];
+                  }
                   var dataCallback = {
                       socket: this,
                       command: commands[i]
                   };
-                  
+                  console.log("valor emocional: " + params.EMOTIONAL_VALUE);
                   modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
-                    
+                    modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
                     var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
@@ -116,11 +122,11 @@ class CommunicationChannel{
               break;
 
               case "DECIR":
-                  var params = commands[i].PARAMS;
                   var dataCallback = {
                       socket: this,
                       command: commands[i]
                   };
+                  modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
                   modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
                       var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 

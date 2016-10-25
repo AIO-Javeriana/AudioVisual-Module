@@ -63,6 +63,38 @@ class VisualModule extends Module{
             utils_renderSVGSet(SVGSet,this.renderedSVG, dataCallback, callback);
         }
     
+        this.changeEmotion = function(emotionalValue){
+            var toRender = [];
+            switch(emotionalValue){
+                case emotionalValue > 0:
+                    toRender = [
+                        {
+                            id:'full-closed-happy-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        }
+                    ];
+                break;
+                case emotionalValue < 0:
+                    toRender = [
+                        {
+                            id:'medium-closed-sad-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        }
+                    ];
+                break;
+            }
+            modules.visualModule.renderSVGSet(toRender,null,function(dataCallback){});
+        }
         /**
          * Shows a small frame. Useful to show conversation lines.
          * This function uses bootstrap alerts.
