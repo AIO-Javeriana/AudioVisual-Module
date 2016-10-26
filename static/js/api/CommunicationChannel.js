@@ -42,7 +42,7 @@ class CommunicationChannel{
         
         this.socket.on('connect', function(){
             var ID = "AUDIO_VISUAL";
-            var commands = [{COMMAND:"BLINK",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}, {COMMAND:"DECIR", PARAMS:["TEXTO","TONO"], INTERRUPTIBLE:false, SERVICE:false}];
+            var commands = [{COMMAND:"ATTENTION_CYCLE",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}, {COMMAND:"DECIR", PARAMS:["TEXTO","TONO"], INTERRUPTIBLE:false, SERVICE:false}];
             var module_info = {
                 MODULE_ID:ID,
                 COMMANDS:commands
@@ -69,46 +69,18 @@ class CommunicationChannel{
           for (var i = 0; i < commands.length; i++) {
             var params = commands[i].PARAMS;  
             switch(commands[i].COMMAND){
-                case "ATTENTION-CYCLE":
+                case "ATTENTION_CYCLE":
                   var dice = Math.floor((Math.random() * 10) + 1);
                   if(dice > 10){
                     // TODO
                   }else{
-                    var toRender = [
-                        {
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        },{
-                            id:'full-closed-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        },{
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        }
-                    ];
+                    var dataCallback = {
+                        socket: this,
+                        command: commands[i],
+                        modules: modules
+                    };
                   }
-                  var dataCallback = {
-                      socket: this,
-                      command: commands[i]
-                  };
-                  console.log("valor emocional: " + params.EMOTIONAL_VALUE);
-                  modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
-                    modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
+                  modules.visualModule.blink(dataCallback, function(dataCallback){
                     var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
@@ -126,6 +98,7 @@ class CommunicationChannel{
                       socket: this,
                       command: commands[i]
                   };
+                  console.log("Prueba: " + params.EMOTIONAL_VALUE);
                   modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
                   modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
                       var reply = {

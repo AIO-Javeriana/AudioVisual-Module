@@ -63,11 +63,53 @@ class VisualModule extends Module{
             utils_renderSVGSet(SVGSet,this.renderedSVG, dataCallback, callback);
         }
     
+        this.blink = function(dataCallback, callback){
+            var toRender = [
+                        {
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        },{
+                            id:'full-closed-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        },{
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        }
+                    ];
+            this.renderSVGSet(toRender,dataCallback,callback);
+        }
+
         this.changeEmotion = function(emotionalValue){
-            var toRender = [];
-            switch(emotionalValue){
+            switch(true){
+                case emotionalValue = 0:
+                    var toRender = [
+                        {
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        }
+                    ];
                 case emotionalValue > 0:
-                    toRender = [
+                    var toRender = [
                         {
                             id:'full-closed-happy-eyes',
                             properties: {
@@ -80,7 +122,7 @@ class VisualModule extends Module{
                     ];
                 break;
                 case emotionalValue < 0:
-                    toRender = [
+                    var toRender = [
                         {
                             id:'medium-closed-sad-eyes',
                             properties: {
@@ -93,7 +135,7 @@ class VisualModule extends Module{
                     ];
                 break;
             }
-            modules.visualModule.renderSVGSet(toRender,null,function(dataCallback){});
+            this.renderSVGSet(toRender,null,function(dataCallback){});
         }
         /**
          * Shows a small frame. Useful to show conversation lines.
