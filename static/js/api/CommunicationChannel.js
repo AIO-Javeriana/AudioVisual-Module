@@ -26,7 +26,6 @@ var mapCommands = [];
 class CommunicationChannel{
     constructor(host, port, modules){
         this.id = 'CommunicationChannel'
-        this.commands = [{"COMMAND":"BLINK","PARAMS":[], "INTERRUPTIBLE": false}];
         this.host = host;
         this.port = port;
         this.modules = modules;
@@ -34,9 +33,6 @@ class CommunicationChannel{
         //Battery level emulation
         var level = Math.floor((Math.random() * 100) + 1);
         this.modules.visualModule.updateBatteryStatus(level);
-
-
-
         this.socket = io.connect(this.host+":"+this.port);
         this.socket.on('connect_error', function(err) {
             var i = Math.floor((Math.random() * 10) + 1);
@@ -46,7 +42,7 @@ class CommunicationChannel{
         
         this.socket.on('connect', function(){
             var ID = "AUDIO_VISUAL";
-            var commands = [{COMMAND:"BLINK",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}];
+            var commands = [{COMMAND:"ATTENTION_CYCLE",PARAMS:[], INTERRUPTIBLE: false, SERVICE: false}, {COMMAND:"DECIR", PARAMS:["TEXTO","TONO"], INTERRUPTIBLE:false, SERVICE:false}];
             var module_info = {
                 MODULE_ID:ID,
                 COMMANDS:commands
@@ -71,26 +67,48 @@ class CommunicationChannel{
           var GROUP_ID = JSONmsg.GROUP_ID;
           var commands = mapCommands[GROUP_ID];
           for (var i = 0; i < commands.length; i++) {
+            var params = commands[i].PARAMS;  
             switch(commands[i].COMMAND){
-                case "BLINK":
-                  
-                  var toRender = this.idle();
-
-                  var dataCallback = {
-                      socket: this,
-                      command: commands[i]
-                  };
-                  
-                  modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
-                    
+                case "ATTENTION_CYCLE":
+                  var dice = Math.floor((Math.random() * 10) + 1);
+                  if(dice > 10){
+                    // TODO
+                  }else{
+                    var dataCallback = {
+                        socket: this,
+                        command: commands[i],
+                        modules: modules
+                    };
+                  }
+                  modules.visualModule.blink(dataCallback, function(dataCallback){
                     var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
                         GROUP_ID: dataCallback.command.GROUP_ID, 
                         STATUS:"DONE", 
-                        MSG:""
+                        ERROR_MESSAGE:"",
+                        FINISH_MESSAGE: ""
                     };
+                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
+                  });
+              break;
 
+              case "DECIR":
+                  var dataCallback = {
+                      socket: this,
+                      command: commands[i]
+                  };
+                  console.log("Prueba: " + params.EMOTIONAL_VALUE);
+                  modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
+                  modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
+                      var reply = {
+                        MODULE_ID:"AUDIO_VISUAL", 
+                        COMMAND_ID: dataCallback.command.COMMAND_ID, 
+                        GROUP_ID: dataCallback.command.GROUP_ID, 
+                        STATUS:"DONE", 
+                        ERROR_MESSAGE:"",
+                        FINISH_MESSAGE: ""
+                    };
                     dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
                   });
               break;
@@ -98,6 +116,15 @@ class CommunicationChannel{
           }
         });
         
+        // TODO: CHECK IF IS WORKING
+        this.socket.on(EventsEnum.WORK_STATUS, function(msg){
+          var JSONmsg = JSON.parse(msg);
+          var GROUP_ID = JSONmsg.GROUP_ID;
+          var COMMAND_ID = JSONmsg.COMMAND_ID;
+          var reply = {MODULE_ID: "AUDIO_VISUAL", STATUS: "WORKING", COMMAND_ID:COMMAND_ID, GROUP_ID:GROUP_ID, MSG: ""};
+          this.emit(EventsEnum.WORK_STATUS_REPLY,JSON.stringify(reply));
+        })
+
         this.socket.on('BATTERY_LVL', function(level) {
             modules.visualModule.updateBatteryStatus(level); 
         });

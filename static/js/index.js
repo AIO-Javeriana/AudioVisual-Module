@@ -241,27 +241,19 @@ window.onload = function init() {
     }
 
     //Resourses for mic correctly working
-    navigator.getUserMedia({ audio: true }, function (stream) {
-        audioContext = new AudioContext();
-        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
-        mediaStreamSource.connect(audioContext.destination);
-
-        //For now audioInput needs to be here to work correctly
-        audioInputModule = new AudioInputModule(mediaStreamSource);
-        
+    //navigator.getUserMedia({ audio: true }, function (stream) {
+        //audioContext = new AudioContext();
         audioVisualModule = new AudioVisualModule('http://localhost','9090',{
             imagesInfo: availableImages,
-            soundsInfo: availableSounds,
-            audioStreamSource: mediaStreamSource
+            soundsInfo: availableSounds
         });
         
-    }, function (error) {
-        throw ('Error: you need to allow the application to use the microphone.' + error);
-    });
+    //}, function (error) {
+        //throw ('Error: you need to allow the application to use the microphone.' + error);
+    //});
+
     
-    var audioOutputModule = new AudioOutputModule('1', availableSounds);
-    var visualModule = new VisualModule('2', availableImages);
-    var videoModule = new VideoModule('3',videos);
+
 
     $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised', {volume: 1});
@@ -278,7 +270,6 @@ window.onload = function init() {
         */
     });
 
-    var pressed = false;
     $('#menu').on('click','#main',function(){
         var $img = $(this).find('img');
         var position = 0;
