@@ -46,8 +46,17 @@ var availableSounds = {
         ]
 };
 
+
 var toRender = [
         {
+            id:'conector_full-opened-eyes_looking-sneaky',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
             id:'sneaky-looking-right',
             properties: {
                 duration: 500,
@@ -64,10 +73,123 @@ var toRender = [
             },
             delay: 500
         },{
+            id:'conector_sneaky-looking-left_full-opened-eyes',
+            properties: {
+                duration: 1,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 1
+        },{
             id:'full-opened-eyes',
             properties: {
                 duration: 500,
                 easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-closed-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        }
+    ];
+
+
+var toRender_sad = [
+        {
+            id:'slightly-closed-sad-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'medium-closed-sad-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'almost-closed-sad-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-closed-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        }
+    ];
+
+var toRender_happy = [
+        {
+            id:'slightly-closed-happy-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'medium-closed-happy-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'almost-closed-happy-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
                 rotation: 'none'
             },
             delay: 500
@@ -183,6 +305,122 @@ window.onload = function init() {
     });
 
     $(document).on('click','#clear', function(){
-        audioOutputModule.textToSpeech('Hola fabian como estas');
+        visualModule.renderSVGSet(idle(), function(){
+            console.log('hola');
+        });
     });
+    $(document).on('click','#power', function(){
+        visualModule.renderSVGSet(toRender_sad, function(){
+            console.log('hola');
+        });
+    });
+    $(document).on('click','#menuu', function(){
+        visualModule.renderSVGSet(toRender_happy, function(){
+            console.log('hola');
+        });
+    })
 };
+
+function idle(){
+
+var sneakyLookingRight = [{
+        id:'conector_full-opened-eyes_looking-sneaky',
+        properties: {
+            duration: 1,
+            easing: 'linear',
+            rotation: 'none'
+        },
+        delay: 0
+    },{
+        id:'sneaky-looking-right',
+        properties: {
+            duration: 500,
+            easing: 'linear',
+            rotation: 'none'
+        },
+        delay: 0
+    },{
+        id:'conector_sneaky-looking-right_full-opened-eyes',
+        properties: {
+            duration: 100,
+            easing: 'quint-in',
+            rotation: 'none'
+        },
+        delay: 500
+    },{
+        id:'full-opened-eyes',
+        properties: {
+            duration: 500,
+            easing: 'linear',
+            rotation: 'none'
+        },
+        delay: 0
+    }
+];
+
+var sneakyLookingLeft = [{
+            id:'conector_full-opened-eyes_looking-sneaky',
+            properties: {
+                duration: 1,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'sneaky-looking-left',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'conector_sneaky-looking-left_full-opened-eyes',
+            properties: {
+                duration: 100,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 500
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 500,
+                easing: 'linear',
+                rotation: 'none'
+            },
+            delay: 0
+        }
+    ];
+
+var blink = [{
+            id:'full-closed-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        },{
+            id:'full-opened-eyes',
+            properties: {
+                duration: 125,
+                easing: 'quint-in',
+                rotation: 'none'
+            },
+            delay: 0
+        }
+    ];
+
+var number = Math.floor((Math.random() * 5) + 1); //Número entre uno y tres
+switch(number){
+    case 1:
+        return sneakyLookingRight;
+    case 2:
+        return sneakyLookingLeft;
+    default:
+        return blink;
+};
+    
+}
+
