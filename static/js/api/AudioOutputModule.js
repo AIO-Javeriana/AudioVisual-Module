@@ -97,6 +97,7 @@ class AudioOutputModule extends Module {
                 msg.onend = properties.onend;
 
                 speechSynthesis.speak(msg);
+                callback(dataCallback);
             }else{
                 throw 'Text to speech not available'
             }

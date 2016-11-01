@@ -95,45 +95,42 @@ class VisualModule extends Module{
         }
 
         this.changeEmotion = function(emotionalValue){
-            switch(true){
-                case emotionalValue = 0:
-                    var toRender = [
-                        {
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        }
-                    ];
-                case emotionalValue > 0:
-                    var toRender = [
-                        {
-                            id:'full-closed-happy-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        }
-                    ];
-                break;
-                case emotionalValue < 0:
-                    var toRender = [
-                        {
-                            id:'medium-closed-sad-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        }
-                    ];
-                break;
+            if (emotionalValue == 0){
+                var toRender = [
+                    {
+                        id:'full-opened-eyes',
+                        properties: {
+                            duration: 500,
+                            easing: 'linear',
+                            rotation: 'none'
+                        },
+                        delay: 500
+                    }
+                ];
+            }else if(emotionalValue > 0){
+                var toRender = [
+                    {
+                        id:'almost-closed-happy-eyes',
+                        properties: {
+                            duration: 500,
+                            easing: 'linear',
+                            rotation: 'none'
+                        },
+                        delay: 500
+                    }
+                ];
+            }else{
+                var toRender = [
+                    {
+                        id:'medium-closed-sad-eyes',
+                        properties: {
+                            duration: 500,
+                            easing: 'linear',
+                            rotation: 'none'
+                        },
+                        delay: 500
+                    }
+                ];
             }
             this.renderSVGSet(toRender,null,function(dataCallback){});
         }

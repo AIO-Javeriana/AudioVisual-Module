@@ -74,13 +74,40 @@ class CommunicationChannel{
                   if(dice > 10){
                     // TODO
                   }else{
-                    var dataCallback = {
-                        socket: this,
-                        command: commands[i],
-                        modules: modules
-                    };
+                    var toRender = [
+                        {
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 500,
+                                easing: 'linear',
+                                rotation: 'none'
+                            },
+                            delay: 500
+                        },{
+                            id:'full-closed-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        },{
+                            id:'full-opened-eyes',
+                            properties: {
+                                duration: 250,
+                                easing: 'quint-in',
+                                rotation: 'none'
+                            },
+                            delay: 0
+                        }
+                    ];
                   }
-                  modules.visualModule.blink(dataCallback, function(dataCallback){
+                  var dataCallback = {
+                      socket: this,
+                      command: commands[i]
+                  };
+                  modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
+                    //modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
                     var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 
@@ -98,7 +125,6 @@ class CommunicationChannel{
                       socket: this,
                       command: commands[i]
                   };
-                  console.log("Prueba: " + params.EMOTIONAL_VALUE);
                   modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
                   modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
                       var reply = {
@@ -128,108 +154,5 @@ class CommunicationChannel{
         this.socket.on('BATTERY_LVL', function(level) {
             modules.visualModule.updateBatteryStatus(level); 
         });
-    }
-
-    idle(){
-        
-        var sneakyLookingRight = [{
-                id:'conector_full-opened-eyes_looking-sneaky',
-                properties: {
-                    duration: 1,
-                    easing: 'linear',
-                    rotation: 'none'
-                },
-                delay: 0
-            },{
-                id:'sneaky-looking-right',
-                properties: {
-                    duration: 500,
-                    easing: 'linear',
-                    rotation: 'none'
-                },
-                delay: 0
-            },{
-                id:'conector_sneaky-looking-right_full-opened-eyes',
-                properties: {
-                    duration: 100,
-                    easing: 'quint-in',
-                    rotation: 'none'
-                },
-                delay: 500
-            },{
-                id:'full-opened-eyes',
-                properties: {
-                    duration: 500,
-                    easing: 'linear',
-                    rotation: 'none'
-                },
-                delay: 0
-            }
-        ];
-
-        var sneakyLookingLeft = [{
-                    id:'conector_full-opened-eyes_looking-sneaky',
-                    properties: {
-                        duration: 1,
-                        easing: 'linear',
-                        rotation: 'none'
-                    },
-                    delay: 0
-                },{
-                    id:'sneaky-looking-left',
-                    properties: {
-                        duration: 500,
-                        easing: 'linear',
-                        rotation: 'none'
-                    },
-                    delay: 0
-                },{
-                    id:'conector_sneaky-looking-left_full-opened-eyes',
-                    properties: {
-                        duration: 100,
-                        easing: 'quint-in',
-                        rotation: 'none'
-                    },
-                    delay: 500
-                },{
-                    id:'full-opened-eyes',
-                    properties: {
-                        duration: 500,
-                        easing: 'linear',
-                        rotation: 'none'
-                    },
-                    delay: 0
-                }
-            ];
-
-        var blink = [{
-                    id:'full-closed-eyes',
-                    properties: {
-                        duration: 125,
-                        easing: 'quint-in',
-                        rotation: 'none'
-                    },
-                    delay: 0
-                },{
-                    id:'full-opened-eyes',
-                    properties: {
-                        duration: 125,
-                        easing: 'quint-in',
-                        rotation: 'none'
-                    },
-                    delay: 0
-                }
-            ];
-
-        var number = Math.floor((Math.random() * 5) + 1); //Número entre uno y tres
-        switch(number){
-            case 1:
-                return sneakyLookingRight;
-            case 2:
-                return sneakyLookingLeft;
-            default:
-                return blink;
-        };
-        
-    }
+    }    
 }
