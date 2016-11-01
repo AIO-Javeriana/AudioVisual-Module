@@ -71,53 +71,25 @@ class CommunicationChannel{
             switch(commands[i].COMMAND){
                 case "ATTENTION_CYCLE":
                   var dice = Math.floor((Math.random() * 10) + 1);
-                  if(dice > 10){
-                    // TODO
-                  }else{
-                    var toRender = [
-                        {
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        },{
-                            id:'full-closed-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        },{
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        }
-                    ];
-                  }
                   var dataCallback = {
                       socket: this,
                       command: commands[i]
                   };
-                  modules.visualModule.renderSVGSet(toRender,dataCallback,function(dataCallback){
-                    //modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
-                    var reply = {
-                        MODULE_ID:"AUDIO_VISUAL", 
-                        COMMAND_ID: dataCallback.command.COMMAND_ID, 
-                        GROUP_ID: dataCallback.command.GROUP_ID, 
-                        STATUS:"DONE", 
-                        ERROR_MESSAGE:"",
-                        FINISH_MESSAGE: ""
-                    };
-                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
-                  });
+                  if(dice > 10){
+                    // TODO
+                  }else{
+                      modules.visualModule.blink(function(){
+                            var reply = {
+                                MODULE_ID:"AUDIO_VISUAL", 
+                                COMMAND_ID: dataCallback.command.COMMAND_ID, 
+                                GROUP_ID: dataCallback.command.GROUP_ID, 
+                                STATUS:"DONE", 
+                                ERROR_MESSAGE:"",
+                                FINISH_MESSAGE: ""
+                            };
+                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED,JSON.stringify(reply));
+                        });
+                  }
               break;
 
               case "DECIR":
@@ -126,7 +98,7 @@ class CommunicationChannel{
                       command: commands[i]
                   };
                   modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
-                  modules.audioOutputModule.textToSpeech(params.TEXTO,null,dataCallback,function(dataCallback){
+                  modules.audioOutputModule.textToSpeech(params.TEXTO,null,function(){
                       var reply = {
                         MODULE_ID:"AUDIO_VISUAL", 
                         COMMAND_ID: dataCallback.command.COMMAND_ID, 

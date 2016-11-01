@@ -45,7 +45,7 @@ class AudioOutputModule extends Module {
             audio.play();
         }
 
-        this.textToSpeech= function(message, options, dataCallback, callback){
+        this.textToSpeech= function(message, options, callback){
             var entityMap = {
                 "á": "a",
                 "é": "e",
@@ -80,8 +80,10 @@ class AudioOutputModule extends Module {
                     properties.rate = options.rate;
                 if(options.pitch != null)
                     properties.pitch = options.pitch;
-                if(options != null)
-                    properties.onend = callback;
+            }
+
+            if(callback != null){
+                properties.onend = callback;
             }
             
             if('speechSynthesis' in window){
@@ -97,7 +99,6 @@ class AudioOutputModule extends Module {
                 msg.onend = properties.onend;
 
                 speechSynthesis.speak(msg);
-                callback(dataCallback);
             }else{
                 throw 'Text to speech not available'
             }

@@ -59,11 +59,11 @@ class VisualModule extends Module{
          *      }
          * 
          */
-        this.renderSVGSet = function(SVGSet, dataCallback, callback){
-            utils_renderSVGSet(SVGSet,this.renderedSVG, dataCallback, callback);
+        this.renderSVGSet = function(SVGSet, callback){
+            utils_renderSVGSet(SVGSet,this.renderedSVG, callback);
         }
     
-        this.blink = function(dataCallback, callback){
+        this.blink = function(callback){
             var toRender = [
                         {
                             id:'full-opened-eyes',
@@ -91,7 +91,7 @@ class VisualModule extends Module{
                             delay: 0
                         }
                     ];
-            this.renderSVGSet(toRender,dataCallback,callback);
+            this.renderSVGSet(toRender,callback);
         }
 
         this.changeEmotion = function(emotionalValue){
