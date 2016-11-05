@@ -5,25 +5,13 @@
   <title>AudioVisualModule</title>
   <link rel="stylesheet" href="./static/css/aio-ui.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/visual_module.css" type="text/css" />
-  <link rel="stylesheet" href="./static/css/sidebar.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/materialize.min.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/bootstrap_alerts.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/materialdesignicons.min.css" media="all" type="text/css" />
+  <link rel="stylesheet" href="./static/css/mfb.min.css" media="all" type="text/css" />
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Clases
-  <script src="./js/Module.js"></script>
-  <script src="./js/Canvas.js"></script>
-  <script src="./js/Character.js"></script>
-  <script src="./js/BodyPart.js"></script>
-  <script src="./js/Eyes.js"></script>
-  <script src="./js/VisualModule.js"></script>
-  <script src="./js/Profile.js"></script>
-  <script src="./js/AudioVisualModule.js"></script>
-  <script src="./js/Main.js"></script>
-  -->
 
 </head>
 
@@ -289,7 +277,6 @@
     </div>
   </div>
 
-
   <div id="battery_status_container">
     <i id="battery_status"></i>
   </div>
@@ -302,6 +289,10 @@
       <li><button id="menuu"><img src="./static/imgs/menu_black_100px.png"></button></li>
     </ul>
   </div>
+
+  <ul class="mfb-component--tl mfb-slidein" data-mfb-hover>
+    <!-- the menu content -->
+  </ul>
 
   <!-- jquery v3.1.0: openSource library for DOM manipulating -->
   <script type="text/javascript" src="./static/js/external/jquery.v3.1.0.min.js"></script>
@@ -328,8 +319,8 @@
 
   <script type="text/javascript" src="./static/js/external/callPlayer.js"></script>
 
-  <!--Google's Material Icons -->
-
+  <!-- nobitagit's material-floating-button taken from https://github.com/nobitagit/material-floating-button -->
+  <script type="text/javascript" src="./static/js/external/mfb.min.js"></script>
 
   <!-- Local resources -->
   <script src="./static/js/api/Module.js"></script>
