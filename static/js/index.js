@@ -1,13 +1,5 @@
 /**
  * Revisar y arreglar en el uml
- * AudioInput (nombres de las funciones, atributos necesitados y framework usado)
- * AudioOutput (eliminar funciones pause y stop, eliminar libreria soundJs), el path no es manejable por el usuario.
- * AVM y Body part tendrán acceso a un objeto Activity que será el que diga que es lo que tiene que hacer cada módulo.
- * VisualModule: Añadir showDialogPrompt, showSVGSet, getAvailableSVGAssets. Borrar paint() del modelo de UML.
- * Hay que borrar el modelo de BodyPart del diagrama de uml, los servicios todos se ofrecen desde el módulo de comunicaciones.
- * ToDo:
- *  - pensar en la forma de como obtener los recursos de imagenes y audio, no pasandolasd desde el index. //
- *  - showVideo: ¿Otro módulo?, ¿Módulo visual? ¿Pero entonces como se conecta con el modulo de audio?. //check
  */
 
 /*
@@ -241,20 +233,17 @@ window.onload = function init() {
     }
 
     //Resourses for mic correctly working
-    //navigator.getUserMedia({ audio: true }, function (stream) {
+    navigator.getUserMedia({ audio: true }, function (stream) {
         //audioContext = new AudioContext();
         audioVisualModule = new AudioVisualModule('http://localhost','9090',{
             imagesInfo: availableImages,
             soundsInfo: availableSounds
         });
         
-    //}, function (error) {
-        //throw ('Error: you need to allow the application to use the microphone.' + error);
-    //});
-
+    }, function (error) {
+        throw ('Error: you need to allow the application to use the microphone.' + error);
+    });
     
-
-
     $(document).on('click','#boton', function(){
         //audioOutputModule.play('surprised', {volume: 1});
         visualModule.showPicture('katy', {timeout: 5000}, function(){
@@ -270,6 +259,9 @@ window.onload = function init() {
         */
     });
 
+    var visualModule = new VisualModule('1', availableImages);
+
+    var pressed = false;
     $('#menu').on('click','#main',function(){
         var $img = $(this).find('img');
         var position = 0;
@@ -297,7 +289,7 @@ window.onload = function init() {
 
     $(document).on('click','#clear', function(){
         visualModule.renderSVGSet(idle(), function(){
-            console.log('hola');
+            console.log('finished');
         });
     });
     $(document).on('click','#power', function(){
@@ -404,14 +396,14 @@ var blink = [{
     ];
 
 var number = Math.floor((Math.random() * 5) + 1); //Número entre uno y tres
-switch(number){
-    case 1:
-        return sneakyLookingRight;
-    case 2:
-        return sneakyLookingLeft;
-    default:
-        return blink;
-};
+    switch(number){
+        case 1:
+            return sneakyLookingRight;
+        case 2:
+            return sneakyLookingLeft;
+        default:
+            return blink;
+    };
     
 }
 
