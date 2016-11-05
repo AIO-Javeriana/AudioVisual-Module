@@ -13,8 +13,8 @@ class AudioOutputModule extends Module {
      *          path: path where the audio files are hosted,
      *          availableSoundFiles:[
      *              {
-     *                  name: name or tag for the sound file,
-     *                  file: name of the file
+     *                  name[String]: name or tag for the sound file,
+     *                  file[String]: name of the file
      *              }
      *          ]
      *      }
@@ -28,13 +28,13 @@ class AudioOutputModule extends Module {
     
         /**
          *  Plays a sound.
-         *  @param name Name of the sound to be played.
-         *  @param properties Object containing the properties of the sound to be played.
+         *  @param name[String] Name of the sound to be played.
+         *  @param properties[Object] Contains the properties of the sound to be played.
          *  {
-         *      volume: volume level of the sound
+         *      volume[float]: volume level of the sound, 0<=volume<=1, Default: 0.5.
          *  }
          */
-        this.play = function( name, properties ) {
+        this.play = function( name, properties, callback ){
             var audio = this.getAudio(name);
             audio.volume = 0.5;
             if( typeof properties !== "undefined"){
@@ -42,9 +42,25 @@ class AudioOutputModule extends Module {
                     audio.volume = properties.volume;
                 }
             }
+
+            audio.addEventListener("ended", function(){
+                callback();
+            });
+
             audio.play();
         }
 
+        /**
+         * Makes a voice to say the text sent.
+         * For more information see: https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
+         * @param message[String]
+         * @param options[Object] {
+         *      volume[float]:  volume level of the voice. 0<= volume <=1. Default: 0.5
+         *      pitch[float]:   specifies the speaking pitch 0.1 <= pitch <= 2. Default 2. 
+         *      rate[float]:  specifies the speaking rate. 0 <= rate <= 2. Default: 1.
+         * }
+         * @param callback[function] function to be called when the speech finishes.
+         * */
         this.textToSpeech= function(message, options, callback){
             var entityMap = {
                 "á": "a",
@@ -166,6 +182,11 @@ class AudioOutputModule extends Module {
         return sound;
     }
 
+    /**
+     * Eliminates accents from the text to be syntetized
+     * @string[String] : Text to be formatted.   
+     * @entityMap[Object] : Characters with accents list with their non accent representation. 
+     */
     escapeHtml(string, entityMap) {
         return String(string).replace(/[áéíóúÁÉÍÓÚ?¿!¡]/g, function (s) {
             return entityMap[s];
