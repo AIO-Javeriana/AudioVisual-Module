@@ -64,33 +64,100 @@ class VisualModule extends Module{
         }
     
         this.blink = function(callback){
-            var toRender = [
-                        {
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 500,
-                                easing: 'linear',
-                                rotation: 'none'
-                            },
-                            delay: 500
-                        },{
-                            id:'full-closed-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        },{
-                            id:'full-opened-eyes',
-                            properties: {
-                                duration: 250,
-                                easing: 'quint-in',
-                                rotation: 'none'
-                            },
-                            delay: 0
-                        }
-                    ];
+            var toRender = [{
+                    id:'full-closed-eyes',
+                    properties: {
+                        duration: 125,
+                        easing: 'quint-in',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'full-opened-eyes',
+                    properties: {
+                        duration: 125,
+                        easing: 'quint-in',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        this.sneakyLookRight = function(callback){
+            var toRender = [{
+                    id:'conector_full-opened-eyes_looking-sneaky',
+                    properties: {
+                        duration: 1,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'sneaky-looking-right',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'conector_sneaky-looking-right_full-opened-eyes',
+                    properties: {
+                        duration: 100,
+                        easing: 'quint-in',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                },{
+                    id:'full-opened-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        this.sneakyLookLeft = function(callback){
+            var toRender = [{
+                    id:'conector_full-opened-eyes_looking-sneaky',
+                    properties: {
+                        duration: 1,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'sneaky-looking-left',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'conector_sneaky-looking-left_full-opened-eyes',
+                    properties: {
+                        duration: 100,
+                        easing: 'quint-in',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                },{
+                    id:'full-opened-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                }
+            ];
             this.renderSVGSet(toRender,callback);
         }
 
@@ -134,12 +201,13 @@ class VisualModule extends Module{
             }
             this.renderSVGSet(toRender,null,function(dataCallback){});
         }
+
         /**
          * Shows a small frame. Useful to show conversation lines.
          * This function uses bootstrap alerts.
          * @param dialog text to be showed.
          */
-        this.showDialogFrame = function(dialog, msg_type, velocity){
+        this.showDialogFrame = function(dialog, msg_type, velocity, callback){
             this.msg.fadeOut(velocity, function(){
                 $( this ).removeClass();
                 $( this ).empty();
@@ -165,6 +233,7 @@ class VisualModule extends Module{
                 });
                 $( this ).html(msg_text);
                 $( this ).fadeIn(velocity);
+                callback();
             });
         }
         
