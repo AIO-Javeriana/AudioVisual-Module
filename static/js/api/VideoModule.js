@@ -10,23 +10,23 @@ class VideoModule extends Module{
      *  @param id id of the new Module.
      *  @param videosObject object containing the info of a video folder:
      *  {
-     *      path: path of the folder,
-     *      availableVideoFiles: [
+     *      path[String]: path of the folder,
+     *      availableVideoFiles[Object]: [
      *          {
-     *              name: name of the available video files in the path,
-     *              file: video file to be played.
-     *              url: url of the video to be played. 
+     *              name[String]: name of the available video files in the path,
+     *              file[String]: video file to be played.
+     *              url[String]: url of the video to be played. 
      *          }
      *      ],
-     *      errorVideo:{
-     *          file: file of the video to be displayed if an error occurs
-     *          url: url of the video to be displayed if an error occurs
+     *      errorVideo[Object]:{
+     *          file[String]: file of the video to be displayed if an error occurs
+     *          url[String]: url of the video to be displayed if an error occurs
      *      }
      *  }
      *  
      *
      *  availableVideos is an optional String array which must contain the name of the
-     *  videos available in path.
+     *  videos available in the given path.
      */
     constructor(id, videosObject){
         super(id);
@@ -44,11 +44,11 @@ class VideoModule extends Module{
         
         /**
          *  Show a video. The played video will depend on the parameters of the videoObject.
-         *  @param videoObject  Object containing the information of the video to be played.
+         *  @param videoObject[Object]  Object containing the information of the video to be played.
          *  {
-         *      name: name of the video,
-         *      url: url of the video to be played (Only YouTube is supported at the moment),
-         *      file: video file to be played.
+         *      name[String]: name of the video,
+         *      url[String]: url of the video to be played (Only YouTube is supported at the moment),
+         *      file[String]: video file to be played.
          *  }
          *  Passing the url or the file is enough. But if the two parameters are passed to the function,
          *  playing the video from the url is priority.
@@ -70,7 +70,7 @@ class VideoModule extends Module{
 
     /**
      *  Obtains a video from the list of available videos and returns it.
-     *  @returns source of the video from the requested name.
+     *  @returns [String] source of the video from the requested name.
      */
     getVideoObjectByName(name){
         var length = this.availableVideos.length;
@@ -84,7 +84,7 @@ class VideoModule extends Module{
 
     /**
      * Creates necesary elements for a youtube video to be played correctly.
-     * @param videoObject:Object Contains video info. 
+     * @param videoObject[Object] Contains video info. 
     */
     createYouTubeElement(videoObject){
         var url = 'http://www.youtube.com/embed/' + this.getParameterByName('v', videoObject.url) + '?enablejsapi=1';
@@ -101,7 +101,7 @@ class VideoModule extends Module{
 
     /**
      *  Plays a video from YouTube with the given url
-     *  @param url url of the video to be played.
+     *  @param url[String] url of the video to be played.
      */
     showVideoFromYouTube(videoObject, properties, callback){
         //See http://stackoverflow.com/questions/7443578/youtube-iframe-api-how-do-i-control-a-iframe-player-thats-already-in-the-html?rq=1
@@ -126,21 +126,5 @@ class VideoModule extends Module{
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    /**
-     *  Plays a video from a folder of video resources.
-     *  @param videoObject object which contains the path of the folder and optionally the available videos to be played.
-     */
-    showVideoFile(file){
-        throw 'Not implemented function exception';
-    }
-
-    /**
-     *  Gets the video resources from path.
-     *  @param name name of the video to be played.
-     */
-    getVideoFilesFromFolder(path){
-        throw 'Not implemented function exception';
     }
 }

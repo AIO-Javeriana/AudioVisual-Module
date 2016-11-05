@@ -10,17 +10,17 @@ class VisualModule extends Module{
      *  image files available in the folder  "/assets/images."
      *  @param imageObject The imageObject structure is the following:
      *  imageObject = {
-     *          path: path where the image files are stored.
-     *          availableImageFiles:[
+     *          path[String]: path where the image files are stored.
+     *          availableImageFiles[Object]:[
      *              {
-     *                  name: name or tag for the sound file,
-     *                  file: name of the file.
-     *                  url: url of the image source from the web.
+     *                  name[String]: name or tag for the sound file,
+     *                  file[String]: name of the file.
+     *                  url[String]: url of the image source from the web.
      *              }
      *          ],
      *          errorImage:{
-     *            file: name of the file.
-     *            url: url of the image source from the web.
+     *            file[String]: name of the file.
+     *            url[String]: url of the image source from the web.
      *          }
      *      }
      */
@@ -48,13 +48,13 @@ class VisualModule extends Module{
          *      {
          *          [
          *              {
-         *                  id: id of the SVG to be rendered,
-         *                  properties: {
-         *                  duration: duration of the animation being rendered,
-         *                  easing: velocity of the animation. available easings in the github repository,
-         *                  rotation: rotation of the animation. available rotations in the github repository
+         *                  id[String]: id of the SVG to be rendered,
+         *                  properties[Object]: {
+         *                  duration[integer]: duration of the animation being rendered, time in ms.
+         *                  easing[String]: velocity of the animation. available easings in the github repository,
+         *                  rotation[String]: rotation of the animation. available rotations in the github repository
          *              },
-         *              delay: time to wait before this animation starts.
+         *              delay[integer]: time to wait before this animation starts, time in ms.
          *          ]
          *      }
          * 
@@ -62,7 +62,11 @@ class VisualModule extends Module{
         this.renderSVGSet = function(SVGSet, callback){
             utils_renderSVGSet(SVGSet,this.renderedSVG, callback);
         }
-    
+        
+        /**
+         * Makes the face blink once.
+         * @param callback[function] function to be called when animation finishes.
+         */
         this.blink = function(callback){
             var toRender = [{
                     id:'full-closed-eyes',
@@ -85,6 +89,10 @@ class VisualModule extends Module{
             this.renderSVGSet(toRender,callback);
         }
 
+        /**
+         * Makes the face to look in a sneaky way to the right.
+         * @param callback[function] function to be called when animation finishes.
+         */
         this.sneakyLookRight = function(callback){
             var toRender = [{
                     id:'conector_full-opened-eyes_looking-sneaky',
@@ -123,6 +131,10 @@ class VisualModule extends Module{
             this.renderSVGSet(toRender,callback);
         }
 
+        /**
+         * Makes the face to look in a sneaky way to the left.
+         * @param callback[function] function to be called when animation finishes.
+         */
         this.sneakyLookLeft = function(callback){
             var toRender = [{
                     id:'conector_full-opened-eyes_looking-sneaky',
@@ -205,7 +217,7 @@ class VisualModule extends Module{
         /**
          * Shows a small frame. Useful to show conversation lines.
          * This function uses bootstrap alerts.
-         * @param dialog text to be showed.
+         * @param dialog[String] text to be showed.
          */
         this.showDialogFrame = function(dialog, msg_type, velocity, callback){
             this.msg.fadeOut(velocity, function(){
@@ -239,7 +251,7 @@ class VisualModule extends Module{
         
         /**
          *  Shows a picture available in the image assets folder.
-         *  @param name Name of the picture to be shown.
+         *  @param name[String] Name of the picture to be shown.
          */
         this.showPicture = function(name, options, callback){
             var imageObject = this.getImageObjectByName(name);
@@ -318,6 +330,7 @@ class VisualModule extends Module{
 
     /**
      * Shows up the show picture preview window
+     * @param image[String] image to be shown.
      */
     showImagePreview(image){
         $('#msg').css('z-index', 3);
@@ -329,7 +342,7 @@ class VisualModule extends Module{
 
     /**
      *   Obtains the image source given the name.
-     *   @returns The image source, url have priority. Default error image if url and path are null.
+     *   @returns [String] The image source, url have priority over path file. Default error image if url and path are null.
      */
     getImageObjectByName(name){
         var length = this.availableImages.length;
@@ -344,7 +357,7 @@ class VisualModule extends Module{
 
     /**
      *  Shows a picture available in the image assets folder.
-     *  @param name Name of the picture to be shown.
+     *  @param name[String] Name of the picture to be shown.
      */
     showPicture(name){
         var image = this.getImageByName(name);
@@ -362,7 +375,7 @@ class VisualModule extends Module{
     /**
      *  Retrieves from the HTML file the information of all the avilable SVG
      *  assets that can be rendered.
-     *  @return the id of each available SVG asset.
+     *  @return [String[]] the id of each available SVG asset.
      */
     getAvailableSVGAssets(){
         var availableSVGAssets = [];
