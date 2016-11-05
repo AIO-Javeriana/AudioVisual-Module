@@ -42,11 +42,12 @@ class AudioOutputModule extends Module {
                     audio.volume = properties.volume;
                 }
             }
-            audio.play();
-
+            
             audio.addEventListener("ended", function(){
                 callback();
             });
+
+            audio.play();
         }
 
         /**
