@@ -3,12 +3,13 @@
 
 <head>
   <title>AudioVisualModule</title>
-  <link rel="stylesheet" href="./static/css/aio-ui.css" type="text/css" />
+  <link rel="stylesheet" href="./static/css/index.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/visual_module.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/materialize.min.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/bootstrap_alerts.css" type="text/css" />
   <link rel="stylesheet" href="./static/css/materialdesignicons.min.css" media="all" type="text/css" />
   <link rel="stylesheet" href="./static/css/mfb.min.css" media="all" type="text/css" />
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,11 +23,7 @@
   <svg version="1.1" id="svg-assets" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
     y="0px" width="800px" height="400px" viewBox="0 0 800 400" enable-background="new 0 0 800 400" xml:space="preserve">
 
-<<<<<<< HEAD
-=======
     <!-- Normal -->
-
->>>>>>> 3e61440f1974d3eda970bac03b688125e7c13bdd
     <g id='full-opened-eyes'>
       <path stroke="#000000" stroke-miterlimit="10" d="M379.442,181.656c0,103.342,0,103.342-71.472,103.342l0,0
         c-71.471,0-71.471,0-71.471-103.91l0,0c0-103.91,0-103.91,71.471-103.91l0,0C379.442,77.178,379.442,77.178,379.442,181.656
@@ -42,7 +39,6 @@
         c0.186-1.556,1.799-2.448,4.699-2.873C353.29,323.399,353.73,323.399,354.169,323.399z"/>
     </g>
 
-<<<<<<< HEAD
     <g id='full-closed-sleeping-eyes'>
       <path stroke="#000000" stroke-miterlimit="10" d="M307.646,351.125L307.646,351.125c-71,0-71.309-15.292-71.309-15.292
         c0-10.73,13.838,6.834,70.505,6.667c54.48-0.16,68.944-17.833,68.907-5.5C375.75,337,379.646,351.125,307.646,351.125z"
@@ -60,8 +56,6 @@
         c1.245-1.231,2.66-2.373,4.238-3.413C381.325,378.202,390.27,375.846,400,375.846" />
     </g>
 
-=======
->>>>>>> 3e61440f1974d3eda970bac03b688125e7c13bdd
     <g id='full-closed-eyes'>
       <path stroke="#000000" stroke-miterlimit="10" d="M379.442,199.729c0,4.271,0,4.271-71.472,4.271l0,0
         c-71.471,0-71.471,0-71.471-4.295l0,0c0-4.295,0-4.295,71.471-4.295l0,0C379.442,195.41,379.442,195.41,379.442,199.729
@@ -77,7 +71,6 @@
         c0.186-1.556,1.799-2.448,4.699-2.873C353.29,323.399,353.73,323.399,354.169,323.399z"/>
     </g>
 
-<<<<<<< HEAD
     <g id='full-looking-left'>
       <path stroke="#000000" stroke-miterlimit="10" d="M573.942,193.238c0,91.573,0,82.618-73.939,95.348l0,0
     			c-73.943,11.03-73.943,0-73.943-95.871l0,0c0-79.396,0-79.396,73.943-95.871l0,0C576.158,84.918,573.942,96.844,573.942,193.238
@@ -124,8 +117,6 @@
         c0.953,0.627,1.813,1.312,2.578,2.047C372.617,360.298,372.638,360.316,372.659,360.34z" />
     </g>
 
-=======
->>>>>>> 3e61440f1974d3eda970bac03b688125e7c13bdd
     <!-- Sad -->
 
     <g id='slightly-closed-sad-eyes'> <!-- Sad level 1 -->
@@ -281,17 +272,30 @@
     <i id="battery_status"></i>
   </div>
 
-  <div id="menu">
-    <button id="main"><img src="./static/imgs/menu_black_100px.png"></button>
-    <ul>
-      <li><button id="clear"><img src="./static/imgs/clear_black_100px.png"></button></li>
-      <li><button id="power"><img src="./static/imgs/power_black_100px.png"></button></li>
-      <li><button id="menuu"><img src="./static/imgs/menu_black_100px.png"></button></li>
-    </ul>
-  </div>
-
-  <ul class="mfb-component--tl mfb-slidein" data-mfb-hover>
-    <!-- the menu content -->
+  <ul id="menu" class="mfb-component--tl  mfb-slidein " data-mfb-toggle="click" data-mfb-state="closed" style="display: block;">
+    <li class="mfb-component__wrap">
+      <a href="#" class="mfb-component__button--main">
+        <i class="mfb-component__main-icon--resting ion-plus-round"></i>
+        <i class="mfb-component__main-icon--active ion-close-round"></i>
+      </a>
+      <ul class="mfb-component__list">
+        <li>
+          <a id="demo" data-mfb-label="Demo" class="mfb-component__button--child">
+            <i class="mfb-component__child-icon ion-ios-play"></i>
+          </a>
+        </li>
+        <li>
+          <a id="happy-demo" data-mfb-label="Happy demo" class="mfb-component__button--child">
+            <i class="mfb-component__child-icon ion-happy"></i>
+          </a>
+        </li>
+        <li>
+          <a id="sad-demo" data-mfb-label="Sad demo" class="mfb-component__button--child">
+            <i class="mfb-component__child-icon ion-sad"></i>
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
 
   <!-- jquery v3.1.0: openSource library for DOM manipulating -->

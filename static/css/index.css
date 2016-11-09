@@ -4,7 +4,7 @@ html, body{
     margin: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #81F781;
+    background-color: #42a5f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,47 +87,5 @@ g:not(:first-child){
 }
 
 
-#menu button{
-    position: absolute;
-    margin: 5vmin !important;
-    padding: 0;
-    left: 0;
-    top: 0;
-    z-index: 3;
-    width: 15vmin;
-    height: 15vmin;
-    border-radius: 100%;
-    border: none;
-    background-color: #D0FA58; 
-    transform: scale(1.2,1.2);
-}
-
-#menu button img{
-    width: 30%;
-    height: 30%;
-}
-
-#menu ul li{
-    list-style-type: none;
-}
-
-#menu ul li button{
-    position: absolute;
-    margin: 5vmin !important;
-    padding: 0;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    width: 15vmin;
-    height: 15vmin;
-    border-radius: 100%;
-    background-color: #C0FF11;
-    border: none;
-}
-
-#menu ul li button img{
-    width: 40%;
-    height: 40%;
-}
 
 
