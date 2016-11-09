@@ -86,6 +86,10 @@ g:not(:first-child){
     z-index: 3;
 }
 
+path {
+    stroke: #0d47a1;
+    fill: #0d47a1;
+}
 
 
 

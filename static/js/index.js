@@ -49,6 +49,7 @@ window.onload = function init() {
  * Functions for buttons response
  */
 
+//Demo button
 $(document).on('click', '#demo', function () {
     audioOutputModule.play('surprised', {volume: 1}, function(){
         console.log('termina audio');
@@ -57,11 +58,15 @@ $(document).on('click', '#demo', function () {
         console.log('hola');
     });
 });
+
+//Demo: happy
 $(document).on('click', '#happy-demo', function () {
-    visualModule.renderSVGSet(toRender_happy064474, function () {
+    visualModule.renderSVGSet(toRender_happy, function () {
         console.log('hola');
     });
 });
+
+//Demo: Sad
 $(document).on('click', '#sad-demo', function () {
     visualModule.renderSVGSet(toRender_sad, function () {
         console.log('hola');
