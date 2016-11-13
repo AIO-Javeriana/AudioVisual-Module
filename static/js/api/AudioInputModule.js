@@ -13,10 +13,9 @@ class AudioInputModule extends Module{
     constructor(id, mediaStreamSource) {
         super(id);
         this.recording = false;
-        console.log(dir);
-        this.record = new Recorder(mediaStreamSource, {
+        /*this.record = new Recorder(mediaStreamSource, {
             workerPath: "./js/external/recorderWorker.js"
-        });
+        });*/
     
         /**
          * Starts to record.
@@ -60,6 +59,25 @@ class AudioInputModule extends Module{
                 this.exportRecording(name);
             }
             this.recording = !this.recording;
+        }
+        
+        
+        this.speechToText = function(callback){
+            var recognition = new webkitSpeechRecognition();
+            recognition.onresult = function(event) { 
+                for(var i = 0; i < event.results[0].length; i++){
+                    if(event.results[i].isFinal){
+                        for(var j = 0; j < event.results[i].length; j++){
+                            callback(event.results[i][j].transcript)
+                        };
+                    }
+                };
+            }
+            recognition.start();
+        }
+        
+        this.answer = function(question){
+            console.log(question);
         }
 
     }

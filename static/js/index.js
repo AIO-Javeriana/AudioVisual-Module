@@ -5,6 +5,8 @@
 var visualModule = new VisualModule('1', availableImages);
 var audioOutputModule = new AudioOutputModule('2', availableSounds);
 
+var audioInputModule = new AudioInputModule('3', null);
+audioInputModule.speechToText(audioInputModule.answer);
 window.onload = function init() {
 
     //Asking browser for mic permission
