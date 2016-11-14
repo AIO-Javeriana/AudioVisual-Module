@@ -141,12 +141,12 @@ class CommunicationChannel {
                             modules.visualModule.happyLow(callback);
                         }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
                             modules.visualModule.happyMedium(callback);
-                        }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 11 ){
+                        }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1 ){
                             modules.visualModule.happyHigh(callback);
                         }else{
                             modules.visualModule.neutral(callback);
                         }
-                        
+
                         modules.audioOutputModule.textToSpeech(params.TEXTO, null, function () {
                             var reply = {
                                 MODULE_ID: "AUDIO_VISUAL",
