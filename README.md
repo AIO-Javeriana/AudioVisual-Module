@@ -28,6 +28,6 @@ Here is a list of the services provided by the AudioVisual Module and APIs or pr
   - Ionicons: [Ionicons](http://ionicons.com/)
   
 # Usage
-Just download the module and run index.html*. However, the module must be connected with AIO's SOCA framework to work correctly. Tested and developed to work in chrome or chromium browsers.
+Just download the module and run index.html*. However, the module must be connected with AIO's SOCA framework to work correctly. Developed and tested to run in chrome or chromium browsers.
 
 *Speech to text does not work under file:// protocol, chrome demands an HTTP or HTTPS connection to grant microphone permission.
