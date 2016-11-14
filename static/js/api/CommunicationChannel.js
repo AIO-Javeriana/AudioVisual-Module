@@ -33,8 +33,10 @@ class CommunicationChannel {
         this.socket = io.connect(this.host + ":" + this.port);
         this.socket.on('connect_error', function (err) {
             var i = Math.floor((Math.random() * 10) + 1);
-            //var dialog = [{ msg: "Oh No!!!", tone: "YELL" }, { msg: "Error de conexión", tone: "NORMAL" }, { msg: "Que mala suerte!!", tone: "YELL" }];
-            modules.visualModule.showDialogFrame(dialog, "error", "slow");
+            var dialog = ["Oh No!!!","Error de conexión","Que mala suerte!!"];
+            modules.visualModule.showDialogFrames(dialog, { type: 'danger', tone: 'low', waitTime:'short' }, function(){
+                console.log('end of connect error');
+            });
         });
 
         this.socket.on('connect', function () {

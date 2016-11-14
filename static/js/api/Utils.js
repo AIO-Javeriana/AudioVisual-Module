@@ -59,7 +59,6 @@ function showDialogFrameCallback(dialogs, options, dialogsIterator, endCallback)
 
 function showDialogFrame (dialog, options, callback){
     //Default parameters
-    console.log(dialog);
     var properties = {
         dialog: '',
         tone: 'medium',
