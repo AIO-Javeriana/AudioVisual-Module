@@ -44,19 +44,17 @@ class VisualModule extends Module{
          * Renders a set of SVG resources. This SVG resources must be correctly available
          * in the HTML file. For more info check: https://github.com/alexk111/SVG-Morpheus.
          * @param SVGSet set of SVG assets availables in the HTML file with the following structure
-         *      {
-         *          [
-         *              {
-         *                  id[String]: id of the SVG to be rendered,
-         *                  properties[Object]: {
-         *                  duration[integer]: duration of the animation being rendered, time in ms.
-         *                  easing[String]: velocity of the animation. available easings in the github repository,
-         *                  rotation[String]: rotation of the animation. available rotations in the github repository
+         *      [
+         *          {
+         *              id[String]: id of the SVG to be rendered,
+         *              properties[Object]: {
+         *                 duration[integer]: duration of the animation being rendered, time in ms.
+         *                 easing[String]: velocity of the animation. available easings in the github repository,
+         *                 rotation[String]: rotation of the animation. available rotations in the github repository
          *              },
          *              delay[integer]: time to wait before this animation starts, time in ms.
-         *          ]
-         *      }
-         * 
+         *          }
+         *      ]
          */
         this.renderSVGSet = function(SVGSet, callback){
             utils_renderSVGSet(SVGSet,this.renderedSVG, callback);
@@ -308,36 +306,18 @@ class VisualModule extends Module{
         /**
          * Shows a small frame. Useful to show conversation lines.
          * This function uses bootstrap alerts.
-         * @param dialog[String] text to be showed.
+         * @param dialogs[String[]] Array of texts that will be shown.
+         * @param options[Object]{
+         *          tone[String]: Determines the tone of the dialog frame, ie. high te text gonna be uppercase. values = ['low', 'medium', 'high']. Default = 'medium'.
+         *          type[String]: Determines the type of the dialog frame, ie. danger makes dialog frame red. values = ['success','info', 'warning', 'danger']. Default: info.
+         *                        more info http://www.w3schools.com/bootstrap/bootstrap_alerts.asp           Colors:    (green)  (blue)   (yellow)    (red)
+         *          waitTime[String]: time to wait between spawning each dialog frame: values = ['short', 'medium', 'high'].
+         *                                                                          time values =  (1s)     (2.5s)   (4s)
+         *      }
+         * @param callback[function] function to be called when animation finishes.
          */
-        this.showDialogFrame = function(dialog, msg_type, velocity, callback){
-            this.msg.fadeOut(velocity, function(){
-                $( this ).removeClass();
-                $( this ).empty();
-                $( this ).addClass("alert");
-                switch (msg_type) {
-                    case 'error':
-                        $( this ).addClass("alert-danger");
-                        break;
-                    case 'info':
-                        $( this ).addClass("alert-info");
-                        break;
-                }
-                var msg_text = "";
-                $.each( dialog, function( index, value ){
-                    switch (value.tone) {
-                        case 'YELL':
-                            msg_text += "<strong>" + value.msg + "</strong>";
-                            break;
-                        case 'NORMAL':
-                            msg_text += value.msg;
-                            break;
-                    }
-                });
-                $( this ).html(msg_text);
-                $( this ).fadeIn(velocity);
-                callback();
-            });
+        this.showDialogFrames = function(dialogs, options, callback){
+            utils_showDialogFrames(dialogs, options, callback);
         }
         
         /**

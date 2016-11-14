@@ -1,5 +1,8 @@
+/**
+ * Set of function to render a set of svg assets
+ */
 var  renderedSVG;
- function renderSVG(svgId, animationProperties, callback, SVGIterator, SVGSet,endCallback){
+function renderSVG(svgId, animationProperties, callback, SVGIterator, SVGSet,endCallback){
      renderedSVG.to(svgId, animationProperties, function(){
         callback(SVGIterator, SVGSet, endCallback);
     });
@@ -25,6 +28,88 @@ function renderSVGSetCallback(SVGIterator, SVGSet,endCallback){
         }
     }
 }
+
+/**
+ * Set of function to show up a set of dialog frames.
+ */
+var dialogsIterator;
+function utils_showDialogFrames(dialogs, options, endCallback){
+    dialogsIterator = 0;
+    utils_showDialogFrame(dialogs, options, dialogsIterator, showDialogFrameCallback, endCallback);
+}
+
+function utils_showDialogFrame(dialogs, options, dialogsIterator, callback, endCallback){
+    showDialogFrame(dialogs[dialogsIterator], options, function(){
+        callback(dialogs, options, dialogsIterator, endCallback);
+    });
+}
+
+function showDialogFrameCallback(dialogs, options, dialogsIterator, endCallback){
+    dialogsIterator++;
+    if( dialogsIterator < dialogs.length ){
+        utils_showDialogFrame(dialogs, options, dialogsIterator, showDialogFrameCallback, endCallback);
+    }else{
+        if(endCallback != null){
+            setTimeout(function(){
+                endCallback();
+            },1000);
+        }
+    }
+}
+
+function showDialogFrame (dialog, options, callback){
+    //Default parameters
+    console.log(dialog);
+    var properties = {
+        dialog: '',
+        tone: 'medium',
+        type: 'info',
+        waitTime: 2500,
+        callback: function(){}
+    }
+
+    //Checking options in parameter.
+    if(dialog != null && typeof dialog !== "undefined"){
+        properties.dialog = dialog;
+    }
+    if(callback != null && typeof callback !== "undefined"){
+        properties.callback = callback;
+    }
+    if(options != null && typeof options !== "undefined"){
+        if(options.tone != null && typeof options.tone !== "undefined"){
+            properties.tone = options.tone;
+            if(properties.tone == 'high')
+                properties.dialog = properties.dialog.toUpperCase();
+        }
+        if(options.type != null && typeof options.type !== "undefined")
+                properties.type = options.type;
+        if(options.waitTime != null && typeof options.waitTime !== "undefined"){
+            if(options.waitTime == 'short'){
+                properties.waitTime = 1000;
+            }else if(options.time == 'long'){
+                properties.waitTime = 4000;
+            }
+        }
+    }
+    
+
+    //Generating dialog frame
+    var dialogFrames = $('#dialog-frames');
+    var dialogFrame = $(
+        '<div class="alert alert-'+properties.type+'">'+
+            '<strong>AIO: </strong>'+properties.dialog+
+        '</div>'
+    );
+        
+    dialogFrames.append(dialogFrame);
+    setTimeout(function(){
+        dialogFrame.addClass('hidden');
+        setTimeout(function(){
+            properties.callback();
+        },1000);
+    },properties.waitTime);          
+}
+
 
 function idle() {
     var number = Math.floor((Math.random() * 5) + 1); //Número entre uno y tres

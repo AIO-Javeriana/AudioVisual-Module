@@ -27,7 +27,9 @@ $(document).on('click', '#happy-demo', function () {
     visualModule.renderSVGSet(toRender_happy, function () {
         console.log('happy-demo callback');
     });
-    
+    visualModule.showDialogFrames(['Hola ','¿Cómo estás?'], { type: 'danger', tone: 'low', waitTime:'medium' }, function(){
+        console.log('finished dialog frame');
+    });
 });
 
 //Demo: Sad

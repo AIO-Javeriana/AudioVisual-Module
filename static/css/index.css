@@ -86,6 +86,19 @@ g:not(:first-child){
     z-index: 3;
 }
 
+#dialog-frames {
+  position: absolute;
+  bottom: 0vh;
+  left: 2vh;
+  right: 2vh;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.4s, opacity 0.4s linear;
+}
+
 path {
     stroke: #0d47a1;
     fill: #0d47a1;
