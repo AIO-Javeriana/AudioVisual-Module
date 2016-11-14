@@ -120,7 +120,33 @@ class CommunicationChannel {
                             socket: this,
                             command: commands[i]
                         };
-                        modules.visualModule.changeEmotion(params.EMOTIONAL_VALUE);
+                        var callback = function(){
+                            var reply = {
+                                MODULE_ID: "AUDIO_VISUAL",
+                                COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                GROUP_ID: dataCallback.command.GROUP_ID,
+                                STATUS: "DONE",
+                                ERROR_MESSAGE: "",
+                                FINISH_MESSAGE: ""
+                            };
+                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                        }
+                        if(-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8){
+                            modules.visualModule.sadHigh(callback);
+                        }else if( -0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4 ){
+                            modules.visualModule.sadMedium(callback);
+                        }else if( -0.3 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1 ){
+                            modules.visualModule.sadLow(callback);
+                        }else if( 0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3 ){
+                            modules.visualModule.happyLow(callback);
+                        }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
+                            modules.visualModule.happyMedium(callback);
+                        }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 11 ){
+                            modules.visualModule.happyHigh(callback);
+                        }else{
+                            modules.visualModule.neutral(callback);
+                        }
+                        
                         modules.audioOutputModule.textToSpeech(params.TEXTO, null, function () {
                             var reply = {
                                 MODULE_ID: "AUDIO_VISUAL",
