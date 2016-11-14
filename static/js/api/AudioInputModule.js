@@ -13,13 +13,13 @@ class AudioInputModule extends Module{
     constructor(id, mediaStreamSource) {
         super(id);        
         
-        this.speechToText = function(callback){
+        this.speechToText = function(processFunction){
             var recognition = new webkitSpeechRecognition();
             recognition.onresult = function(event) { 
                 for(var i = 0; i < event.results[0].length; i++){
                     if(event.results[i].isFinal){
                         for(var j = 0; j < event.results[i].length; j++){
-                            callback(event.results[i][j].transcript);
+                            processFunction(event.results[i][j].transcript);
                         };
                     }
                 };
@@ -32,8 +32,20 @@ class AudioInputModule extends Module{
             recognition.start();
         }
         
-        this.answer = function(question){
-            console.log(question);
+        this.answer = function(processFunction, callback){
+            this.speechToText(function(question){
+                $.ajax({
+                    url: "https://webknox-question-answering.p.mashape.com/questions/answers",
+                    data: { answerLookup: false, answerSearch: false, question: question},
+                    type: "GET",
+                    beforeSend: function(xhr)
+                    {
+                        xhr.setRequestHeader('X-Mashape-Key', 'LjjvxSR6ZHmshpvD3uHwyArX5Supp1I6RZdjsnY8w8LNQC2SUe');
+                    }
+                }).done(function( data ) {
+                    processFunction(data.answer, callback);
+                });
+            });
         }
 
     }

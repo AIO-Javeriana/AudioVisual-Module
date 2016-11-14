@@ -111,7 +111,7 @@ class AudioOutputModule extends Module {
                 msg.rate = properties.rate;
                 msg.pitch = properties.pitch;
                 msg.text = properties.message;
-                msg.lang = 'es-ES';
+                msg.lang = 'en-US';
                 msg.onend = properties.onend;
 
                 speechSynthesis.speak(msg);

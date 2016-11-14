@@ -1,16 +1,20 @@
 window.onload = function init() {
-    audioVisualModule = new AudioVisualModule('http://localhost', '9090', {
+    /*audioVisualModule = new AudioVisualModule('http://localhost', '9090', {
         imagesInfo: availableImages,
         soundsInfo: availableSounds
-    });
+    });*/
 };
 
 /**
  * Functions for buttons response, just for testings ans demonstration purposes.
  */
-var visualModule = new VisualModule('1', availableImages);
+//var visualModule = new VisualModule('1', availableImages);
 var audioOutputModule = new AudioOutputModule('2', availableSounds);
 var audioInputModule = new AudioInputModule('3', null);
+
+/*audioInputModule.answer(function(data, callback){
+    audioOutputModule.textToSpeech(data, null, callback);    
+});*/
 
 //Demo button
 $(document).on('click', '#demo', function () {
