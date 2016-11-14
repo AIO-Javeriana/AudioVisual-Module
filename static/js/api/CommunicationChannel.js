@@ -30,9 +30,6 @@ class CommunicationChannel {
         this.port = port;
         this.modules = modules;
 
-        //Battery level emulation
-        var level = Math.floor((Math.random() * 100) + 1);
-        this.modules.visualModule.updateBatteryStatus(level);
         this.socket = io.connect(this.host + ":" + this.port);
         this.socket.on('connect_error', function (err) {
             var i = Math.floor((Math.random() * 10) + 1);

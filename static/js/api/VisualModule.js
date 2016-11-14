@@ -32,7 +32,6 @@ class VisualModule extends Module{
         this.renderedSVG = new SVGMorpheus('#svg-assets', {iconId: 'full-opened-eyes'});
         this.msg = $("#msg");
         this.errorImageSource = null;
-
         this.errorImageSource = 'http://hdimagesnew.com/wp-content/uploads/2016/09/image-not-found.jpg';
         if( typeof imageObject.errorImage !== "undefined" ){
             if( typeof imageObject.errorImage.url !== "undefined" && imageObject.errorImage.url != null)
