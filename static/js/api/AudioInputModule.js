@@ -68,11 +68,16 @@ class AudioInputModule extends Module{
                 for(var i = 0; i < event.results[0].length; i++){
                     if(event.results[i].isFinal){
                         for(var j = 0; j < event.results[i].length; j++){
-                            callback(event.results[i][j].transcript)
+                            callback(event.results[i][j].transcript);
                         };
                     }
                 };
             }
+
+            recognition.onerror = function(event) {
+                console.log(event.error);
+            };
+            
             recognition.start();
         }
         

@@ -146,9 +146,5 @@ class CommunicationChannel {
             var reply = { MODULE_ID: "AUDIO_VISUAL", STATUS: "WORKING", COMMAND_ID: COMMAND_ID, GROUP_ID: GROUP_ID, MSG: "" };
             this.emit(EventsEnum.WORK_STATUS_REPLY, JSON.stringify(reply));
         })
-
-        this.socket.on('BATTERY_LVL', function (level) {
-            modules.visualModule.updateBatteryStatus(level);
-        });
     }
 }
