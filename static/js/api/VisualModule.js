@@ -172,45 +172,137 @@ class VisualModule extends Module{
             this.renderSVGSet(toRender,callback);
         }
 
-        this.changeEmotion = function(emotionalValue){
-            if (emotionalValue == 0){
-                var toRender = [
+        /**
+         * State of the actor at lowest level of sadness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.sadLow = function(callback){
+            var toRender = [
+                {
+                    id:'almost-closed-sad-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        /**
+         * State of the actor at medium level of sadness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.sadMedium = function(callback){
+            var toRender = [
+                {
+                    id:'medium-closed-sad-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+        
+        /**
+         * State of the actor at highest level of sadness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.sadHigh = function(callback){
+            var toRender = [
+                {
+                    id:'slightly-closed-sad-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        /**
+         * State of the actor at lowest level of happiness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.happyLow = function(callback){
+            var toRender = [
+                {
+                    id:'slightly-closed-happy-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        /**
+         * State of the actor at medium level of happiness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.happyMedium = function(callback){
+            var toRender = [
+                {
+                    id:'medium-closed-happy-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        /**
+         * State of the actor at highest level of happiness.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.happyHigh = function(callback){
+            var toRender = [
+                {
+                    id:'almost-closed-happy-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
+
+        /**
+         * State of the actor at neutral state.
+         * @param callback[function] function to be called when animation finishes.
+         */
+        this.neutral = function(callback){
+            var toRender = [
                     {
-                        id:'full-opened-eyes',
-                        properties: {
-                            duration: 500,
-                            easing: 'linear',
-                            rotation: 'none'
-                        },
-                        delay: 500
-                    }
-                ];
-            }else if(emotionalValue > 0){
-                var toRender = [
-                    {
-                        id:'almost-closed-happy-eyes',
-                        properties: {
-                            duration: 500,
-                            easing: 'linear',
-                            rotation: 'none'
-                        },
-                        delay: 500
-                    }
-                ];
-            }else{
-                var toRender = [
-                    {
-                        id:'medium-closed-sad-eyes',
-                        properties: {
-                            duration: 500,
-                            easing: 'linear',
-                            rotation: 'none'
-                        },
-                        delay: 500
-                    }
-                ];
-            }
-            this.renderSVGSet(toRender,null,function(dataCallback){});
+                    id:'full-opened-eyes',
+                    properties: {
+                        duration: 500,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 500
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
         }
 
         /**

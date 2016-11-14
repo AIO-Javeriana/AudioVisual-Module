@@ -116,7 +116,6 @@ class VideoModule extends Module{
             callPlayer(videoObject.name,"stopVideo");
         });
     }
-
     
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
