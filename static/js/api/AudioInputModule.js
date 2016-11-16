@@ -33,9 +33,8 @@ class AudioInputModule extends Module{
         }
         
         this.answer = function(processFunction, callback){
-            //this.speechToText(function(question){
-            var question = "1 mas 1";
-            var question = this.toQuestion(question);
+            this.speechToText(function(question){
+                var question = this.toQuestion(question);
                 $.ajax({
                     url: "https://translation.googleapis.com/language/translate/v2",
                     data: { key: "AIzaSyDxnqLNmCv2j3ZWqUb30qnZ-OJMWO3ZEQA", 
@@ -69,7 +68,7 @@ class AudioInputModule extends Module{
                         });
                     });
                 });
-            //});
+            });
         }
 
         this.toQuestion = function(sentence){
