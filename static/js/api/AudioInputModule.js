@@ -33,19 +33,22 @@ class AudioInputModule extends Module{
         }
         
         this.answer = function(processFunction, callback){
-            this.speechToText(function(question){
+            //this.speechToText(function(question){
+            var question = "1 mas 1";
+            var question = this.toQuestion(question);
                 $.ajax({
-                    url: "https://translate.yandex.net/api/v1.5/tr.json/translate",
-                    data: { key: "trnsl.1.1.20161114T200315Z.3c3ab99e5b147085.058271e128f7f2506533bc569277afbf4ff14029", 
-                            text: question, 
-                            lang: "es-en"
+                    url: "https://translation.googleapis.com/language/translate/v2",
+                    data: { key: "AIzaSyDxnqLNmCv2j3ZWqUb30qnZ-OJMWO3ZEQA", 
+                            q: question,
+                            source: "es",
+                            target: "en"
                     },
                     type: "GET",
-                }).done(function( data ) {
-                    console.log(data.text[0]);
+                }).done(function( data) {
+                    console.log(data.data.translations[0].translatedText);
                     $.ajax({
                         url: "https://webknox-question-answering.p.mashape.com/questions/answers",
-                        data: { answerLookup: false, answerSearch: false, question: data.text[0]},
+                        data: { answerLookup: false, answerSearch: false, question: data.data.translations[0].translatedText},
                         type: "GET",
                         beforeSend: function(xhr)
                         {
@@ -53,20 +56,42 @@ class AudioInputModule extends Module{
                         }
                     }).done(function( data ) {
                         $.ajax({
-                            url: "https://translate.yandex.net/api/v1.5/tr.json/translate",
-                            data: { key: "trnsl.1.1.20161114T200315Z.3c3ab99e5b147085.058271e128f7f2506533bc569277afbf4ff14029", 
-                                    text: data.answer, 
-                                    lang: "en-es"
+                            url: "https://translation.googleapis.com/language/translate/v2",
+                            data: { key: "AIzaSyDxnqLNmCv2j3ZWqUb30qnZ-OJMWO3ZEQA", 
+                                    q: data.answer, 
+                                    source: "en",
+                                    target: "es"
                             },
                             type: "GET",
                         }).done(function( data ) {
-                            console.log(data.text);
-                            processFunction(data.text, callback);
+                            console.log(data.data.translations[0].translatedText);
+                            processFunction(data.data.translations[0].translatedText, callback);
                         });
                     });
                 });
-            });
+            //});
         }
 
+        this.toQuestion = function(sentence){
+            var words = sentence.split(" ");
+            switch(words[0]){
+                case "que":
+                    words[0] = "Qué";
+                break;
+                case "cual":
+                    words[0] = "Cuál";
+                break;
+                case "quien":
+                    words[0] = "Quién";
+                break;
+            }
+            var sentence = "¿";
+            words.forEach(function(word) {
+                sentence += word + " ";
+            });
+            sentence.trim();
+            sentence += "?";
+            return sentence;
+        }
     }
 }

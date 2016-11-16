@@ -12,9 +12,10 @@ window.onload = function init() {
 var audioOutputModule = new AudioOutputModule('2', availableSounds);
 var audioInputModule = new AudioInputModule('3', null);
 
-/*audioInputModule.answer(function(data, callback){
+audioInputModule.answer(function(data, callback){
     audioOutputModule.textToSpeech(data, null, callback);    
-});*/
+});
+
 
 //Demo button
 $(document).on('click', '#demo', function () {
