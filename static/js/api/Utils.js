@@ -426,3 +426,25 @@ var toRender_happy = [
         delay: 0
     }
 ];
+
+function toQuestion(sentence){
+    var words = sentence.split(" ");
+    switch(words[0]){
+        case "que":
+            words[0] = "Qué";
+        break;
+        case "cual":
+            words[0] = "Cuál";
+        break;
+        case "quien":
+            words[0] = "Quién";
+        break;
+    }
+    var sentence = "¿";
+    words.forEach(function(word) {
+        sentence += word + " ";
+    });
+    sentence.trim();
+    sentence += "?";
+    return sentence;
+}

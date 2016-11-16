@@ -34,7 +34,7 @@ class AudioInputModule extends Module{
         
         this.answer = function(processFunction, callback){
             this.speechToText(function(question){
-                var question = this.toQuestion(question);
+                var question = toQuestion(question);
                 $.ajax({
                     url: "https://translation.googleapis.com/language/translate/v2",
                     data: { key: "AIzaSyDxnqLNmCv2j3ZWqUb30qnZ-OJMWO3ZEQA", 
@@ -69,28 +69,6 @@ class AudioInputModule extends Module{
                     });
                 });
             });
-        }
-
-        this.toQuestion = function(sentence){
-            var words = sentence.split(" ");
-            switch(words[0]){
-                case "que":
-                    words[0] = "Qué";
-                break;
-                case "cual":
-                    words[0] = "Cuál";
-                break;
-                case "quien":
-                    words[0] = "Quién";
-                break;
-            }
-            var sentence = "¿";
-            words.forEach(function(word) {
-                sentence += word + " ";
-            });
-            sentence.trim();
-            sentence += "?";
-            return sentence;
         }
     }
 }
