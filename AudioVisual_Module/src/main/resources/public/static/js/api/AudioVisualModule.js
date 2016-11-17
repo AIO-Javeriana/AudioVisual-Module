@@ -8,6 +8,6 @@ class AudioVisualModule extends Module{
             audioInputModule: new AudioInputModule('3', null),
             videoModule: null
         };
-        this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
+        //this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
     }   
 }
