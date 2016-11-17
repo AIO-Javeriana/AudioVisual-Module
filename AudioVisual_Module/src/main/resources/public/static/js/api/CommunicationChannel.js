@@ -185,18 +185,31 @@ class CommunicationChannel {
                             console.log("Responder " + dataCallback.command.COMMAND_ID);
                             modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", null, function () {
                                 modules.audioInputModule.answer(function(data, callback){
-                                    audioOutputModule.textToSpeech(data, null, function(){
-                                        var reply = {
-                                            MODULE_ID: "AUDIO_VISUAL",
-                                            COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                            GROUP_ID: dataCallback.command.GROUP_ID,
-                                            STATUS: "DONE",
-                                            ERROR_MESSAGE: "",
-                                            FINISH_MESSAGE: ""
-                                        };
-                                        console.log("Enviando " + dataCallback.command.COMMAND_ID);
-                                        dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                                    });   
+                                    if(modules.audioOutputModule != null){
+                                        modules.audioOutputModule.textToSpeech(params.TEXTO, null, function () {
+                                            var reply = {
+                                                MODULE_ID: "AUDIO_VISUAL",
+                                                COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                                GROUP_ID: dataCallback.command.GROUP_ID,
+                                                STATUS: "DONE",
+                                                ERROR_MESSAGE: "",
+                                                FINISH_MESSAGE: ""
+                                            };
+                                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                                        });
+                                    }else{
+                                        modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, function(){
+                                            var reply = {
+                                                MODULE_ID: "AUDIO_VISUAL",
+                                                COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                                GROUP_ID: dataCallback.command.GROUP_ID,
+                                                STATUS: "DONE",
+                                                ERROR_MESSAGE: "",
+                                                FINISH_MESSAGE: ""
+                                            };
+                                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                                        });
+                                    } 
                                 }); 
                             });
                         break;

@@ -32,4 +32,8 @@ window.onload = function init() {
             console.log('sad-demo callback');
         });
     });
+    
+    $(document).on('click', '#disconnect', function () {
+        audioVisualModule.availableModules.audioOutputModule = null;
+    });
 };
