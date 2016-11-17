@@ -1,0 +1,24 @@
+characterDescriptors:
+    -   playerNames: [A1]
+        personRelationships:
+            Mama: Amigo
+            Vecino: Enemigo
+            Transeunte: Desconocido
+        eventDesirabilities:
+            Morir: Indeseable
+            Ganar: Deseable
+            Perder: Algo Indeseable
+        objectRelationships:
+            Loteria: Valioso
+            Billetera: Importante
+            Mama: Importante
+        emotionalAxis:
+            -   positiveName: Felicidad
+                negativeName: Tristeza
+                currentValue: 0.2
+                baseValue: 0
+                forgetFactor: 0.1
+                eventInfluences:
+                    Morir: 1
+                    Ganar: 0.8
+                    Perder: 0.2

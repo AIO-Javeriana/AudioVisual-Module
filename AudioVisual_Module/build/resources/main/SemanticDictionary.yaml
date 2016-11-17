@@ -1,0 +1,18 @@
+persons:
+    Enemigo: -1
+    No amigable: -0.3
+    Desconocido: 0
+    Amigo: 0.7
+    Cercano: 0.8        
+events:
+    Indeseable: -1
+    Algo Indeseable: -0.4
+    Indiferente: 0
+    Algo Deseable: 0.4
+    Deseable: 0.1  
+objects:
+    Repulsivo: -1
+    No valioso: -0.2
+    Indiferente: 0
+    Valioso: 0.6
+    Importante: 0.8

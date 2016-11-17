@@ -1,0 +1,31 @@
+semanticDictionaryFile: SemanticDictionary.yaml
+characterDescriptorFile: CharacterDescriptor.yaml
+configurationDescriptorFile: ConfigurationDescriptor.yaml
+worldMapDescriptorFile: WorldMapDescriptor.yaml
+script:
+    
+    -   id: 1
+        preconditions: []
+        playerName: A1
+        commands:
+            DECIR: 
+                TEXTO: HOLA SOY AIO, COMO ESTAS? SOY TU COMPAÑERO
+                TONO: HABLAR
+        emotionalEvent :
+                person: Mama
+                event: Ganar
+                object: Loteria
+    -   id: 2
+        preconditions: [1]
+        playerName: A1
+        commands:
+            DECIR: 
+                TEXTO: TE MATARÉ
+                TONO: HABLAR
+    -   id: 3
+        preconditions: [2]
+        playerName: A1
+        commands:
+            MOVER: 
+                DIRECCION: DERECHA
+badWords: [IDIOTA,TONTO]

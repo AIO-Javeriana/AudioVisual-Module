@@ -1,0 +1,17 @@
+locations: [iglesia, carcel, neutral_1, neutral_2, neutral_3]
+roads:
+    -   origin: neutral_1
+        target: neutral_2
+        direction: left
+    -   origin: neutral_2
+        target: iglesia
+        direction: right
+    -   origin: neutral_2
+        target: neutral_3
+        direction: right
+    -   origin: neutral_3
+        target: carcel
+        direction: left
+initial_location: 
+    A1: neutral_1        
+        

@@ -1,0 +1,19 @@
+worldModel:
+	places:
+	     House: 1
+	     Workplace: 2
+	     Hospital: 3
+	     PoliceStation: 4
+	     Jail: 5
+	     Street23: 6
+	Connections:
+            -   IDPlace1: 1
+                IDPlace2: 6
+            -   IDPlace1: 6
+                IDPlace2: 2
+            -   IDPlace1: 6
+                IDPlace2: 3
+            -   IDPlace1: 2
+                IDPlace2: 4
+            -   IDPlace1: 2
+                IDPlace2: 5               
