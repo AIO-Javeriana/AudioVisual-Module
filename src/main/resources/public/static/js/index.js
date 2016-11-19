@@ -19,12 +19,26 @@ window.onload = function init() {
     
     //Demo: happy
     $(document).on('click', '#happy-demo', function () {
+        
         audioVisualModule.availableModules.visualModule.renderSVGSet(toRender_happy, function () {
             console.log('happy-demo callback');
         });
         audioVisualModule.availableModules.visualModule.showDialogFrames(['Hola ','¿Cómo estás?'], { type: 'danger', tone: 'low', waitTime:'medium' }, function(){
             console.log('finished dialog frame');
         });
+    });
+
+    //Demo: Talk
+    $(document).on('click', '#talk-demo', function () {
+        var stop = false;
+        var msg = 'Holi como estás';
+        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg,{}, function(){
+            console.log('termino tts');
+            stop = true;    
+        });
+        while(!stop){
+            audioVisualModule.availableModules.visualModule.blink();
+        }
     });
     
     //Demo: Sad
