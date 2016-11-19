@@ -1,7 +1,8 @@
 
 window.onload = function init() {
-    
-    var audioVisualModule = new AudioVisualModule('http://localhost', '9090', {
+    meSpeak.loadConfig("/static/js/external/textToSpeech/mespeak_config.json");
+	meSpeak.loadVoice('/static/js/external/textToSpeech/voices/es-la.json');
+    var audioVisualModule = new AudioVisualModule('10.42.0.119', '9090', {
         imagesInfo: availableImages,
         soundsInfo: availableSounds
     });

@@ -160,6 +160,7 @@ class CommunicationChannel {
                                     ERROR_MESSAGE: "",
                                     FINISH_MESSAGE: ""
                                 };
+console.log("Enviando Respuesta");
                                 dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                             });
                         }else{
@@ -172,6 +173,7 @@ class CommunicationChannel {
                                     ERROR_MESSAGE: "",
                                     FINISH_MESSAGE: ""
                                 };
+console.log("Enviando Respuesta");
                                 dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                             });
                         }
@@ -186,7 +188,7 @@ class CommunicationChannel {
                             modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", null, function () {
                                 modules.audioInputModule.answer(function(data, callback){
                                     if(modules.audioOutputModule != null){
-                                        modules.audioOutputModule.textToSpeech(params.TEXTO, null, function () {
+                                        modules.audioOutputModule.textToSpeech(data, null, function () {
                                             var reply = {
                                                 MODULE_ID: "AUDIO_VISUAL",
                                                 COMMAND_ID: dataCallback.command.COMMAND_ID,

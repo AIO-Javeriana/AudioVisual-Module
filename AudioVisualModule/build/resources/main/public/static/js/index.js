@@ -1,45 +1,40 @@
-/*window.onload = function init() {
-    audioVisualModule = new AudioVisualModule('http://localhost', '9090', {
+
+window.onload = function init() {
+    meSpeak.loadConfig("/static/js/external/textToSpeech/mespeak_config.json");
+	meSpeak.loadVoice('/static/js/external/textToSpeech/voices/es-la.json');
+    var audioVisualModule = new AudioVisualModule('10.42.0.119', '9090', {
         imagesInfo: availableImages,
         soundsInfo: availableSounds
     });
-};*/
 
-/**
- * Functions for buttons response, just for testings ans demonstration purposes.
- */
-//var visualModule = new VisualModule('1', availableImages);
-var audioOutputModule = new AudioOutputModule('2', availableSounds);
-var audioInputModule = new AudioInputModule('3', null);
-
-/*audioInputModule.answer(function(data, callback){
-    audioOutputModule.textToSpeech(data, null, callback);    
-});*/
-
-
-//Demo button
-$(document).on('click', '#demo', function () {
-    audioOutputModule.play('surprised', {volume: 1}, function(){
-        console.log('termina audio');
+    //Demo button
+    $(document).on('click', '#demo', function () {
+        audioVisualModule.availableModules.audioOutputModule.play('surprised', {volume: 1}, function(){
+            console.log('termina audio');
+        });
+        audioVisualModule.availableModules.visualModule.renderSVGSet(idle(), function () {
+            console.log('demo callback');
+        });
     });
-    visualModule.renderSVGSet(idle(), function () {
-        console.log('demo callback');
+    
+    //Demo: happy
+    $(document).on('click', '#happy-demo', function () {
+        audioVisualModule.availableModules.visualModule.renderSVGSet(toRender_happy, function () {
+            console.log('happy-demo callback');
+        });
+        audioVisualModule.availableModules.visualModule.showDialogFrames(['Hola ','¿Cómo estás?'], { type: 'danger', tone: 'low', waitTime:'medium' }, function(){
+            console.log('finished dialog frame');
+        });
     });
-});
-
-//Demo: happy
-$(document).on('click', '#happy-demo', function () {
-    visualModule.renderSVGSet(toRender_happy, function () {
-        console.log('happy-demo callback');
+    
+    //Demo: Sad
+    $(document).on('click', '#sad-demo', function () {
+        audioVisualModule.availableModules.visualModule.renderSVGSet(toRender_sad, function () {
+            console.log('sad-demo callback');
+        });
     });
-    visualModule.showDialogFrames(['Hola ','¿Cómo estás?'], { type: 'danger', tone: 'low', waitTime:'medium' }, function(){
-        console.log('finished dialog frame');
+    
+    $(document).on('click', '#disconnect', function () {
+        audioVisualModule.availableModules.audioOutputModule = null;
     });
-});
-
-//Demo: Sad
-$(document).on('click', '#sad-demo', function () {
-    visualModule.renderSVGSet(toRender_sad, function () {
-        console.log('sad-demo callback');
-    });
-})
+};

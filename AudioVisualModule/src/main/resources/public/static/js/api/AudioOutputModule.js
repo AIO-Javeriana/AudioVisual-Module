@@ -62,62 +62,7 @@ class AudioOutputModule extends Module {
          * @param callback[function] function to be called when the speech finishes.
          * */
         this.textToSpeech= function(message, options, callback){
-            var entityMap = {
-                "á": "a",
-                "é": "e",
-                "í": "i",
-                'ó': 'o',
-                "ú": 'u',
-                "Á": 'A',
-                "É": "E",
-                "Í": "I",
-                "Ó": "O",
-                'Ú': 'U;',
-                "?": '',
-                "¿": '',
-                "!": '',
-                "¡": ''
-            };
-
-            message = this.escapeHtml(message, entityMap);
-            var properties = {
-                message: '', 
-                volume: 0.5,
-                rate: 1,
-                pitch: 2,
-                onend: function(){}
-            }
-
-            properties.message = message;
-            if(options != null){
-                if(options.volume != null)
-                    properties.volume = options.volume;
-                if(options.rate != null)
-                    properties.rate = options.rate;
-                if(options.pitch != null)
-                    properties.pitch = options.pitch;
-            }
-
-            if(callback != null){
-                properties.onend = callback;
-            }
-            
-            if('speechSynthesis' in window){
-                var msg = new SpeechSynthesisUtterance(message);
-                var voices = window.speechSynthesis.getVoices();
-                
-                msg.voiceURI = 'native';
-                msg.volume = properties.volume;
-                msg.rate = properties.rate;
-                msg.pitch = properties.pitch;
-                msg.text = properties.message;
-                msg.lang = 'en-US';
-                msg.onend = properties.onend;
-
-                speechSynthesis.speak(msg);
-            }else{
-                throw 'Text to speech not available'
-            }
+            meSpeak.speak(message, {variant:"whisper"},callback);
         }
 
     }
