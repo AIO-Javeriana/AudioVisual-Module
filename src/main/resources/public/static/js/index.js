@@ -1,5 +1,5 @@
 
-var blinking = false;
+var talking = false;
 
 window.onload = function init() {
     meSpeak.loadConfig("./static/js/external/textToSpeech/mespeak_config.json");
@@ -34,29 +34,17 @@ window.onload = function init() {
     $(document).on('click', '#talk-demo', function () {
         var msg = 'La Segunda Guerra Mundial fue un conflicto militar global que se desarrolló entre 1939 y 1945. En él se vieron implicadas la mayor parte de las naciones del mundo, incluidas todas las grandes potencias, agrupadas en dos alianzas militares enfrentadas: los Aliados de la Segunda Guerra Mundial y las Potencias del Eje. Fue la mayor contienda bélica de la Historia, con más de cien millones de militares movilizados y un estado de «guerra total» en que los grandes contendientes destinaron toda su capacidad económica, militar y científica al servicio del esfuerzo bélico, borrando la distinción entre recursos civiles y militares. Marcada por hechos de enorme repercusión histórica que incluyeron la muerte masiva de civiles, el Holocausto y el uso, por primera y única vez, de armas nucleares en un conflicto militar, la Segunda Guerra Mundial fue el conflicto más mortífero en la historia de la humanidad,1 con un resultado final de entre 50 y 70 millones de víctimas.';
         var timer_blink = window.setInterval(function(){
-            if(!blinking){
-                blinking = true;
-                audioVisualModule.availableModules.visualModule.blink(function(){
-                    blinking = false;
+            if(!talking){
+                talking = true;
+                audioVisualModule.availableModules.visualModule.talk(function(){
+                    talking = false;
                 })
             }
         }, 1500);
         
         audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg,{}, function(){
             window.clearInterval(timer_blink)
-        });
-        /*while(talking){
-            if(!blinking){
-                console.log("prueba");
-                blinking = true;
-                
-            }
-        }
-        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg,{}, function(){
-            console.log('termino tts');
-            talking = false;    
-        });*/
-        
+        });        
     });
     
     //Demo: Sad
