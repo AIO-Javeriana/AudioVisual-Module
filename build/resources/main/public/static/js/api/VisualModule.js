@@ -302,6 +302,29 @@ class VisualModule extends Module{
             ];
             this.renderSVGSet(toRender,callback);
         }
+        
+        this.talk = function(callback){
+            var toRender = [
+                {
+                    id:'full-opened-eyes_opened-talking-mouth',
+                    properties: {
+                        duration: 300,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                },{
+                    id:'full-opened-eyes_closed-talking-mouth',
+                    properties: {
+                        duration: 150,
+                        easing: 'linear',
+                        rotation: 'none'
+                    },
+                    delay: 0
+                }
+            ];
+            this.renderSVGSet(toRender,callback);
+        }
 
         /**
          * Shows a small frame. Useful to show conversation lines.

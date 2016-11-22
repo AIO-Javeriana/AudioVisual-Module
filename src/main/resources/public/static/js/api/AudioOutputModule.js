@@ -61,10 +61,22 @@ class AudioOutputModule extends Module {
          * }
          * @param callback[function] function to be called when the speech finishes.
          * */
-        this.textToSpeech= function(message, options, callback){
-            meSpeak.speak(message, {variant:"whisper"},callback);
+        var talking = false;
+        this.textToSpeech= function(message, visualModule, options, callback){
+            var talk_loop = window.setInterval(function(){
+                if(!talking){
+                    talking = true;
+                    visualModule.talk(function(){
+                        talking = false;
+                    })
+                }
+            }, 650);
+            
+            meSpeak.speak(message, {variant:"whisper"},function(){
+                window.clearInterval(talk_loop);
+                callback();
+            }); 
         }
-
     }
 
     /**

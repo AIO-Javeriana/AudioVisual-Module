@@ -1,8 +1,7 @@
-
 window.onload = function init() {
-    meSpeak.loadConfig("/static/js/external/textToSpeech/mespeak_config.json");
-	meSpeak.loadVoice('/static/js/external/textToSpeech/voices/es-la.json');
-    var audioVisualModule = new AudioVisualModule('10.42.0.119', '9090', {
+    meSpeak.loadConfig("./static/js/external/textToSpeech/mespeak_config.json");
+	meSpeak.loadVoice('./static/js/external/textToSpeech/voices/es-la.json');
+    var audioVisualModule = new AudioVisualModule('localhost', '9090', {
         imagesInfo: availableImages,
         soundsInfo: availableSounds
     });
@@ -30,15 +29,11 @@ window.onload = function init() {
 
     //Demo: Talk
     $(document).on('click', '#talk-demo', function () {
-        var stop = false;
-        var msg = 'Holi como estás';
-        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg,{}, function(){
-            console.log('termino tts');
-            stop = true;    
-        });
-        while(!stop){
-            audioVisualModule.availableModules.visualModule.blink();
-        }
+        var msg = 'La Segunda Guerra Mundial fue un conflicto militar global que se desarrolló entre 1939 y 1945. En él se vieron implicadas la mayor parte de las naciones del mundo, incluidas todas las grandes potencias, agrupadas en dos alianzas militares enfrentadas: los Aliados de la Segunda Guerra Mundial y las Potencias del Eje.';
+        
+        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg, audioVisualModule.availableModules.visualModule, {}, function(){
+            console.log('finished tts');
+        });        
     });
     
     //Demo: Sad

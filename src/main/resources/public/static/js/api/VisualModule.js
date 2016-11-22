@@ -302,13 +302,13 @@ class VisualModule extends Module{
             ];
             this.renderSVGSet(toRender,callback);
         }
-
+        
         this.talk = function(callback){
             var toRender = [
                 {
                     id:'full-opened-eyes_opened-talking-mouth',
                     properties: {
-                        duration: 200,
+                        duration: 300,
                         easing: 'linear',
                         rotation: 'none'
                     },
@@ -316,7 +316,7 @@ class VisualModule extends Module{
                 },{
                     id:'full-opened-eyes_closed-talking-mouth',
                     properties: {
-                        duration: 100,
+                        duration: 150,
                         easing: 'linear',
                         rotation: 'none'
                     },
