@@ -26,15 +26,6 @@ window.onload = function init() {
             console.log('finished dialog frame');
         });
     });
-
-    //Demo: Talk
-    $(document).on('click', '#talk-demo', function () {
-        var msg = 'La Segunda Guerra Mundial fue un conflicto militar global que se desarrolló entre 1939 y 1945. En él se vieron implicadas la mayor parte de las naciones del mundo, incluidas todas las grandes potencias, agrupadas en dos alianzas militares enfrentadas: los Aliados de la Segunda Guerra Mundial y las Potencias del Eje.';
-        
-        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg, audioVisualModule.availableModules.visualModule, {}, function(){
-            console.log('finished tts');
-        });        
-    });
     
     //Demo: Sad
     $(document).on('click', '#sad-demo', function () {
@@ -45,5 +36,14 @@ window.onload = function init() {
     
     $(document).on('click', '#disconnect', function () {
         audioVisualModule.availableModules.audioOutputModule = null;
+    });
+    
+    //Demo: Talk
+    $(document).on('click', '#talk-demo', function () {
+        var msg = 'La Segunda Guerra Mundial fue un conflicto militar global que se desarrolló entre 1939 y 1945. En él se vieron implicadas la mayor parte de las naciones del mundo, incluidas todas las grandes potencias, agrupadas en dos alianzas militares enfrentadas: los Aliados de la Segunda Guerra Mundial y las Potencias del Eje.';
+        
+        audioVisualModule.availableModules.audioOutputModule.textToSpeech(msg, audioVisualModule.availableModules.visualModule, {}, function(){
+            console.log('finished tts');
+        });        
     });
 };
