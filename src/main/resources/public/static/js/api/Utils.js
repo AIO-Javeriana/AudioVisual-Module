@@ -105,7 +105,7 @@ function showDialogFrame (dialog, options, callback){
         dialogFrame.addClass('hidden');
         setTimeout(function(){
             properties.callback();
-        },1000);
+        },3500);
     },properties.waitTime);          
 }
 
