@@ -8,6 +8,7 @@ class AudioVisualModule extends Module{
             audioInputModule: new AudioInputModule('3', null),
             videoModule: null
         };
+        console.log('asdadas');
         this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
     }   
 }

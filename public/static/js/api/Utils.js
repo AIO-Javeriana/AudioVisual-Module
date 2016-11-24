@@ -152,6 +152,14 @@ var availableSounds = {
         {
             name: 'surprised',
             file: 'surprised.mp3'
+        },
+        {
+            name: 'campana',
+            file: 'campana.mp3'
+        },
+        {
+            name: 'colegio',
+            file: 'colegio.mp3'
         }
     ]
 };

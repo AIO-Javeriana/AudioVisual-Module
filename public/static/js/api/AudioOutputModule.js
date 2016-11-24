@@ -36,8 +36,8 @@ class AudioOutputModule extends Module {
          */
         this.play = function( name, properties, callback ){
             var audio = this.getAudio(name);
-            audio.volume = 0.5;
-            if( typeof properties !== "undefined"){
+            audio.volume = 1;
+            if( properties != null){
                 if( typeof properties.volume !== "undefined" && properties.volume != null && 0 <= properties.volume && properties.volume <= 1 ){
                     audio.volume = properties.volume;
                 }
@@ -63,17 +63,17 @@ class AudioOutputModule extends Module {
          * */
         var talking = false;
         this.textToSpeech= function(message, visualModule, options, callback){
-            var talk_loop = window.setInterval(function(){
+            /*var talk_loop = window.setInterval(function(){
                 if(!talking){
                     talking = true;
                     visualModule.talk(function(){
                         talking = false;
                     })
                 }
-            }, 650);
+            }, 650);*/
             
-            meSpeak.speak(message, {variant:"whisper"},function(){
-                window.clearInterval(talk_loop);
+            meSpeak.speak(message, {variant:"m6",pitch:80,wordgap:3 },function(){
+                //window.clearInterval(talk_loop);
                 callback();
             }); 
         }
