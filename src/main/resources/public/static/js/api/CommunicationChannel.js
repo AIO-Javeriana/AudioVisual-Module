@@ -71,110 +71,57 @@ class CommunicationChannel {
             var commands = mapCommands[GROUP_ID];
             for (var i = 0; i < commands.length; i++) {
                 var params = commands[i].PARAMS;
+                var dataCallback = {
+                    socket: this,
+                    command: commands[i]
+                };
+                var callback = function(){
+                    var reply = {
+                        MODULE_ID: "AUDIO_VISUAL",
+                        COMMAND_ID: dataCallback.command.COMMAND_ID,
+                        GROUP_ID: dataCallback.command.GROUP_ID,
+                        STATUS: "DONE",
+                        ERROR_MESSAGE: "",
+                        FINISH_MESSAGE: ""
+                    };
+                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                }
                 switch (commands[i].COMMAND) {
                     case "ATTENTION_CYCLE":
                         var dice = Math.floor((Math.random() * 10) + 1);
-                        var dataCallback = {
-                            socket: this,
-                            command: commands[i]
-                        };
-
+                        
                         if (1 <= dice && dice <= 6) {
-                            modules.visualModule.blink(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
+                            modules.visualModule.blink(callback);
                         } else if (7 <= dice && dice <= 8) {
-                            modules.visualModule.sneakyLookRight(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
+                            modules.visualModule.sneakyLookRight(callback);
                         } else if (9 <= dice && dice <= 10) {
-                            modules.visualModule.sneakyLookLeft(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
+                            modules.visualModule.sneakyLookLeft(callback);
                         }
 
                         break;
 
                     case "DECIR":
-                        var dataCallback = {
-                            socket: this,
-                            command: commands[i]
-                        };
-                        var callback = function(){
-                            var reply = {
-                                MODULE_ID: "AUDIO_VISUAL",
-                                COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                GROUP_ID: dataCallback.command.GROUP_ID,
-                                STATUS: "DONE",
-                                ERROR_MESSAGE: "",
-                                FINISH_MESSAGE: ""
-                            };
-                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                        }
                         if(-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8){
-                            modules.visualModule.sadHigh(callback);
+                            modules.visualModule.sadHigh(function() {});
                         }else if( -0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4 ){
-                            modules.visualModule.sadMedium(callback);
+                            modules.visualModule.sadMedium(function() {});
                         }else if( -0.3 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1 ){
-                            modules.visualModule.sadLow(callback);
+                            modules.visualModule.sadLow(function() {});
                         }else if( 0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3 ){
-                            modules.visualModule.happyLow(callback);
+                            modules.visualModule.happyLow(function() {});
                         }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
-                            modules.visualModule.happyMedium(callback);
+                            modules.visualModule.happyMedium(function() {});
                         }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1 ){
-                            modules.visualModule.happyHigh(callback);
+                            modules.visualModule.happyHigh(function() {});
                         }else{
-                            modules.visualModule.neutral(callback);
+                            modules.visualModule.neutral(function() {});
                         }
 
                         if(modules.audioOutputModule != null){
-                            modules.audioOutputModule.textToSpeech(params.TEXTO, null, function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
-                        }else{
-                            modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, function(){
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
+                            modules.audioOutputModule.textToSpeech(params.TEXTO, modules.visualModule, null,callback);
+                        }
+                        if(modules.visualModule != null){
+                            modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, callback);
                         }
                         break;
 
@@ -183,93 +130,38 @@ class CommunicationChannel {
                                 socket: this,
                                 command: commands[i]
                             };
-                            modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", null, function () {
-                                modules.audioInputModule.answer(function(data, callback){
+                            modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", modules.visualModule, null, function () {
+                                modules.audioInputModule.answer(function(data){
                                     if(modules.audioOutputModule != null){
-                                        modules.audioOutputModule.textToSpeech(data, null, function () {
-                                            var reply = {
-                                                MODULE_ID: "AUDIO_VISUAL",
-                                                COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                                GROUP_ID: dataCallback.command.GROUP_ID,
-                                                STATUS: "DONE",
-                                                ERROR_MESSAGE: "",
-                                                FINISH_MESSAGE: ""
-                                            };
-                                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                                        });
+                                        modules.audioOutputModule.textToSpeech(data, modules.visualModule, null, callback);
                                     }else{
-                                        modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, function(){
-                                            var reply = {
-                                                MODULE_ID: "AUDIO_VISUAL",
-                                                COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                                GROUP_ID: dataCallback.command.GROUP_ID,
-                                                STATUS: "DONE",
-                                                ERROR_MESSAGE: "",
-                                                FINISH_MESSAGE: ""
-                                            };
-                                            dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                                        });
+                                        modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, callback);
                                     } 
                                 }); 
                             });
                         break;
                         case "INFORM_NECESSITY":
-                            var dataCallback = {
-                                socket: this,
-                                command: commands[i]
-                            };
-                            var callback = function(){
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            }
                             if(-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8){
-                                modules.visualModule.sadHigh(callback);
+                                modules.visualModule.sadHigh(function() {});
                             }else if( -0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4 ){
-                                modules.visualModule.sadMedium(callback);
+                                modules.visualModule.sadMedium(function() {});
                             }else if( -0.3 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1 ){
-                                modules.visualModule.sadLow(callback);
+                                modules.visualModule.sadLow(function() {});
                             }else if( 0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3 ){
-                                modules.visualModule.happyLow(callback);
+                                modules.visualModule.happyLow(function() {});
                             }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
-                                modules.visualModule.happyMedium(callback);
+                                modules.visualModule.happyMedium(function() {});
                             }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1 ){
-                                modules.visualModule.happyHigh(callback);
+                                modules.visualModule.happyHigh(function() {});
                             }else{
-                                modules.visualModule.neutral(callback);
+                                modules.visualModule.neutral(function() {});
                             }
     
                             if(modules.audioOutputModule != null){
-                                modules.audioOutputModule.textToSpeech(params.SERVICES, null, function () {
-                                    var reply = {
-                                        MODULE_ID: "AUDIO_VISUAL",
-                                        COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                        GROUP_ID: dataCallback.command.GROUP_ID,
-                                        STATUS: "DONE",
-                                        ERROR_MESSAGE: "",
-                                        FINISH_MESSAGE: ""
-                                    };
-                                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                                });
+                                modules.audioOutputModule.textToSpeech(params.SERVICES, modules.audioOutputModule.visualModule, null, callback);
                             }
                             if (modules.visualModule != null){
-                                modules.visualModule.showDialogFrames([params.SERVICES], { type: 'danger', tone: 'low', waitTime:'short' }, function(){
-                                    var reply = {
-                                        MODULE_ID: "AUDIO_VISUAL",
-                                        COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                        GROUP_ID: dataCallback.command.GROUP_ID,
-                                        STATUS: "DONE",
-                                        ERROR_MESSAGE: "",
-                                        FINISH_MESSAGE: ""
-                                    };
-                                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                                });
+                                modules.visualModule.showDialogFrames([params.SERVICES], { type: 'danger', tone: 'low', waitTime:'short' }, callback);
                             }    
                         break;
                             

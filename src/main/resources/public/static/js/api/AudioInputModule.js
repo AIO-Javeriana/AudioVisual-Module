@@ -32,7 +32,7 @@ class AudioInputModule extends Module{
             recognition.start();
         }
         
-        this.answer = function(processFunction, callback){
+        this.answer = function(processFunction){
             this.speechToText(function(question){
                 var question = toQuestion(question);
                 console.log(question);
@@ -65,7 +65,7 @@ class AudioInputModule extends Module{
                             type: "GET",
                         }).done(function( data ) {
                             console.log(data.data.translations[0].translatedText);
-                            processFunction(data.data.translations[0].translatedText, callback);
+                            processFunction(data.data.translations[0].translatedText);
                         });
                     });
                 });
