@@ -8,9 +8,9 @@
 class AudioInputModule extends Module{
 
     /**
-     * @param mediaStreamSource media stream source needed to record.
+     * @param id string to identify the module
      */
-    constructor(id, mediaStreamSource) {
+    constructor(id) {
         super(id);        
         
         this.speechToText = function(processFunction){

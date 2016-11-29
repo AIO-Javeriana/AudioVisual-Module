@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <div id="player"></div>
+    <button id="b1">Video1</button>
+    <button id="b2">Video2</button>
+    <button id="b3">Video3</button>
+
+    <script src="http://www.youtube.com/player_api"></script>
+    <script type="text/javascript" src="./static/js/external/jquery.v3.1.0.min.js"></script>
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '480',
+                width: '800',
+                videoId: 'sDj72zqZakE',
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        // autoplay video
+        function onPlayerReady(event) {
+            player.setVolume(100);
+            player.setPlaybackRate(1);
+        }
+
+        function youtube_parser(url){
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            return (match&&match[7].length==11)? match[7] : false;
+        }
+
+        $(document).on('click', '#b1', function(){
+            var url  = 'https://www.youtube.com/watch?v=0OqZhwSRYwE';
+            playVideo(url, null, function(){
+                console.log('holi');
+            });
+        });  
+
+        var playVideo = function(url, options, callback){
+            var   id = youtube_parser(url);
+            var properties = {
+                volume: 100,
+                speed: 1,
+                callback: function(){}
+            };
+
+            //Checking options
+            if(callback != null)
+                properties.callback = callback;
+            if(options != null){
+                if(options.volume != null)
+                    properties.volume = options.volume*100;
+                if(options.speed != null)
+                    properties.speed = options.speed;
+            }
+            //Setting options
+            player.addEventListener('onStateChange', function(event){
+                if(event.data === 0) {    
+                    properties.callback();
+                }
+            })
+            player.setVolume(properties.volume);
+            player.setPlaybackRate(properties.speed);
+            player.cueVideoById(id);
+            player.playVideo();
+        }
+    </script>
+    
+</body>
+
+</html>

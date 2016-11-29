@@ -165,9 +165,7 @@ var availableSounds = {
 };
 
 
-var availableVideos = {
-    path: './assets/sounds/',
-    availableVideoFiles: [
+var availableVideos =[
         {
             name: 'digimon',
             url: 'https://www.youtube.com/watch?v=b1uH4BnswKQ'
@@ -175,11 +173,7 @@ var availableVideos = {
             name: 'dora',
             url: 'https://www.youtube.com/watch?v=EdgV1FMFDq4'
         }
-    ],
-    errorVideo: {
-        url: 'https://www.youtube.com/watch?v=sDj72zqZakE'
-    }
-}
+    ];
 
 var sneakyLookingRight = [{
         id:'conector_full-opened-eyes_looking-sneaky',
