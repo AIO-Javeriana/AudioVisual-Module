@@ -4,7 +4,7 @@ html, body{
     margin: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #42a5f5;
+    background-color: #BBDEFB;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,8 +82,8 @@ g:not(:first-child){
 }
 
 path {
-    stroke: #0d47a1;
-    fill: #0d47a1;
+    stroke: #0D47A1;
+    fill: #0D47A1;
 }
 
 
