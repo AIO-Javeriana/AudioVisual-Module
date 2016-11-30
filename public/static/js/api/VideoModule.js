@@ -43,6 +43,7 @@ class VideoModule extends Module{
          * 
          */
         this.playVideo = function(name, options, callback){
+            $('#youtube').css('display','flex');
             var id = this.getVideoId(name);
             var properties = {
                 volume: 100,
@@ -62,7 +63,8 @@ class VideoModule extends Module{
 
             //Setting options
             this.player.addEventListener('onStateChange', function(event){
-                if(event.data === 0) {    
+                if(event.data === 0) {
+                    $('#youtube').css('display','none');    
                     properties.callback();
                 }
             });

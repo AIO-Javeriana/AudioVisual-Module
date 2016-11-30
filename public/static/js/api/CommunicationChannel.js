@@ -225,7 +225,10 @@ if(commands != null){
                         break;
                         case "REPRODUCIR-SONIDO":
                             modules.audioOutputModule.play(params.SONIDO, null, callback);    
-                        break;
+                            break;
+                        case "REPRODUCIR-VIDEO":
+                            modules.audioOutputModule.play(params.VIDEO, null, callback);    
+                            break;
                        }     
                 }
             }
