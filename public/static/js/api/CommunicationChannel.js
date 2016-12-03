@@ -33,20 +33,20 @@ class CommunicationChannel {
         this.socket = io.connect(this.host + ":" + this.port);
         this.socket.on('connect_error', function (err) {
             var i = Math.floor((Math.random() * 10) + 1);
-            var dialog = ["Oh No!!!","Error de conexión","Que mala suerte!!"];
-            modules.visualModule.showDialogFrames(dialog, { type: 'danger', tone: 'low', waitTime:'short' }, function(){
+            var dialog = ["Oh No!!!", "Error de conexión", "Que mala suerte!!"];
+            modules.visualModule.showDialogFrames(dialog, { type: 'danger', tone: 'low', waitTime: 'short' }, function () {
                 console.log('end of connect error');
             });
         });
 
         this.socket.on('connect', function () {
             var ID = "AUDIO_VISUAL";
-            var commands = [{ COMMAND: "ATTENTION_CYCLE", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false }, 
-                            { COMMAND: "DECIR", PARAMS: ["TEXTO", "TONO"], INTERRUPTIBLE: false, SERVICE: false },
-                            { COMMAND: "RESPONDER", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
-                            { COMMAND: "INFORM_NECESSITY", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false},
-                            { COMMAND: "REPRODUCIR-SONIDO", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false}
-                            ];
+            var commands = [{ COMMAND: "ATTENTION_CYCLE", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "DECIR", PARAMS: ["TEXTO", "TONO"], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "RESPONDER", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "INFORM_NECESSITY", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "REPRODUCIR-SONIDO", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false }
+            ];
             var module_info = {
                 MODULE_ID: ID,
                 COMMANDS: commands
@@ -70,100 +70,100 @@ class CommunicationChannel {
             var JSONmsg = JSON.parse(msg);
             var GROUP_ID = JSONmsg.GROUP_ID;
             var commands = mapCommands[GROUP_ID];
-if(commands != null){
-            for (var i = 0; i < commands.length; i++) {
-                var params = commands[i].PARAMS;
-		var dataCallback = {
-                            socket: this,
-                            command: commands[i]
-                        };
-                var callback = function(){
-                    var reply = {
-                        MODULE_ID: "AUDIO_VISUAL",
-                        COMMAND_ID: dataCallback.command.COMMAND_ID,
-                        GROUP_ID: dataCallback.command.GROUP_ID,
-                        STATUS: "DONE",
-                        ERROR_MESSAGE: "",
-                        FINISH_MESSAGE: ""
+            if (commands != null) {
+                for (var i = 0; i < commands.length; i++) {
+                    var params = commands[i].PARAMS;
+                    var dataCallback = {
+                        socket: this,
+                        command: commands[i]
                     };
-                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                }
-                switch (commands[i].COMMAND) {
-                    case "ATTENTION_CYCLE":
-                        var dice = Math.floor((Math.random() * 10) + 1);
-                        
-                        if (1 <= dice && dice <= 6) {
-                            modules.visualModule.blink(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
-                        } else if (7 <= dice && dice <= 8) {
-                            modules.visualModule.sneakyLookRight(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
-                        } else if (9 <= dice && dice <= 10) {
-                            modules.visualModule.sneakyLookLeft(function () {
-                                var reply = {
-                                    MODULE_ID: "AUDIO_VISUAL",
-                                    COMMAND_ID: dataCallback.command.COMMAND_ID,
-                                    GROUP_ID: dataCallback.command.GROUP_ID,
-                                    STATUS: "DONE",
-                                    ERROR_MESSAGE: "",
-                                    FINISH_MESSAGE: ""
-                                };
-                                dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
-                            });
-                        }
+                    var callback = function () {
+                        var reply = {
+                            MODULE_ID: "AUDIO_VISUAL",
+                            COMMAND_ID: dataCallback.command.COMMAND_ID,
+                            GROUP_ID: dataCallback.command.GROUP_ID,
+                            STATUS: "DONE",
+                            ERROR_MESSAGE: "",
+                            FINISH_MESSAGE: ""
+                        };
+                        dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                    }
+                    switch (commands[i].COMMAND) {
+                        case "ATTENTION_CYCLE":
+                            var dice = Math.floor((Math.random() * 10) + 1);
 
-                        break;
+                            if (1 <= dice && dice <= 6) {
+                                modules.visualModule.blink(function () {
+                                    var reply = {
+                                        MODULE_ID: "AUDIO_VISUAL",
+                                        COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                        GROUP_ID: dataCallback.command.GROUP_ID,
+                                        STATUS: "DONE",
+                                        ERROR_MESSAGE: "",
+                                        FINISH_MESSAGE: ""
+                                    };
+                                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                                });
+                            } else if (7 <= dice && dice <= 8) {
+                                modules.visualModule.sneakyLookRight(function () {
+                                    var reply = {
+                                        MODULE_ID: "AUDIO_VISUAL",
+                                        COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                        GROUP_ID: dataCallback.command.GROUP_ID,
+                                        STATUS: "DONE",
+                                        ERROR_MESSAGE: "",
+                                        FINISH_MESSAGE: ""
+                                    };
+                                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                                });
+                            } else if (9 <= dice && dice <= 10) {
+                                modules.visualModule.sneakyLookLeft(function () {
+                                    var reply = {
+                                        MODULE_ID: "AUDIO_VISUAL",
+                                        COMMAND_ID: dataCallback.command.COMMAND_ID,
+                                        GROUP_ID: dataCallback.command.GROUP_ID,
+                                        STATUS: "DONE",
+                                        ERROR_MESSAGE: "",
+                                        FINISH_MESSAGE: ""
+                                    };
+                                    dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                                });
+                            }
 
-                    case "DECIR":
-                        
-                        if(-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8){
-                            modules.visualModule.sadHigh(function() {});
-                        }else if( -0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4 ){
-                            modules.visualModule.sadMedium(function() {});
-                        }else if( -0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1 ){
-                            modules.visualModule.sadLow(function() {});
-                        }else if( 0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3 ){
-                            modules.visualModule.happyLow(function() {});
-                        }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
-                            modules.visualModule.happyMedium(function() {});
-                        }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1 ){
-                            modules.visualModule.happyHigh(function() {});
-                        }else{
-                            modules.visualModule.neutral(function() {});
-                        }
+                            break;
 
-                        if(modules.audioOutputModule != null){
-                            modules.audioOutputModule.textToSpeech(params.TEXTO, modules.visualModule, null, callback);
-                        }else{
-                            modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, callback);
-                        }
-                        break;
+                        case "DECIR":
+
+                            if (-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8) {
+                                modules.visualModule.sadHigh(function () { });
+                            } else if (-0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4) {
+                                modules.visualModule.sadMedium(function () { });
+                            } else if (-0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1) {
+                                modules.visualModule.sadLow(function () { });
+                            } else if (0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3) {
+                                modules.visualModule.happyLow(function () { });
+                            } else if (0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7) {
+                                modules.visualModule.happyMedium(function () { });
+                            } else if (0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1) {
+                                modules.visualModule.happyHigh(function () { });
+                            } else {
+                                modules.visualModule.neutral(function () { });
+                            }
+
+                            if (modules.audioOutputModule != null) {
+                                modules.audioOutputModule.textToSpeech(params.TEXTO, modules.visualModule, null, callback);
+                            } else {
+                                modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime: 'short' }, callback);
+                            }
+                            break;
 
                         case "RESPONDER":
                             modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", modules.visualModule, null, function () {
-                                modules.audioInputModule.answer(function(data, callback){
-                                    if(modules.audioOutputModule != null){
-                                        modules.audioOutputModule.textToSpeech(data,modules.visualModule, null, callback);
-                                    }else{
-                                        modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime:'short' }, function(){
+                                modules.audioInputModule.answer(function (data, callback) {
+                                    if (modules.audioOutputModule != null) {
+                                        modules.audioOutputModule.textToSpeech(data, modules.visualModule, null, callback);
+                                    } else {
+                                        modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime: 'short' }, function () {
                                             var reply = {
                                                 MODULE_ID: "AUDIO_VISUAL",
                                                 COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -174,30 +174,30 @@ if(commands != null){
                                             };
                                             dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                                         });
-                                    } 
-                                }); 
+                                    }
+                                });
                             });
-                        break;
+                            break;
                         case "INFORM_NECESSITY":
-                            
-                            if(-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8){
+
+                            if (-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8) {
                                 modules.visualModule.sadHigh(callback);
-                            }else if( -0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4 ){
-                                modules.visualModule.sadMedium(function() {});
-                            }else if( -0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1 ){
-                                modules.visualModule.sadLow(function() {});
-                            }else if( 0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3 ){
-                                modules.visualModule.happyLow(function() {});
-                            }else if( 0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7 ){
-                                modules.visualModule.happyMedium(function() {});
-                            }else if( 0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1 ){
-                                modules.visualModule.happyHigh(function() {});
-                            }else{
-                                modules.visualModule.neutral(function() {});
+                            } else if (-0.7 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.4) {
+                                modules.visualModule.sadMedium(function () { });
+                            } else if (-0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.1) {
+                                modules.visualModule.sadLow(function () { });
+                            } else if (0.1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.3) {
+                                modules.visualModule.happyLow(function () { });
+                            } else if (0.4 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 0.7) {
+                                modules.visualModule.happyMedium(function () { });
+                            } else if (0.8 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= 1) {
+                                modules.visualModule.happyHigh(function () { });
+                            } else {
+                                modules.visualModule.neutral(function () { });
                             }
-    
-                            if(modules.audioOutputModule != null){
-                                modules.audioOutputModule.textToSpeech(params.SERVICES, modules.visualModule,null, function () {
+
+                            if (modules.audioOutputModule != null) {
+                                modules.audioOutputModule.textToSpeech(params.SERVICES, modules.visualModule, null, function () {
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -209,8 +209,8 @@ if(commands != null){
                                     dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                                 });
                             }
-                            if (modules.visualModule != null){
-                                modules.visualModule.showDialogFrames([params.SERVICES], { type: 'danger', tone: 'low', waitTime:'short' }, function(){
+                            if (modules.visualModule != null) {
+                                modules.visualModule.showDialogFrames([params.SERVICES], { type: 'danger', tone: 'low', waitTime: 'short' }, function () {
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -221,15 +221,15 @@ if(commands != null){
                                     };
                                     dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                                 });
-                            }    
-                        break;
+                            }
+                            break;
                         case "REPRODUCIR-SONIDO":
-                            modules.audioOutputModule.play(params.SONIDO, null, callback);    
+                            modules.audioOutputModule.play(params.SONIDO, null, callback);
                             break;
                         case "REPRODUCIR-VIDEO":
-                            modules.audioOutputModule.play(params.VIDEO, null, callback);    
+                            modules.videoModule.playVideo(params.VIDEO, null, callback);
                             break;
-                       }     
+                    }
                 }
             }
         });

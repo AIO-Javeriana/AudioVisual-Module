@@ -11,8 +11,7 @@ class AudioInputModule extends Module{
      * @param id string to identify the module
      */
     constructor(id) {
-        super(id);        
-        
+        super(id);
         this.speechToText = function(processFunction){
             var recognition = new webkitSpeechRecognition();
             recognition.onresult = function(event) { 

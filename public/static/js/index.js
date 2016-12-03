@@ -4,7 +4,8 @@ window.onload = function init() {
     var audioVisualModule = new AudioVisualModule('10.42.0.191', '9090', {
         imagesInfo: availableImages,
         soundsInfo: availableSounds,
-        videosInfo: availableVideos
+        videosInfo: availableVideos,
+        commandsInfo: voiceCommands
     });
 
     //Demo button

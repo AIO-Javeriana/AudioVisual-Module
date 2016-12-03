@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "AudioVisual-Module",
   "main": "server.js",
-  "repository": "",
+  "repository": "https://github.com/AIO-Javeriana/AudioVisual-Module",
   "dependencies": {
     "async": "~0.2.8",
     "express": "~3.2.4"

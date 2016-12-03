@@ -450,3 +450,13 @@ function toQuestion(sentence){
     sentence += "?";
     return sentence;
 }
+
+var voiceCommands = [
+    {
+        question: 'Hola AIO',
+        answer:'Hola amigo'
+    },{
+        question: 'pregunta',
+        answer: 'respuesta'
+    }
+]
