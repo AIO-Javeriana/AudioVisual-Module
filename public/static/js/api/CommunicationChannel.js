@@ -75,15 +75,19 @@ class CommunicationChannel {
         
         this.socket.on(EventsEnum.POSSIBLE_SUPPLIER, function(msg){
             var JSONmsg = JSON.parse(msg);
-            if(JSONmsg.COMMAND == "BATTERY_LVL"){
-                var msg = { MODULE_ID: "AUDIO_VISUAL",  EVENT_NAME: EventsEnum.SUBSCRIPTION_SENSOR_SERVICE, SENSOR_SERVICE_NAME: JSONmsg.COMMAND};    
+            //console.log(EventsEnum.POSSIBLE_SUPPLIER+" : "+msg);
+            //console.log(JSONmsg.DATA.COMMAND)
+            if(JSONmsg.DATA.COMMAND == "BATTERY_LVL"){
+                console.log("Enviando peticion de subscripcion a servicio");
+                var msg = { MODULE_ID: "AUDIO_VISUAL",  EVENT_NAME: EventsEnum.SUBSCRIPTION_SENSOR_SERVICE, SENSOR_SERVICE_NAME: JSONmsg.DATA.COMMAND};    
                 this.emit(EventsEnum.SUBSCRIPTION_SENSOR_SERVICE, JSON.stringify(msg));
             }
         });
         
         this.socket.on(EventsEnum.SENSOR_SERVICE_REPLY, function(msg){
             var JSONmsg = JSON.parse(msg);
-            if(JSONmsg.DATA.SENSOR_SERVICE_NAME == "BATTERY_LVL"){
+             if(JSONmsg.DATA.SENSOR_SERVICE_NAME == "BATTERY_LVL"){
+                console.log(EventsEnum.SENSOR_SERVICE_REPLY+" : "+JSONmsg.DATA.PARAMS.BATTERY_LVL);
                 modules.visualModule.updateBatteryStatus(JSONmsg.DATA.PARAMS.BATTERY_LVL);
             }
         });
