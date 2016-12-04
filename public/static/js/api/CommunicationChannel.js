@@ -2,22 +2,24 @@ var EventsEnum = {
     REGISTRATION: "REGISTRATION",
     REGISTRATION_REPLY: "REGISTRATION_REPLY",
     WORK_ASSIGNATION: "WORK_ASSIGNATION",
-    WORK_ASSIGNATION_REPLY: "WORK_ASSIGNATION-REPLY",
+    WORK_ASSIGNATION_REPLY: "WORK_ASSIGNATION_REPLY",
     WORK_STATUS: "WORK_STATUS",
-    WORK_STATUS_REPLY: "WORK_STATUS-REPLY",
+    WORK_STATUS_REPLY: "WORK_STATUS_REPLY",
     ALL_BEGINS: "ALL_BEGINS",
     ACTION_FINISHED: "ACTION_FINISHED",
-    GET_SENSOR_SERVICES: "GET_SENSOR-SERVICES",
-    SUBSCRIPTION_SENSOR_SERVICE: "SUBSCRIPTION_SENSOR-SERVICE",
+    GET_SENSOR_SERVICES: "GET_SENSOR_SERVICES",
+    SUBSCRIPTION_SENSOR_SERVICE: "SUBSCRIPTION_SENSOR_SERVICE",
     SENSOR_SERVICE: "SENSOR_SERVICE",
     EMOTIONAL_EVENT: "EMOTIONAL_EVENT",
     PARTICIPATION_EVENT: "PARTICIPATION_EVENT",
-    SUBSCRIPTION_SENSOR_SERVICE_REPLY: "SUBSCRIPTION_SENSOR-SERVICE-REPLY",
-    NECESSITY_FOR_MODULE: "NECESSITY_FOR-MODULE",
+    SUBSCRIPTION_SENSOR_SERVICE_REPLY: "SUBSCRIPTION_SENSOR_SERVICE_REPLY",
+    NECESSITY_FOR_MODULE: "NECESSITY_FOR_MODULE",
     FINISHED_EXECUTE_COMMAND: "FINISHED_EXECUTE_COMMAND",
     SENSOR_SERVICE_REPLY: "SENSOR_SERVICE_REPLY",
-    GET_SENSOR_SERVICES_REPLY: "GET_SENSOR_SERVICES-REPLY",
+    GET_SENSOR_SERVICES_REPLY: "GET_SENSOR_SERVICES_REPLY",
+    MODULE_REGISTRATION_SERVICE: "MODULE_REGISTRATION_SERVICE",
     COMMANDS_ASSIGNATION: "COMMANDS_ASSIGNATION",
+    POSSIBLE_SUPPLIER: "POSSIBLE_SUPPLIER",
     NOT_DEFINED: "NOT_DEFINED"
 };
 
@@ -66,6 +68,26 @@ class CommunicationChannel {
             this.emit(EventsEnum.WORK_ASSIGNATION_REPLY, JSON.stringify(reply));
         })
 
+        this.socket.on(EventsEnum.REGISTRATION_REPLY, function() {
+            var msg = { MODULE_ID: "AUDIO_VISUAL",  EVENT_NAME: EventsEnum.MODULE_REGISTRATION_SERVICE};    
+            this.emit(EventsEnum.MODULE_REGISTRATION_SERVICE, JSON.stringify(msg));
+        });
+        
+        this.socket.on(EventsEnum.POSSIBLE_SUPPLIER, function(msg){
+            var JSONmsg = JSON.parse(msg);
+            if(JSONmsg.COMMAND == "BATTERY_LVL"){
+                var msg = { MODULE_ID: "AUDIO_VISUAL",  EVENT_NAME: EventsEnum.SUBSCRIPTION_SENSOR_SERVICE, SENSOR_SERVICE_NAME: JSONmsg.COMMAND};    
+                this.emit(EventsEnum.SUBSCRIPTION_SENSOR_SERVICE, JSON.stringify(msg));
+            }
+        });
+        
+        this.socket.on(EventsEnum.SENSOR_SERVICE_REPLY, function(msg){
+            var JSONmsg = JSON.parse(msg);
+            if(JSONmsg.DATA.SENSOR_SERVICE_NAME == "BATTERY_LVL"){
+                modules.visualModule.updateBatteryStatus(JSONmsg.DATA.PARAMS.BATTERY_LVL);
+            }
+        });
+        
         this.socket.on(EventsEnum.ALL_BEGINS, function (msg) {
             var JSONmsg = JSON.parse(msg);
             var GROUP_ID = JSONmsg.GROUP_ID;
@@ -92,7 +114,7 @@ class CommunicationChannel {
                         case "ATTENTION_CYCLE":
                             var dice = Math.floor((Math.random() * 10) + 1);
 
-                            if (1 <= dice && dice <= 6) {
+                            if (1 <= dice && dice <= 7) {
                                 modules.visualModule.blink(function () {
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
@@ -104,7 +126,7 @@ class CommunicationChannel {
                                     };
                                     dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
                                 });
-                            } else if (7 <= dice && dice <= 8) {
+                            } else if (7 < dice && dice <= 8) {
                                 modules.visualModule.sneakyLookRight(function () {
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",

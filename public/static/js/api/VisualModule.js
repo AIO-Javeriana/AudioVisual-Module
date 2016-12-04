@@ -374,7 +374,44 @@ class VisualModule extends Module{
                 that.closeImagePreview(); 
                 callback();
             }, time);
-        }        
+        }       
+        
+        this.updateBatteryStatus = function(level){
+            $("#battery_status").removeClass();
+            $("#battery_status").addClass("mdi mdi-light mdi-24px");
+            switch (true) {
+                case (level<10):
+                    $("#battery_status").addClass("mdi-battery-alert");
+                    break;
+                case (level>=10 && level<20):
+                    $("#battery_status").addClass("mdi-battery-10");
+                    break;
+                case (level>=20 && level<30):
+                    $("#battery_status").addClass("mdi-battery-20");
+                    break;
+                case (level>=30 && level<40):
+                    $("#battery_status").addClass("mdi-battery-30");
+                    break;
+                case (level>=40 && level<50):
+                    $("#battery_status").addClass("mdi-battery-40");
+                    break;
+                case (level>=50 && level<60):
+                    $("#battery_status").addClass("mdi-battery-50");
+                    break;
+                case (level>=60 && level<70):
+                    $("#battery_status").addClass("mdi-battery-60");
+                    break;    
+                case (level>=70 && level<80):
+                    $("#battery_status").addClass("mdi-battery-70");
+                    break;
+                case (level>=80 && level<90):
+                    $("#battery_status").addClass("mdi-battery-80");
+                    break;
+                case (level>=90):
+                    $("#battery_status").addClass("mdi-battery");
+                    break;
+            }
+        }
     }
 
     /**
