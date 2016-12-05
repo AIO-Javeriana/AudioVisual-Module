@@ -160,6 +160,12 @@ var availableSounds = {
         {
             name: 'colegio',
             file: 'colegio.mp3'
+        },{
+            name: 'splash',
+            file: 'splash.mp3'
+        },{
+            name: 'whistle',
+            file: 'whistle.mp3'
         }
     ]
 };
@@ -172,6 +178,9 @@ var availableVideos =[
         }, {
             name: 'dora',
             url: 'https://www.youtube.com/watch?v=EdgV1FMFDq4'
+        },{
+            name:'dinosaurios',
+            url: 'https://www.youtube.com/watch?v=1oe5Mxs-S3I'
         }
     ];
 
