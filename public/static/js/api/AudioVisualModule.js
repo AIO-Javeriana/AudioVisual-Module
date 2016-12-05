@@ -9,7 +9,7 @@ class AudioVisualModule extends Module{
             videoModule: new VideoModule('videoModule', optional.videosInfo)
         };
         this.startAnnyang(this.availableModules.audioOutputModule);
-        this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
+        //this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
     }
 
     startAnnyang(audioOutputModule){
@@ -17,13 +17,24 @@ class AudioVisualModule extends Module{
             audioOutputModule.textToSpeech(texto, null, null, function(){});
         }
 
+        var started = false;
+
         if (annyang) {
             var commands = {
                 'hola aio': function() { tts('Hola amigo') },
                 'hola miguel': function() { tts('Hola amigo') },
                 'hola': function() { tts('Hola amigo'); },
                 'hello': function() { tts('Hola amigo'); },
-                'como te llamas': function() {tts('Mi nombre es AIO');}
+                'what\'s your name': function() {tts('Mi nombre es AIO');},
+                'start': function(){
+                    var text = 'Hola, yo soy AIO y les doy la bienvenida a la sustentación del trabajo de grado de Stiven Avila, Miguel Bermeo y Fabian Merchán, llamado plataforma de dramatización robótica modular, dirigida por Alejandra gonzalez y Enrique Gonzalez.';
+                    //var text = 'stiven hijueputa';
+                    if(!started){
+                        tts(text);
+                        started = true;
+                    }
+                },
+                'thanks': function(){ tts('a ti, gracias'); }
             };
 
             annyang.addCommands(commands);
