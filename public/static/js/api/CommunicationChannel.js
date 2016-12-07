@@ -47,7 +47,8 @@ class CommunicationChannel {
                 { COMMAND: "DECIR", PARAMS: ["TEXTO", "TONO"], INTERRUPTIBLE: false, SERVICE: false },
                 { COMMAND: "RESPONDER", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
                 { COMMAND: "INFORM_NECESSITY", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
-                { COMMAND: "REPRODUCIR-SONIDO", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false }
+                { COMMAND: "REPRODUCIR-SONIDO", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "REPRODUCIR-VIDEO", PARAMS: ["VIDEO"], INTERRUPTIBLE: false, SERVICE: false }
             ];
             var module_info = {
                 MODULE_ID: ID,

@@ -9,7 +9,7 @@ class AudioVisualModule extends Module{
             videoModule: new VideoModule('videoModule', optional.videosInfo)
         };
         this.startAnnyang(this.availableModules.audioOutputModule);
-        //this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
+        this.communicationChannel = new CommunicationChannel(host, port, this.availableModules);
     }
 
     startAnnyang(audioOutputModule){
