@@ -1,13 +1,15 @@
 Manual de instalación
-===================
 ###Módulo AudioVisual de AIO
----
+===================
+
+
 El módulo audiovisual de AIO controla todos los recursos de visuales y auditivos del robot. Está desarrollado en JavaScript, y los recursos visuales se controlan a través de CSS y HTML. El código fuente del proyecto se encuentra publicado en [GitHub]([https://github.com/AIO-Javeriana/AudioVisual-Module).
 
 ##**Dependencias**
 #####**Software**
   - [NodeJS](https://nodejs.org/es/)
-  - [Chromium browser](https://www.chromium.org/)[^chrome] 
+  - [Chromium browser](https://www.chromium.org/)[^1]
+  
 #####**Hardware**
   - Parlante
   - Micrófono
@@ -56,6 +58,7 @@ Emite un texto como sonido.
 #####**Opciones**
 - TEXTO: Texto que se va a emitir como sonido.
 - TONO: Tono de la voz.
+
 #####**Ejemplo**
 ```yaml
 	DECIR: 
@@ -87,6 +90,7 @@ Este servicio, usa el *Web Audio API*, para mayor información acerca de archivo
 
 #####**Opciones**
 -	SONIDO: Nombre del sonido que se va a reproducir.
+
 #####**Ejemplo**
 ```yaml
 	REPRODUCIR-SONIDO: 
@@ -109,6 +113,7 @@ var availableVideos =[{
 
 #####**Opciones**
 - VIDEO: Nombre del video a reproducir.
+
 #####**Ejemplo**
 ```yaml
 	REPRODUCIR-VIDEO: 
@@ -117,13 +122,15 @@ var availableVideos =[{
 
 ###RESPONDER
 Activa el micrófono para que el usuario pueda realizar una pregunta al usuario.
+
 #####**Opciones**
 Este servicio no tiene opciones de configuración.
+
 #####**Ejemplo**
 ```yaml
 	RESPONDER:  
 ```
 
- [^chrome]: [Google Chrome](https://www.google.com/chrome/) Aunque el proyecto está diseñado y probado para ser utilizado en Chromium browser (navegador soportado por dispositivos con procesador ARM), todas sus opciones son compatibles con el navegador Google Chrome.
+ [^1]: [Google Chrome](https://www.google.com/chrome/) Aunque el proyecto está diseñado y probado para ser utilizado en Chromium browser (navegador soportado por dispositivos con procesador ARM), todas sus opciones son compatibles con el navegador Google Chrome.
 
 
