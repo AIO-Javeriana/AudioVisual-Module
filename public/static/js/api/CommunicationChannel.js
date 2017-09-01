@@ -5,6 +5,7 @@ var EventsEnum = {
     WORK_ASSIGNATION_REPLY: "WORK_ASSIGNATION_REPLY",
     WORK_STATUS: "WORK_STATUS",
     WORK_STATUS_REPLY: "WORK_STATUS_REPLY",
+    ABORT_WORK:"ABORT_WORK",
     ALL_BEGINS: "ALL_BEGINS",
     ACTION_FINISHED: "ACTION_FINISHED",
     GET_SENSOR_SERVICES: "GET_SENSOR_SERVICES",
@@ -24,6 +25,8 @@ var EventsEnum = {
 };
 
 var mapCommands = [];
+var servicesState = new Map();
+
 
 class CommunicationChannel {
     constructor(host, port, modules) {
@@ -31,6 +34,13 @@ class CommunicationChannel {
         this.host = host;
         this.port = port;
         this.modules = modules;
+        servicesState.set("ATTENTION_CYCLE",true);
+        servicesState.set("SAY",true);
+        servicesState.set("ANSWER",true);
+        servicesState.set("INFORM_NECESSITY",true);
+        servicesState.set("PLAY_SOUND",true);
+        servicesState.set("PLAY_VIDEO",true);
+        
 
         this.socket = io.connect(this.host + ":" + this.port);
         this.socket.on('connect_error', function (err) {
@@ -43,12 +53,13 @@ class CommunicationChannel {
 
         this.socket.on('connect', function () {
             var ID = "AUDIO_VISUAL";
-            var commands = [{ COMMAND: "ATTENTION_CYCLE", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
-                { COMMAND: "DECIR", PARAMS: ["TEXTO", "TONO"], INTERRUPTIBLE: false, SERVICE: false },
-                { COMMAND: "RESPONDER", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
+            var commands = [
+                { COMMAND: "ATTENTION_CYCLE", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "SAY", PARAMS: ["TEXTO", "TONO"], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "ANSWER", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
                 { COMMAND: "INFORM_NECESSITY", PARAMS: [], INTERRUPTIBLE: false, SERVICE: false },
-                { COMMAND: "REPRODUCIR-SONIDO", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false },
-                { COMMAND: "REPRODUCIR-VIDEO", PARAMS: ["VIDEO"], INTERRUPTIBLE: false, SERVICE: false }
+                { COMMAND: "PLAY_SOUND", PARAMS: ["SONIDO"], INTERRUPTIBLE: false, SERVICE: false },
+                { COMMAND: "PLAY_VIDEO", PARAMS: ["VIDEO"], INTERRUPTIBLE: false, SERVICE: false }
             ];
             var module_info = {
                 MODULE_ID: ID,
@@ -62,6 +73,39 @@ class CommunicationChannel {
             var GROUP_ID = JSONmsg.GROUP_ID;
             var COMMAND_ID = JSONmsg.COMMAND_ID;
             var reply = { MODULE_ID: "AUDIO_VISUAL", REPLY: "ACCEPTED", COMMAND_ID: COMMAND_ID, COMMAND_GROUP: GROUP_ID };
+            //console.log("[WORK_ASSIGNATION] "+JSONmsg.COMMAND+" "+servicesState.get(JSONmsg.COMMAND) );
+            if(servicesState.get(JSONmsg.COMMAND) == undefined || !servicesState.get(JSONmsg.COMMAND)){
+                reply.REPLY="REFUSED";
+            }else {
+                switch (JSONmsg.COMMAND){
+                    case ("ATTENTION_CYCLE"): 
+                                            servicesState.set("ATTENTION_CYCLE",false);
+                                            servicesState.set("SAY",false);
+                                            servicesState.set("INFORM_NECESSITY",false);
+                                            break;
+                    case ("SAY"):  
+                                            servicesState.set("ATTENTION_CYCLE",false);
+                                            servicesState.set("SAY",false);
+                                            servicesState.set("INFORM_NECESSITY",false);
+                                            break;
+                    case ("ANSWER"):  
+                                            servicesState.set("ANSWER",false);
+                                            break;
+                    case ("INFORM_NECESSITY"):  
+                                            servicesState.set("ATTENTION_CYCLE",false);
+                                            servicesState.set("SAY",false);
+                                            servicesState.set("INFORM_NECESSITY",false);
+                                            break;
+                    case ("PLAY_SOUND"):  
+                                            servicesState.set("PLAY_SOUND",false);
+                                            break;
+                    case ("PLAY_VIDEO"):  
+                                            servicesState.set("PLAY_VIDEO",false);
+                                            break;
+                    default:
+
+                }
+            }
             if (mapCommands[GROUP_ID] == null) {
                 mapCommands[GROUP_ID] = [];
             }
@@ -105,6 +149,12 @@ class CommunicationChannel {
                         command: commands[i]
                     };
                     var callback = function () {
+                        servicesState.set("ATTENTION_CYCLE",true);
+                        servicesState.set("SAY",true);
+                        servicesState.set("INFORM_NECESSITY",true);
+                        servicesState.set("ANSWER",true);
+                        servicesState.set("PLAY_SOUND",true);
+                        servicesState.set("PLAY_VIDEO",true);
                         var reply = {
                             MODULE_ID: "AUDIO_VISUAL",
                             COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -114,6 +164,7 @@ class CommunicationChannel {
                             FINISH_MESSAGE: ""
                         };
                         dataCallback.socket.emit(EventsEnum.ACTION_FINISHED, JSON.stringify(reply));
+                        
                     }
                     switch (commands[i].COMMAND) {
                         case "ATTENTION_CYCLE":
@@ -121,6 +172,9 @@ class CommunicationChannel {
 
                             if (1 <= dice && dice <= 7) {
                                 modules.visualModule.blink(function () {
+                                    servicesState.set("ATTENTION_CYCLE",true);
+                                    servicesState.set("SAY",true);
+                                    servicesState.set("INFORM_NECESSITY",true);
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -133,6 +187,9 @@ class CommunicationChannel {
                                 });
                             } else if (7 < dice && dice <= 8) {
                                 modules.visualModule.sneakyLookRight(function () {
+                                    servicesState.set("ATTENTION_CYCLE",true);
+                                    servicesState.set("SAY",true);
+                                    servicesState.set("INFORM_NECESSITY",true);
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -145,6 +202,9 @@ class CommunicationChannel {
                                 });
                             } else if (9 <= dice && dice <= 10) {
                                 modules.visualModule.sneakyLookLeft(function () {
+                                    servicesState.set("ATTENTION_CYCLE",true);
+                                    servicesState.set("SAY",true);
+                                    servicesState.set("INFORM_NECESSITY",true);
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -159,7 +219,7 @@ class CommunicationChannel {
 
                             break;
 
-                        case "DECIR":
+                        case "SAY":
 
                             if (-1 <= params.EMOTIONAL_VALUE && params.EMOTIONAL_VALUE <= -0.8) {
                                 modules.visualModule.sadHigh(function () { });
@@ -184,13 +244,14 @@ class CommunicationChannel {
                             }
                             break;
 
-                        case "RESPONDER":
+                        case "ANSWER":
                             modules.audioOutputModule.textToSpeech("Preguntame lo que quieras", modules.visualModule, null, function () {
                                 modules.audioInputModule.answer(function (data, callback) {
                                     if (modules.audioOutputModule != null) {
                                         modules.audioOutputModule.textToSpeech(data, modules.visualModule, null, callback);
                                     } else {
                                         modules.visualModule.showDialogFrames([params.TEXTO], { type: 'info', tone: 'low', waitTime: 'short' }, function () {
+                                            ervicesState.set("ANSWER",true);
                                             var reply = {
                                                 MODULE_ID: "AUDIO_VISUAL",
                                                 COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -225,6 +286,9 @@ class CommunicationChannel {
 
                             if (modules.audioOutputModule != null) {
                                 modules.audioOutputModule.textToSpeech(params.SERVICES, modules.visualModule, null, function () {
+                                    servicesState.set("ATTENTION_CYCLE",true);
+                                    servicesState.set("SAY",true);
+                                    servicesState.set("INFORM_NECESSITY",true);
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -238,6 +302,9 @@ class CommunicationChannel {
                             }
                             if (modules.visualModule != null) {
                                 modules.visualModule.showDialogFrames([params.SERVICES], { type: 'danger', tone: 'low', waitTime: 'short' }, function () {
+                                    servicesState.set("ATTENTION_CYCLE",true);
+                                    servicesState.set("SAY",true);
+                                    servicesState.set("INFORM_NECESSITY",true);
                                     var reply = {
                                         MODULE_ID: "AUDIO_VISUAL",
                                         COMMAND_ID: dataCallback.command.COMMAND_ID,
@@ -250,10 +317,10 @@ class CommunicationChannel {
                                 });
                             }
                             break;
-                        case "REPRODUCIR-SONIDO":
+                        case "PLAY_SOUND":
                             modules.audioOutputModule.play(params.SONIDO, null, callback);
                             break;
-                        case "REPRODUCIR-VIDEO":
+                        case "PLAY_VIDEO":
                             modules.videoModule.playVideo(params.VIDEO, null, callback);
                             break;
                     }
@@ -268,6 +335,18 @@ class CommunicationChannel {
             var COMMAND_ID = JSONmsg.COMMAND_ID;
             var reply = { MODULE_ID: "AUDIO_VISUAL", STATUS: "WORKING", COMMAND_ID: COMMAND_ID, GROUP_ID: GROUP_ID, MSG: "" };
             this.emit(EventsEnum.WORK_STATUS_REPLY, JSON.stringify(reply));
-        })
+        });
+        
+        this.socket.on(EventsEnum.ABORT_WORK, function (msg) {
+            var JSONmsg = JSON.parse(msg);
+            var GROUP_ID = JSONmsg.GROUP_ID;
+            var COMMAND_ID = JSONmsg.COMMAND_ID;
+            servicesState.set("ATTENTION_CYCLE",true);
+            servicesState.set("SAY",true);
+            servicesState.set("INFORM_NECESSITY",true);
+            servicesState.set("ANSWER",true);
+            servicesState.set("PLAY_SOUND",true);
+            servicesState.set("PLAY_VIDEO",true);
+        });
     }
 }
